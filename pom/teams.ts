@@ -11,10 +11,6 @@ export class Teams{
     this.equipmentAppButton = page.locator('.action.ng-binding', { hasText: 'Equipment Management' });
     }
 
-    async openApplicationApp() {
-     await  this.page.goto("https://teamssrvse01.de.ad.tba.nl:9303/")
-    }
-
     async selectEquipmentApp(){
         await expect(this.pageOverview).toBeVisible();
         await this.equipmentAppButton.click();
