@@ -15,6 +15,5 @@ export class VehiclesTab {
     async selectVehicleType(vehicle:VehicleType): Promise<void> {
         const vehicleInput = this.getVehicleTypInputLocator(vehicle);
         await vehicleInput.click();
-
     }
 }

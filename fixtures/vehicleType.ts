@@ -1,6 +1,15 @@
 export enum VehicleType {
     AGV = 'agv',
+    A_RTG= 'a-rtg',
     A_RMG = 'a-rmg',
     A_STRAD= 'a-strad',
-    REMOTE_OPERATING_STATION = 'remote-operating-station'
+    MSC = 'msc',
+    QC = 'qc',
+    REACH_STACKER = 'reach-stacker',
+    REMOTE_OPERATING_STATION = 'remote-operating-station',
+    TERMINAL_TRUCK = 'terminal-truck',
+    ACS = 'acs',
+    BES = 'bes',
+    AUTO_TT = 'auto_tt',
+    RAIL_GANTRY_CRANE = 'rail-gantry-crane',
 }

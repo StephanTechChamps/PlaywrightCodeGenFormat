@@ -4,12 +4,10 @@ Allure usage (avoid opening index.html directly):
    npm test
 
 2) Generate the Allure HTML report:
-   npm run allure:generate
+   allure generate allure-results --clean
 
 3) Open the Allure report via a local HTTP server (fixes endless loading spinner):
-   npm run allure:open
-   # Alternatively, serve from allure-results directly:
-   npm run allure:serve
+    allure serve allure-results
 
 Notes:
 - Opening allure-report/index.html with file:// can cause the page to stay on the loading spinner due to browser security blocking XHR requests.

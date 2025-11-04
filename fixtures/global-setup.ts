@@ -2,7 +2,6 @@ import {Page, test as base} from '@playwright/test';
 import {LoginPage} from "../pom/loginPage";
 import {Teams} from "../pom/teams";
 import { FullConfig } from '@playwright/test';
-import fs from 'fs';
 
 async function globalSetup(config: FullConfig,page: Page) {
     console.info('🔧 Global setup started');

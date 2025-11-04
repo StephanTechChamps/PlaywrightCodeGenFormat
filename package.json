@@ -18,8 +18,8 @@
   "devDependencies": {
     "@playwright/test": "^1.56.0",
     "@types/node": "^24.7.0",
-    "allure-playwright": "^3.4.1",
     "allure-commandline": "^2.29.0",
+    "allure-playwright": "^3.4.2",
     "playwright": "^1.56.0"
   },
   "directories": {
@@ -33,5 +33,9 @@
     "url": "https://github.com/StephanTechChamps/PlaywrightCodeGenFormat/issues"
   },
   "homepage": "https://github.com/StephanTechChamps/PlaywrightCodeGenFormat#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "fs-extra": "^11.3.2",
+    "typescript": "^5.9.3"
+  }
 }
