@@ -9,7 +9,6 @@ import {Page} from "@playwright/test";
 
 test.use({ignoreHTTPSErrors: true});
 
-// Log in before each test in this file
 test.beforeEach(async ({page}) => {
     const loginPage = new LoginPage(page);
     await loginPage.login(BASE_URL, USERNAME, PASSWORD);
@@ -42,7 +41,6 @@ test("Create a AGV (only essential fields)", async ({page}) => {
 
 test("Create a A-STRAD (only essential fields)", async ({page}) => {
     const { homePage, equipmentFormPage } = setupPages(page);
-
     await homePage.selectVehicleType(VehicleType.A_STRAD);
     await equipmentFormPage.createASTRAD("Test A-STRAD", 4000, 600, "1.20202", "Lion-o", 600);
 })
