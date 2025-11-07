@@ -15,6 +15,4 @@ export class Teams{
         await expect(this.pageOverview).toBeVisible();
         await this.equipmentAppButton.click();
     }
-
-
 }

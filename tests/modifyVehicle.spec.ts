@@ -1,6 +1,6 @@
 import {test} from "@playwright/test";
-import {LoginPage} from "../pom/loginPage";
-import {VehiclesTab} from "../pom/vehiclesTab"
+import {LoginPage} from "../pom/auth/loginPage";
+import {VehiclesTab} from "../pom/equipment/vehiclesTab"
 import {BASE_URL, PASSWORD, USERNAME} from "../fixtures/projectConfig";
 import {VehicleType} from "../fixtures/vehicleType";
 

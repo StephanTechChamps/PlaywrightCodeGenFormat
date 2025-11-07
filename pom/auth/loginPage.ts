@@ -24,5 +24,4 @@ export class LoginPage {
         await expect(this.welcomeText).toHaveText(' Admin - Equipment Management ');
     }
 
-
 }

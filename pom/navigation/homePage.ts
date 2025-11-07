@@ -1,6 +1,5 @@
 import {expect, Locator, Page} from '@playwright/test';
-import {VehicleType} from "../fixtures/vehicleType";
-// import {VehicleType} from "../fixtures/vehicleType";
+import {VehicleType} from "../../fixtures/vehicleType";
 
 export class HomePage {
     readonly page: Page;
@@ -14,8 +13,6 @@ export class HomePage {
         this.selectInput = page.locator('input[placeholder="Equipment name"]');
         this.closeButton = page.locator('[class="tba-icon-default tba-side-panel-close-button v-btn v-btn--icon v-btn--round theme--light v-size--default"]');
     }
-
-
 
     getVehicleLocator(type: VehicleType): Locator {
         return this.page.locator(`[data-cy="${type}"]`);
@@ -48,5 +45,4 @@ export class HomePage {
         await this.selectInput.fill(vehicle.valueOf());
         await this.selectInput.press('Enter');
     }
-
 }

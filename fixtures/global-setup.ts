@@ -1,6 +1,6 @@
 import {Page, test as base} from '@playwright/test';
-import {LoginPage} from "../pom/loginPage";
-import {Teams} from "../pom/teams";
+import {LoginPage} from "../pom/auth/loginPage";
+import {Teams} from "../pom/navigation/teams";
 import { FullConfig } from '@playwright/test';
 
 async function globalSetup(config: FullConfig,page: Page) {

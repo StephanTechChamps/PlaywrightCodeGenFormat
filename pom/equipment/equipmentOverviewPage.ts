@@ -35,5 +35,4 @@ export class equipmentOverviewPage {
     getHamburgerMenuLocator(equipmentName: string): Locator {
         return this.page.locator(`//span[text()="${equipmentName}"]/../../../..//td//button//span/i`);
     }
-
 }

@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import {LoginPage} from "../pom/loginPage"
+import {LoginPage} from "../pom/auth/loginPage"
 
 
 
