@@ -47,5 +47,4 @@ export class AddMaintenanceFormPage {
         await field.fill(value);
         await field.press('Enter');
     }
-
 }

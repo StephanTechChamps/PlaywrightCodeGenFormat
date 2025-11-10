@@ -131,8 +131,6 @@ export class AddEquipmentFormPage {
             [this.name, name],
             [this.maxWeight, maxWeight],
             [this.availableLocationOnPlatform, availableLocationOnPlatform],
-            // [await this.berth.click()],
-            // [await this.berthOption.click()],
             [this.softwareVersion, softwareVersion],
             [this.hostName, hostName],
             [this.portNumber, portNumber],

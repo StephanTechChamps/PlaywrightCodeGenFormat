@@ -21,7 +21,7 @@ export class equipmentOverviewPage {
         await this.searchInput.fill(equipmentName);
         await this.searchInput.press('Enter');
 
-        const hamburgerMenu = this.getHamburgerMenuLocator(equipmentName);
+        const hamburgerMenu = this.getHiddenMenuLocator(equipmentName);
         await hamburgerMenu.hover();
         await hamburgerMenu.click();
 
@@ -29,10 +29,9 @@ export class equipmentOverviewPage {
     }
 
     async exportAllEquipment(){
-
     }
 
-    getHamburgerMenuLocator(equipmentName: string): Locator {
+    getHiddenMenuLocator(equipmentName: string): Locator {
         return this.page.locator(`//span[text()="${equipmentName}"]/../../../..//td//button//span/i`);
     }
 }

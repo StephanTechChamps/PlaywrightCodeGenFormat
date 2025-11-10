@@ -22,7 +22,6 @@ export class topMenuBarPage {
         await this.leftMainMenuButton.click();
         await this.navigationMenuButton.isVisible();
         await this.maintenanceButton.click();
-        // await this.topBarTitle.isVisible();
     }
 
     async openEquipmentManagement() {
