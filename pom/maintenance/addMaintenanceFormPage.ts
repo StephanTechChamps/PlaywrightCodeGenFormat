@@ -26,7 +26,7 @@ export class AddMaintenanceFormPage {
         this.equipmentTable = page.locator('[class="tba-grid-container"] table');
     }
 
-    async addMaintenanceForEquipment(startDate: string, endDate: string) {
+    async addMaintenanceEventForEquipment(startDate: string, endDate: string) {
         await this.selectEquipment();
         await this.fillDate(this.startDateField, startDate);
         await this.fillDate(this.endDateField, endDate);
