@@ -1,12 +1,13 @@
 import {HomePage} from "../pom/navigation/homePage";
 import {LoginPage} from "../pom/auth/loginPage";
 import {BASE_URL, PASSWORD, USERNAME} from "../fixtures/projectConfig";
-import {test} from '../fixtures/tests.fixtures'
+import {expect, test} from '../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {VehicleType} from "../fixtures/vehicleType";
 import {Page} from "@playwright/test";
 import {EquipmentOverviewPage} from "../pom/equipment/equipmentOverviewPage";
 import {ExportEquipmentFormPage} from "../pom/equipment/exportEquipmentFormPage"
+import {expectedDataForTestA} from "../test-data/equipment/equipmentTestData"
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -39,4 +40,11 @@ test("Import A-RMG equipment from a file", async ({page}) => {
     const {homePage, equipmentOverviewPage} = setupPages(page);
     await homePage.selectVehicleType(VehicleType.A_RMG);
     await equipmentOverviewPage.importAllEquipmentFromFile("A_RMG_IMPORT.csv")
+});
+
+test("Verify test data for", async ({page}) => {
+    const {homePage, equipmentOverviewPage} = setupPages(page);
+    await homePage.selectVehicleType(VehicleType.A_RMG);
+    const actualData = await equipmentOverviewPage.getActualEquipmentTableData();
+    expect(actualData).toEqual(expectedDataForTestA)
 });

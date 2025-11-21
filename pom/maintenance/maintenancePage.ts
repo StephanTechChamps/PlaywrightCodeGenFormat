@@ -98,16 +98,16 @@ export class MaintenancePage {
         await expect(this.headerElementPlannedStartDate).toBeVisible();
     }
 
-
-    async getAllHeaders() {
+    async getAllHeadersOfDataTable() {
         this.navigateToMaintenancePage()
-        const allTexts = await this.allTableHeaderElements.allTextContents();
-        return allTexts.filter(text => text.trim() !== '');
+        const headerElements = await this.allTableHeaderElements.allTextContents();
+        return headerElements.filter(text => text.trim() !== '');
     }
 
     async getActualMaintenanceTableData() {
         await this.navigateToMaintenancePage();
         this.asserDataTableIsVisible()
+
         const tableRows = await this.maintenanceTableRow.all();
         const actualWebTableData: MaintenanceTableRowData[] = await Promise.all(
             tableRows.map(async (row) => {

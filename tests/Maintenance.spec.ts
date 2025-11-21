@@ -59,7 +59,7 @@ test("Create and edit schedule", async ({page}) => {
 test("Validate the data of the maintenance table", async ({page}) => {
     const {topMenuBar, maintenancePage} = setupPages(page);
     await topMenuBar.openMaintenancePage();
-    const headers = await maintenancePage.getAllHeaders();
+    const headers = await maintenancePage.getAllHeadersOfDataTable();
     expect(headers).toEqual(['Equipment', 'Planned start date', 'Planned end date']);
     expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
         [
@@ -77,6 +77,11 @@ test("Validate the data of the maintenance table", async ({page}) => {
                 equipmentName: 'AW05',
                 plannedStartDate: 'Nov 17, 2025 (17:30)',
                 plannedEndDate: 'Nov 30, 2025 (17:30)'
+            },
+            {
+                equipmentName: "AW01",
+                plannedStartDate: "Nov 23, 2025 (08:47)",
+                plannedEndDate: "Dec 23, 2027 (23:59)"
             }
         ]
     );

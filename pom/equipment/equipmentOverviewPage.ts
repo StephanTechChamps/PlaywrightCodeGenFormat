@@ -1,6 +1,6 @@
-import {Locator, Page} from '@playwright/test';
+import {expect, Locator, Page} from '@playwright/test';
 import * as path from "node:path";
-
+import {EquipmentTableRowData} from "./EquipmentTableRowData";
 
 export class EquipmentOverviewPage {
     readonly page: Page;
@@ -9,6 +9,10 @@ export class EquipmentOverviewPage {
     readonly removeButton: Locator;
     readonly importButton: Locator;
     readonly exportButton: Locator;
+    readonly equipmentTable: Locator;
+    readonly headerElements: Locator;
+    readonly tableRow: Locator;
+    readonly rowElement: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -17,6 +21,13 @@ export class EquipmentOverviewPage {
         this.removeButton = page.getByText(' Remove ');
         this.importButton = page.locator('[class="v-input__prepend-outer"] button');
         this.exportButton = page.locator('[class="tba-editable-grid equipment-table"] button[class="tba-toolbar-icon-btn export-equipment-btn v-btn v-btn--icon v-btn--round theme--light v-size--default"]')
+
+        this.equipmentTable = page.locator('[class="tba-editable-grid equipment-table"]')
+        this.headerElements = page.locator('[class="tba-grid-header"] th span[aria-haspopup="true"]');
+
+        this.tableRow = page.locator('[class="tba-editable-grid equipment-table"] tr[class=""]');
+        this.rowElement = page.locator('[aria-haspopup="true"]');
+
     }
 
     async deleteEquipment(equipmentName: string) {
@@ -59,5 +70,45 @@ export class EquipmentOverviewPage {
 
     getHiddenMenuLocator(equipmentName: string): Locator {
         return this.page.locator(`//span[text()="${equipmentName}"]/../../../..//td//button//span/i`);
+    }
+
+    async asserDataTableIsVisible() {
+        await expect(this.equipmentTable).toBeVisible();
+    }
+
+    async getAllHeadersOfDataTable() {
+        await this.asserDataTableIsVisible();
+        const headerElements = await this.headerElements.allTextContents();
+        return headerElements.filter(text => text.trim() != "");
+    }
+
+    async getActualEquipmentTableData(): Promise<EquipmentTableRowData[]> {
+        await this.asserDataTableIsVisible();
+        return Promise.all(
+            (await this.tableRow.all()).map(async (row) => {
+                const values = await row.locator(this.rowElement).allTextContents();
+                return this.mapAllValuesToObjects(values.map(v => v.trim()));
+            })
+        );
+    }
+
+
+    private mapAllValuesToObjects(value: string[]) {
+        const data: EquipmentTableRowData = {
+            name: value[0] ?? '',
+            length: value[1] ?? '',
+            width: value[2] ?? '',
+            maxWeight: value[3] ?? '',
+            liftCapability: value[4] ?? '',
+            maxTwinWeightDifference: value[5] ?? '',
+            maxTierHeight: value[6] ?? '',
+            softwareVersion: value[7] ?? '',
+            hostName: value[8] ?? '',
+            automationPort: value[9] ?? '',
+            stackProfilingPort: value[10] ?? '',
+            craneId: value[11] ?? '',
+            boundary: value[12] ?? '',
+        };
+        return data;
     }
 }
