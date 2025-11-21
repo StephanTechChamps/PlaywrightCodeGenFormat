@@ -1,6 +1,6 @@
 import {EquipmentTableRowData} from "../../pom/equipment/EquipmentTableRowData";
 
-export let expectedDataForTestA: EquipmentTableRowData[] = [
+export let  expectedDataForTestA: EquipmentTableRowData[] = [
     {
         name: 'AW01',
         length: '480',
