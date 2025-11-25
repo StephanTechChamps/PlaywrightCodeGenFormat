@@ -27,7 +27,6 @@ export class EquipmentOverviewPage {
 
         this.tableRow = page.locator('[class="tba-editable-grid equipment-table"] tr[class=""]');
         this.rowElement = page.locator('[aria-haspopup="true"]');
-
     }
 
     async deleteEquipment(equipmentName: string) {
@@ -57,7 +56,6 @@ export class EquipmentOverviewPage {
         const filePath = path.resolve(__dirname, '../../test-data/equipment', fileName);
         const fileChooser = await this.triggerFileChooser();
         await fileChooser.setFiles(filePath);
-
         console.info('Import completed.');
     }
 
@@ -76,12 +74,6 @@ export class EquipmentOverviewPage {
         await expect(this.equipmentTable).toBeVisible();
     }
 
-    async getAllHeadersOfDataTable() {
-        await this.asserDataTableIsVisible();
-        const headerElements = await this.headerElements.allTextContents();
-        return headerElements.filter(text => text.trim() != "");
-    }
-
     async getActualEquipmentTableData(): Promise<EquipmentTableRowData[]> {
         await this.asserDataTableIsVisible();
         return Promise.all(
@@ -91,7 +83,6 @@ export class EquipmentOverviewPage {
             })
         );
     }
-
 
     private mapAllValuesToObjects(value: string[]) {
         const data: EquipmentTableRowData = {

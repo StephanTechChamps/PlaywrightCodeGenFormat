@@ -1,9 +1,8 @@
-// noinspection ES6MissingAwait
-
 import {expect, Locator, Page} from "@playwright/test";
 import {AddMaintenanceFormPage} from "./addMaintenanceFormPage";
 import {MaintenanceTableRowData} from "./MaintenanceTableRowData";
 import {MAINTENANCE_URL} from "../../fixtures/projectConfig";
+import {vehicleCode} from "../../fixtures/MaintenanceVehicleCode";
 
 export class MaintenancePage {
     readonly page: Page;
@@ -49,7 +48,7 @@ export class MaintenancePage {
     }
 
     async openCreateMaintenancePage(): Promise<void> {
-        this.navigateToMaintenancePage()
+        await this.navigateToMaintenancePage()
         await expect(this.maintenancePage).toBeVisible();
         await expect(this.topBar).toBeVisible();
         await this.createButton.first().click();
@@ -61,11 +60,11 @@ export class MaintenancePage {
         await menu.click();
     }
 
-    async editMaintenanceEvent(equipment: string, start: string, end: string, newDate: string, finalDate: string): Promise<void> {
+    async editMaintenanceEvent(equipment: vehicleCode, start: string, end: string, newDate: string, finalDate: string): Promise<void> {
         await this.openEditMenu(equipment, start, end);
         await this.editButton.click();
         const form = new AddMaintenanceFormPage(this.page)
-        await form.addMaintenanceEventForEquipment(newDate, finalDate);
+        await form.editMaintenanceEventForEquipment(equipment,newDate, finalDate);
     }
 
     async removeMaintenanceMaintenanceEvent(equipment: string, start: string, end: string): Promise<void> {
@@ -75,7 +74,11 @@ export class MaintenancePage {
         await this.confirmRemoveButton.click();
     }
 
-    async openCompleteMaintenanceMenu(equipment: string, start: string, end: string): Promise<void> {
+    async validateNoRowsPresent(){
+        await expect(this.maintenanceTableRow).toHaveCount(0);
+    }
+
+    async openCompleteMaintenanceMenu(equipment: vehicleCode, start: string, end: string): Promise<void> {
         const button = this.getCompleteMaintenanceButtonLocator(equipment, start, end);
         await button.hover();
         await expect(button).toBeVisible();
@@ -99,16 +102,23 @@ export class MaintenancePage {
     }
 
     async getAllHeadersOfDataTable() {
-        this.navigateToMaintenancePage()
+        await this.navigateToMaintenancePage()
         const headerElements = await this.allTableHeaderElements.allTextContents();
         return headerElements.filter(text => text.trim() !== '');
     }
 
+    async validateHeadersArePresent() {
+        const headers = await this.getAllHeadersOfDataTable();
+        expect(headers).toEqual(['Equipment', 'Planned start date', 'Planned end date']);
+    }
+
     async getActualMaintenanceTableData() {
         await this.navigateToMaintenancePage();
-        this.asserDataTableIsVisible()
+        await this.asserDataTableIsVisible()
+        await this.validateHeadersArePresent();
 
-        const tableRows = await this.maintenanceTableRow.all();
+
+        const tableRows: Locator[] = await this.maintenanceTableRow.all();
         const actualWebTableData: MaintenanceTableRowData[] = await Promise.all(
             tableRows.map(async (row) => {
                 return await this.mappedDataPerRow(row);

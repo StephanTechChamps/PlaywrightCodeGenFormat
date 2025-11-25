@@ -1,4 +1,6 @@
 import {Locator, Page} from "@playwright/test";
+import {expect} from "../../fixtures/tests.fixtures";
+import {vehicleCode} from "../../fixtures/MaintenanceVehicleCode";
 
 export class AddMaintenanceFormPage {
 
@@ -12,6 +14,7 @@ export class AddMaintenanceFormPage {
     readonly planMaintenanceButton: Locator;
     readonly equipmentTable: Locator;
     readonly equipmentListItems: Locator;
+    readonly loadingSpinner: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -24,27 +27,41 @@ export class AddMaintenanceFormPage {
         this.cancelButton = page.getByText(' Cancel ');
         this.planMaintenanceButton = page.getByText(' Plan maintenance ');
         this.equipmentTable = page.locator('[class="tba-grid-container"] table');
+        this.loadingSpinner = page.locator('span[class="tba-notification-text"]').first();
     }
 
-    async addMaintenanceEventForEquipment(startDate: string, endDate: string) {
-        await this.selectEquipment();
+    async addMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
+        await this.selectEquipment(vehicleCode);
         await this.fillDate(this.startDateField, startDate);
         await this.fillDate(this.endDateField, endDate);
         await this.planMaintenanceButton.click();
         await Promise.all([
             this.maintenanceFormTitle.isHidden(),
             this.equipmentTable.isVisible(),
+            expect(this.loadingSpinner).toBeVisible(),
+            expect(this.loadingSpinner).toBeHidden()
         ]);
     }
 
-    private async selectEquipment() {
-        await this.pieceOfEquipmentField.click();
-        await this.equipmentListItems.first().click();
+    async editMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
+        await this.selectEquipment(vehicleCode);
+        await this.fillDate(this.startDateField, startDate);
+        await this.fillDate(this.endDateField, endDate);
+        await this.planMaintenanceButton.click();
+        await this.loadingSpinner.waitFor({state: 'visible'})
+        await this.loadingSpinner.waitFor({state: 'hidden'})
     }
 
     private async fillDate(field: Locator, value: string) {
         await field.clear();
         await field.fill(value);
         await field.press('Enter');
+    }
+
+    private async selectEquipment(equipmentType: vehicleCode) {
+        const listOption = this.page.locator(`//div[@class="tba-select__item"]//div//span[text()='${equipmentType}']`);
+        await this.pieceOfEquipmentField.click();
+        await this.pieceOfEquipmentField.fill(equipmentType)
+        await listOption.click();
     }
 }
