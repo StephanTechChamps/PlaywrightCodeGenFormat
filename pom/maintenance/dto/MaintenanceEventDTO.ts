@@ -1,4 +1,4 @@
-import {vehicleCode} from "../../../fixtures/MaintenanceVehicleCode";
+import {vehicleCode} from "../../../enums/MaintenanceVehicleCode";
 
 /**
  * Data Transfer Object voor een onderhoudsevenement

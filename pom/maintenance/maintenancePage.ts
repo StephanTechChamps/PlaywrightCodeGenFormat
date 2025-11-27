@@ -22,6 +22,7 @@ export class MaintenancePage {
     readonly equipmentElementFieldInRow: Locator;
     readonly plannedStartDateElementInRow: Locator;
     readonly plannedEndDateElementInRow: Locator;
+    readonly filterSearchInput: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -41,6 +42,7 @@ export class MaintenancePage {
         this.equipmentElementFieldInRow = page.locator('td span[aria-haspopup="true"]');
         this.plannedStartDateElementInRow = page.locator('td:nth-child(2)')
         this.plannedEndDateElementInRow = page.locator(' //td//div[@class="end-date"]//span[1]');
+        this.filterSearchInput = page.locator('input[placeholder="Equipment name"]');
     }
 
     private async navigateToMaintenancePage() {
@@ -64,7 +66,7 @@ export class MaintenancePage {
         await this.openEditMenu(equipment, start, end);
         await this.editButton.click();
         const form = new AddMaintenanceFormPage(this.page)
-        await form.editMaintenanceEventForEquipment(equipment,newDate, finalDate);
+        await form.editMaintenanceEventForEquipment(equipment, newDate, finalDate);
     }
 
     async removeMaintenanceMaintenanceEvent(equipment: string, start: string, end: string): Promise<void> {
@@ -74,7 +76,7 @@ export class MaintenancePage {
         await this.confirmRemoveButton.click();
     }
 
-    async validateNoRowsPresent(){
+    async validateNoRowsPresent() {
         await expect(this.maintenanceTableRow).toHaveCount(0);
     }
 
@@ -83,6 +85,12 @@ export class MaintenancePage {
         await button.hover();
         await expect(button).toBeVisible();
         await button.click();
+    }
+
+    async applyFilter(item: string) {
+        await this.filterSearchInput.click()
+        await this.filterSearchInput.fill(item);
+        await this.filterSearchInput.press('Enter');
     }
 
     getHiddenMenuLocator(equipment: string, start: string, end: string): Locator {
@@ -95,6 +103,21 @@ export class MaintenancePage {
         return this.page.locator(
             `//span[text()="${equipment}"]/../../../..//td[text()=" ${start} "]/..//span[text()="${end}"]/../../..//td[@class="pinned pinned--to-right pinned--to-right-first"]//button`
         ).first();
+    }
+
+    async clickTableSortByHeader(header: "Equipment" | "Planned start date" | "Planned end date") {
+        const headerTitle = await this.headerLocator(header);
+        await headerTitle.click();
+        const headerButton = await this.getHeaderFilter(header);
+        await headerButton.click();
+    }
+
+    async headerLocator(header: "Equipment" | "Planned start date" | "Planned end date"){
+        return this.page.locator(`//span[text()="${header}"]`)
+    }
+
+    async getHeaderFilter(header: string): Promise<Locator> {
+        return this.page.locator(`//span[text()="${header}"]/..//following-sibling::i`)
     }
 
     async asserDataTableIsVisible() {

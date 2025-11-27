@@ -40,14 +40,7 @@ test("Create and complete maintenance schedule", async ({page}) => {
     const {topMenuBar, maintenancePage, addMaintenance, confirmMaintenance} = setupPages(page);
     await topMenuBar.openMaintenancePage();
     await maintenancePage.openCreateMaintenancePage();
-    
-    // Gebruik builder pattern voor betere leesbaarheid
-    await addMaintenance.createMaintenanceEvent()
-        .withVehicle(vehicleCode.QC8)
-        .withStartDate('Nov 20, 2025 (15:20)')
-        .withEndDate('Nov 20, 2026 (20:00)')
-        .submit();
-    
+    await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.QC8, 'Nov 20, 2025 (15:20)', 'Nov 20, 2026 (20:00)');
     expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
         [
             {
@@ -65,14 +58,7 @@ test("Create, edit and delete a maintenance schedule", async ({page}) => {
     const {topMenuBar, maintenancePage, addMaintenance} = setupPages(page);
     await topMenuBar.openMaintenancePage();
     await maintenancePage.openCreateMaintenancePage();
-    
-    // Gebruik builder pattern voor het aanmaken
-    await addMaintenance.createMaintenanceEvent()
-        .withVehicle(vehicleCode.AL1)
-        .withStartDate('Nov 15, 2025 (15:47)')
-        .withEndDate('Nov 20, 2026 (10:00)')
-        .submit();
-    
+    await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 20, 2026 (10:00)');
     expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
         [
             {
@@ -98,49 +84,50 @@ test("Arrange and filter table data", async ({page}) => {
     const {topMenuBar, maintenancePage, addMaintenance} = setupPages(page);
     await topMenuBar.openMaintenancePage();
     await maintenancePage.openCreateMaintenancePage();
-    
-    // Gebruik builder pattern voor meerdere onderhoudsevenementen
-    await addMaintenance.createMaintenanceEvent()
-        .withVehicle(vehicleCode.AL1)
-        .withStartDate('Nov 15, 2025 (15:47)')
-        .withEndDate('Nov 21, 2026 (10:00)')
-        .submit();
-    
-    await addMaintenance.createMaintenanceEvent()
-        .withVehicle(vehicleCode.AL3)
-        .withStartDate('Nov 10, 2025 (15:47)')
-        .withEndDate('Nov 26, 2026 (10:00)')
-        .submit();
-    
-    await addMaintenance.createMaintenanceEvent()
-        .withVehicle(vehicleCode.AW2)
-        .withStartDate('Nov 09, 2025 (15:47)')
-        .withEndDate('Nov 26, 2026 (10:00)')
-        .submit();
-    
-    await addMaintenance.createMaintenanceEvent()
-        .withVehicle(vehicleCode.AW3)
-        .withStartDate('Nov 27, 2025 (15:47)')
-        .withEndDate('Nov 27, 2026 (10:00)')
-        .submit();
-
+    await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 21, 2026 (10:00)');
+    await maintenancePage.openCreateMaintenancePage();
+    await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AL3, 'Nov 10, 2025 (15:47)', 'Nov 26, 2026 (10:00)');
+    await maintenancePage.openCreateMaintenancePage();
+    await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AW2, 'Nov 09, 2025 (15:47)', 'Nov 26, 2026 (10:00)');
+    await maintenancePage.openCreateMaintenancePage();
+    await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AW3, 'Nov 27, 2025 (15:47)', 'Nov 27, 2026 (10:00)');
     expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
         [
             {
                 equipmentName: 'AL01',
                 plannedStartDate: 'Nov 15, 2025 (15:47)',
-                plannedEndDate: 'Nov 20, 2026 (10:00)',
-            }
+                plannedEndDate: 'Nov 21, 2026 (10:00)',
+            },
+            {
+                equipmentName: 'AL03',
+                plannedStartDate: 'Nov 10, 2025 (15:47)',
+                plannedEndDate: 'Nov 26, 2026 (10:00)',
+            },
+            {
+                equipmentName: 'AW02',
+                plannedStartDate: 'Nov 9, 2025 (15:47)',
+                plannedEndDate: 'Nov 26, 2026 (10:00)',
+            },
+            {
+                equipmentName: 'AW03',
+                plannedStartDate: 'Nov 27, 2025 (15:47)',
+                plannedEndDate: 'Nov 27, 2026 (10:00)',
+            },
         ])
-    await maintenancePage.editMaintenanceEvent(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 20, 2026 (10:00)', 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)')
+    await maintenancePage.applyFilter('AL');
+    await maintenancePage.clickTableSortByHeader("Equipment")
     expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
         [
             {
+                equipmentName: 'AL03',
+                plannedStartDate: 'Nov 10, 2025 (15:47)',
+                plannedEndDate: 'Nov 26, 2026 (10:00)',
+            },
+            {
                 equipmentName: 'AL01',
-                plannedStartDate: 'Nov 20, 2026 (15:47)',
-                plannedEndDate: 'Nov 25, 2026 (10:00)',
-            }
+                plannedStartDate: 'Nov 15, 2025 (15:47)',
+                plannedEndDate: 'Nov 21, 2026 (10:00)',
+            },
+
         ])
-    await maintenancePage.removeMaintenanceMaintenanceEvent(vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
-    await maintenancePage.validateNoRowsPresent();
 })
