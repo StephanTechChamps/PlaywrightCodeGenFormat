@@ -1,4 +1,4 @@
-import {vehicleCode} from "../../fixtures/MaintenanceVehicleCode";
+import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 
 export const maintenanceTestData = {
     QC8: {

@@ -1,5 +1,5 @@
 import {LoginPage} from "../pom/auth/loginPage";
-import {BASE_URL, PASSWORD, USERNAME} from "../fixtures/projectConfig";
+import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
 import {test} from '../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {MaintenancePage} from "../pom/maintenance/maintenancePage";
@@ -8,7 +8,7 @@ import {AddMaintenanceFormPage} from "../pom/maintenance/addMaintenanceFormPage"
 import {ConfirmMaintenanceFormPage} from "../pom/maintenance/confirmMaintenanceFormPage";
 import {Page} from "playwright/test";
 import {expect} from "@playwright/test";
-import {vehicleCode} from "../fixtures/MaintenanceVehicleCode";
+import {vehicleCode} from "../enums/MaintenanceVehicleCode";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -22,6 +22,10 @@ async function setAllureProperties() {
     await severity('Critical');
     await tag('Smoke');
     await label('suite', "Maintenance tests");
+}
+
+async function mapTestDataForMaintenanceEvents(data: any) {
+
 }
 
 const setupPages = (page: Page) => {
@@ -49,7 +53,7 @@ test("Create and complete maintenance schedule", async ({page}) => {
     await confirmMaintenance.confirmMaintenance('Nov 21, 2027 (20:00)');
 });
 
-
+// builder pattern toepassen
 test("Create, edit and delete a maintenance schedule", async ({page}) => {
     const {topMenuBar, maintenancePage, addMaintenance} = setupPages(page);
     await topMenuBar.openMaintenancePage();

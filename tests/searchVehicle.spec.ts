@@ -1,8 +1,8 @@
 import { test } from "@playwright/test";
 import { HomePage } from "../pom/navigation/homePage";
 import { LoginPage } from "../pom/auth/loginPage";
-import { BASE_URL, USERNAME, PASSWORD } from "../fixtures/projectConfig";
-import {VehicleType} from "../fixtures/vehicleType";
+import { BASE_URL, USERNAME, PASSWORD } from "../config/projectConfig";
+import {VehicleType} from "../enums/vehicleType";
 
 test.use({ ignoreHTTPSErrors: true });
 

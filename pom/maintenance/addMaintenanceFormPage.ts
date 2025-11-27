@@ -1,6 +1,6 @@
 import {Locator, Page} from "@playwright/test";
 import {expect} from "../../fixtures/tests.fixtures";
-import {vehicleCode} from "../../fixtures/MaintenanceVehicleCode";
+import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 
 export class AddMaintenanceFormPage {
 

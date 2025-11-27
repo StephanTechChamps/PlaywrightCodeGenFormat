@@ -1,9 +1,9 @@
 import {test} from "../fixtures/tests.fixtures";
 import {LoginPage} from "../pom/auth/loginPage";
-import {BASE_URL, PASSWORD, USERNAME} from "../fixtures/projectConfig";
+import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
 import {label, severity, tag} from "allure-js-commons";
 import {HomePage} from "../pom/navigation/homePage";
-import {VehicleType} from "../fixtures/vehicleType";
+import {VehicleType} from "../enums/vehicleType";
 import {EquipmentOverviewPage} from "../pom/equipment/equipmentOverviewPage";
 
 test.use({ignoreHTTPSErrors: true});

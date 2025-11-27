@@ -1,6 +1,6 @@
-import {Page, test as base} from '@playwright/test';
-import {LoginPage} from "../pom/auth/loginPage";
-import {Teams} from "../pom/navigation/teams";
+import {Page} from '@playwright/test';
+import {LoginPage} from "./pom/auth/loginPage";
+import {Teams} from "./pom/navigation/teams";
 import { FullConfig } from '@playwright/test';
 
 async function globalSetup(config: FullConfig,page: Page) {
@@ -16,15 +16,7 @@ async function globalSetup(config: FullConfig,page: Page) {
     await page.context().storageState({path: 'storageState.json'});
 
 
-    // Voorbeeld: login en sla sessie op
-    // const browser = await chromium.launch();
-    // const page = await browser.newPage();
-    // await page.goto('https://example.com/login');
-    // await page.fill('#username', 'user');
-    // await page.fill('#password', 'pass');
-    // await page.click('button[type="submit"]');
-    // await page.context().storageState({ path: 'storageState.json' });
-    // await browser.close();
+
 
     console.log('✅ Setup voltooid');
 }

@@ -1,8 +1,8 @@
 import {expect, Locator, Page} from "@playwright/test";
 import {AddMaintenanceFormPage} from "./addMaintenanceFormPage";
 import {MaintenanceTableRowData} from "./MaintenanceTableRowData";
-import {MAINTENANCE_URL} from "../../fixtures/projectConfig";
-import {vehicleCode} from "../../fixtures/MaintenanceVehicleCode";
+import {MAINTENANCE_URL} from "../../config/projectConfig";
+import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 
 export class MaintenancePage {
     readonly page: Page;
@@ -107,16 +107,17 @@ export class MaintenancePage {
         return headerElements.filter(text => text.trim() !== '');
     }
 
+    // expect datatable to be visible and headers to be present niry in
     async validateHeadersArePresent() {
         const headers = await this.getAllHeadersOfDataTable();
         expect(headers).toEqual(['Equipment', 'Planned start date', 'Planned end date']);
     }
 
     async getActualMaintenanceTableData() {
-        await this.navigateToMaintenancePage();
-        await this.asserDataTableIsVisible()
-        await this.validateHeadersArePresent();
-
+        // moet navigateren naar de pagina in deze methodes in de testen?
+        // await this.navigateToMaintenancePage();
+        // await this.asserDataTableIsVisible()
+        // await this.validateHeadersArePresent();
 
         const tableRows: Locator[] = await this.maintenanceTableRow.all();
         const actualWebTableData: MaintenanceTableRowData[] = await Promise.all(

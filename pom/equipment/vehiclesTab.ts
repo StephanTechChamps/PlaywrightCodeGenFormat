@@ -1,5 +1,5 @@
 import { Locator, Page} from '@playwright/test';
-import {VehicleType} from "../../fixtures/vehicleType";
+import {VehicleType} from "../../enums/vehicleType";
 
 export class VehiclesTab {
     readonly page: Page;

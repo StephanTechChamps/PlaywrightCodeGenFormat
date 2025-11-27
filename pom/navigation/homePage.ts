@@ -1,5 +1,5 @@
 import {expect, Locator, Page} from '@playwright/test';
-import {VehicleType} from "../../fixtures/vehicleType";
+import {VehicleType} from "../../enums/vehicleType";
 
 export class HomePage {
     readonly page: Page;

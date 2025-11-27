@@ -1,8 +1,8 @@
 import {test} from "@playwright/test";
 import {LoginPage} from "../pom/auth/loginPage";
 import {VehiclesTab} from "../pom/equipment/vehiclesTab"
-import {BASE_URL, PASSWORD, USERNAME} from "../fixtures/projectConfig";
-import {VehicleType} from "../fixtures/vehicleType";
+import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
+import {VehicleType} from "../enums/vehicleType";
 
 // Apply common settings once for this file
 test.use({ ignoreHTTPSErrors: true });
