@@ -1,41 +1,38 @@
 import {Locator, Page} from "@playwright/test";
-import {expect} from "../../fixtures/tests.fixtures";
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 
 export class AddMaintenanceFormPage {
 
     readonly page: Page;
     readonly maintenanceFormTitle: Locator;
-    readonly createMaintenanceButton: Locator;
     readonly pieceOfEquipmentField: Locator;
     readonly startDateField: Locator;
     readonly endDateField: Locator;
-    readonly cancelButton: Locator;
     readonly planMaintenanceButton: Locator;
     readonly equipmentTable: Locator;
-    readonly equipmentListItems: Locator;
     readonly loadingSpinner: Locator;
 
 
     constructor(page: Page) {
         this.page = page;
         this.maintenanceFormTitle = page.locator('[data-cy="maintenance-dialog-title"]');
-        this.createMaintenanceButton = page.locator('[class="toolbar-action-buttons"] button')
         this.pieceOfEquipmentField = page.locator('//span[@data-cy="equipment-selector"]//input[@autocomplete="off"]');
-        this.equipmentListItems = page.locator('[class="tba-select__item"]');
         this.startDateField = page.locator('[name="startDate"] input');
         this.endDateField = page.locator('[name="endDate"] input');
-        this.cancelButton = page.getByText(' Cancel ');
         this.planMaintenanceButton = page.getByText(' Plan maintenance ');
         this.equipmentTable = page.locator('[class="tba-grid-container"] table');
         this.loadingSpinner = page.locator('span[class="tba-notification-text"]').first();
     }
 
     private async selectEquipment(equipmentType: vehicleCode) {
-        const listOption = this.page.locator(`//div[@class="tba-select__item"]//div//span[text()='${equipmentType}']`);
+        const listOption = this.returnListOption(equipmentType);
         await this.pieceOfEquipmentField.click();
         await this.pieceOfEquipmentField.fill(equipmentType)
         await listOption.click();
+    }
+
+    private returnListOption(equipmentType: vehicleCode) {
+        return this.page.locator(`//div[@class="tba-select__item"]//div//span[text()='${equipmentType}']`);
     }
 
     private async fillDate(field: Locator, value: string) {
@@ -50,20 +47,21 @@ export class AddMaintenanceFormPage {
         await this.fillDate(this.endDateField, endDate);
     }
 
+    private async submitForm() {
+        await this.planMaintenanceButton.click();
+        await this.waitForSpinnerToDisappear();
+    }
+
     async addMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
         await this.fillInFormData(vehicleCode, startDate, endDate);
-        await this.planMaintenanceButton.click();
-        await Promise.all([
-            this.maintenanceFormTitle.isHidden(),
-            this.equipmentTable.isVisible(),
-            this.waitForSpinnerToDisappear()
-        ]);
+        await this.submitForm();
+        await this.maintenanceFormTitle.waitFor({ state: 'hidden' });
+        await this.equipmentTable.waitFor({ state: 'visible' });
     }
 
     async editMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
         await this.fillInFormData(vehicleCode, startDate, endDate);
-        await this.planMaintenanceButton.click();
-        await this.waitForSpinnerToDisappear();
+        await this.submitForm();
     }
 
     private async waitForSpinnerToDisappear() {

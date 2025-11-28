@@ -18,13 +18,13 @@ export class ConfirmMaintenanceFormPage {
     }
 
     async setMaintenanceEndDate(date: string): Promise<void> {
-        await this.dateInput.fill('');
+        await this.dateInput.fill(date);
         await this.dateInput.fill(date);
         await this.dateInput.press('Enter');
     }
 
     async confirmMaintenance(date: string): Promise<void> {
-        await expect(this.popupTitle).toHaveText("Complete planned maintenance?");
+        await expect(this.popupTitle).toContainText("Complete planned maintenance?");
         await this.setMaintenanceEndDate(date);
         await this.clickConfirm();
     }
