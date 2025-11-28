@@ -1,6 +1,5 @@
 import {expect, Locator, Page} from "@playwright/test";
 import {AddMaintenanceFormPage} from "./addMaintenanceFormPage";
-import {MaintenanceTableRowData} from "../../interfaces/MaintenanceTableRowData";
 import {MAINTENANCE_URL} from "../../config/projectConfig";
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 
@@ -13,11 +12,6 @@ export class MaintenancePage {
     readonly removeButton: Locator;
     readonly popupTitle: Locator;
     readonly confirmRemoveButton: Locator;
-    readonly allTableHeaderElements: Locator;
-    readonly maintenanceTableRow: Locator;
-    readonly equipmentElementFieldInRow: Locator;
-    readonly plannedStartDateElementInRow: Locator;
-    readonly plannedEndDateElementInRow: Locator;
     readonly filterSearchInput: Locator;
 
     constructor(page: Page) {
@@ -29,11 +23,6 @@ export class MaintenancePage {
         this.removeButton = page.locator('(//div[text()=" Remove maintenance " and contains(@class, "v-list-item__title")])[1]');
         this.popupTitle = page.locator('.tba-dialog-title');
         this.confirmRemoveButton = page.locator('//span[text()=" Remove maintenance "]/ancestor::button');
-        this.allTableHeaderElements = page.locator(' [class="header-cell"] span[aria-expanded="false"]');
-        this.maintenanceTableRow = page.locator('[class="tba-grid-container"] tr[class=""]');
-        this.equipmentElementFieldInRow = page.locator('td span[aria-haspopup="true"]');
-        this.plannedStartDateElementInRow = page.locator('td:nth-child(2)')
-        this.plannedEndDateElementInRow = page.locator(' //td//div[@class="end-date"]//span[1]');
         this.filterSearchInput = page.locator('input[placeholder="Equipment name"]');
     }
 
@@ -46,35 +35,6 @@ export class MaintenancePage {
         await expect(this.maintenancePage).toBeVisible();
         await expect(this.topBar).toBeVisible();
         await this.createButton.first().click();
-    }
-
-    async getActualMaintenanceTableData() {
-        const tableRows: Locator[] = await this.maintenanceTableRow.all();
-        const actualWebTableData: MaintenanceTableRowData[] = await Promise.all(
-            tableRows.map(async (row) => {
-                return await this.mappedDataPerRow(row);
-            })
-        );
-        return actualWebTableData;
-    }
-
-    private async mappedDataPerRow(row: Locator) {
-        const equipmentName = await row.locator(this.equipmentElementFieldInRow).innerText();
-        const plannedStartDate = await row.locator(this.plannedStartDateElementInRow).innerText();
-        const plannedEndDate = await row.locator(this.plannedEndDateElementInRow).innerText();
-        return {equipmentName, plannedStartDate, plannedEndDate};
-    }
-
-    async getAllHeadersOfDataTable() {
-        await this.navigateToMaintenancePage()
-        const headerElements = await this.allTableHeaderElements.allTextContents();
-        return headerElements.filter(text => text.trim() !== '');
-    }
-
-    async validateHeadersArePresent() {
-        const headers = await this.getAllHeadersOfDataTable();
-        const expectedHeaders = ['Equipment', 'Planned start date', 'Planned end date'];
-        return JSON.stringify(headers) == JSON.stringify(expectedHeaders);
     }
 
     async openEditMenu(equipment: string, start: string, end: string): Promise<void> {
@@ -104,12 +64,6 @@ export class MaintenancePage {
         await button.click();
     }
 
-    async applyFilter(item: string) {
-        await this.filterSearchInput.click()
-        await this.filterSearchInput.fill(item);
-        await this.filterSearchInput.press('Enter');
-    }
-
     getHiddenMenuLocator(equipment: string, start: string, end: string): Locator {
         return this.page.locator(
             `//span[text()="${equipment}"]/../../../..//td[text()=' ${start} ']/..//span[text()='${end}']/../../..//button[@class="tba-icon-default-important actions-on-hover v-btn v-btn--icon v-btn--round v-btn--text theme--light v-size--default"]`
@@ -120,22 +74,5 @@ export class MaintenancePage {
         return this.page.locator(
             `//span[text()="${equipment}"]/../../../..//td[text()=" ${start} "]/..//span[text()="${end}"]/../../..//td[@class="pinned pinned--to-right pinned--to-right-first"]//button`
         ).first();
-    }
-
-    async clickTableSortByHeader(header: "Equipment" | "Planned start date" | "Planned end date") {
-        const headerTitle = await this.headerLocator(header);
-        await headerTitle.click();
-        const headerButton = await this.getHeaderFilter(header);
-        await headerButton.click();
-    }
-
-
-
-    async headerLocator(header: "Equipment" | "Planned start date" | "Planned end date") {
-        return this.page.locator(`//span[text()="${header}"]`)
-    }
-
-    async getHeaderFilter(header: string): Promise<Locator> {
-        return this.page.locator(`//span[text()="${header}"]/..//following-sibling::i`)
     }
 }

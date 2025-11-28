@@ -9,6 +9,7 @@ import {ConfirmMaintenanceFormPage} from "../pom/maintenance/confirmMaintenanceF
 import {Page} from "playwright/test";
 import {expect} from "@playwright/test";
 import {vehicleCode} from "../enums/MaintenanceVehicleCode";
+import {MaintenanceTable} from "../pom/maintenance/maintenanceTable";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -43,16 +44,17 @@ const setupPages = (page: Page) => {
     const maintenancePage = new MaintenancePage(page);
     const addMaintenance = new AddMaintenanceFormPage(page)
     const confirmMaintenance = new ConfirmMaintenanceFormPage(page);
-    return {topMenuBar, maintenancePage, addMaintenance, confirmMaintenance};
+    const maintenanceTable = new MaintenanceTable(page);
+    return {topMenuBar, maintenancePage, addMaintenance, confirmMaintenance, maintenanceTable};
 }
 
 test("Create and complete maintenance schedule", async ({page}) => {
-    const {topMenuBar, maintenancePage, addMaintenance, confirmMaintenance} = setupPages(page);
+    const {topMenuBar, maintenancePage, addMaintenance, confirmMaintenance, maintenanceTable} = setupPages(page);
     await topMenuBar.openMaintenancePage();
     await maintenancePage.openCreateMaintenancePage();
     await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.QC8, 'Nov 20, 2025 (15:20)', 'Nov 20, 2026 (20:00)');
-    expect(await maintenancePage.validateHeadersArePresent()).toBe(true)
-    expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
+    expect(await maintenanceTable.validateHeadersArePresent()).toBe(true);
+    expect(await maintenanceTable.getActualMaintenanceTableData()).toEqual(
         [
             {
                 equipmentName: 'QC08',
@@ -65,11 +67,11 @@ test("Create and complete maintenance schedule", async ({page}) => {
 });
 
 test("Create, edit and delete a maintenance schedule", async ({page}) => {
-    const {topMenuBar, maintenancePage, addMaintenance} = setupPages(page);
+    const {topMenuBar, maintenancePage, addMaintenance, maintenanceTable} = setupPages(page);
     await topMenuBar.openMaintenancePage();
     await maintenancePage.openCreateMaintenancePage();
     await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 20, 2026 (10:00)');
-    expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
+    expect(await maintenanceTable.getActualMaintenanceTableData()).toEqual(
         [
             {
                 equipmentName: 'AL01',
@@ -78,7 +80,7 @@ test("Create, edit and delete a maintenance schedule", async ({page}) => {
             }
         ])
     await maintenancePage.editMaintenanceEvent(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 20, 2026 (10:00)', 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)')
-    expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
+    expect(await maintenanceTable.getActualMaintenanceTableData()).toEqual(
         [
             {
                 equipmentName: 'AL01',
@@ -87,11 +89,11 @@ test("Create, edit and delete a maintenance schedule", async ({page}) => {
             }
         ])
     await maintenancePage.removeMaintenanceMaintenanceEvent(vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
-    await expect(maintenancePage.maintenanceTableRow).toHaveCount(0);
+    await expect(maintenanceTable.maintenanceTableRow).toHaveCount(0);
 })
 
 test("Arrange and filter table data", async ({page}) => {
-    const {topMenuBar, maintenancePage, addMaintenance} = setupPages(page);
+    const {topMenuBar, maintenancePage, addMaintenance, maintenanceTable} = setupPages(page);
     await topMenuBar.openMaintenancePage();
     await maintenancePage.openCreateMaintenancePage();
     await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 21, 2026 (10:00)');
@@ -101,7 +103,7 @@ test("Arrange and filter table data", async ({page}) => {
     await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AW2, 'Nov 09, 2025 (15:47)', 'Nov 26, 2026 (10:00)');
     await maintenancePage.openCreateMaintenancePage();
     await addMaintenance.addMaintenanceEventForEquipment(vehicleCode.AW3, 'Nov 27, 2025 (15:47)', 'Nov 27, 2026 (10:00)');
-    expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
+    expect(await maintenanceTable.getActualMaintenanceTableData()).toEqual(
         [
             {
                 equipmentName: 'AL01',
@@ -124,9 +126,9 @@ test("Arrange and filter table data", async ({page}) => {
                 plannedEndDate: 'Nov 27, 2026 (10:00)',
             },
         ])
-    await maintenancePage.applyFilter('AL');
-    await maintenancePage.clickTableSortByHeader("Equipment")
-    expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
+    await maintenanceTable.applyFilter('AL');
+    await maintenanceTable.clickTableSortByHeader("Equipment")
+    expect(await maintenanceTable.getActualMaintenanceTableData()).toEqual(
         [
             {
                 equipmentName: 'AL03',
@@ -140,8 +142,8 @@ test("Arrange and filter table data", async ({page}) => {
             },
 
         ])
-    await maintenancePage.applyFilter('');
-    expect(await maintenancePage.getActualMaintenanceTableData()).toEqual(
+    await maintenanceTable.applyFilter('');
+    expect(await maintenanceTable.getActualMaintenanceTableData()).toEqual(
         [{
             equipmentName: 'AW03',
             plannedStartDate: 'Nov 27, 2025 (15:47)',

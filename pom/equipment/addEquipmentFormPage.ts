@@ -141,11 +141,10 @@ export class AddEquipmentFormPage {
         await locator.fill(value.toString());
     }
 
-    private async openAndFillInCreationForm(pairs: [Locator, string | number][]) {
+    private async openAndFillInCreationForm(pairs: [Locator, string | number][]): Promise<void> {
         await this.homePage.clickCreateVehicleButton();
-        for (const [locator, value] of pairs) {
-            await this.fillField(locator, value);
-        }
+        await Promise.all(pairs.map(([locator, value]) =>
+            this.fillField(locator, value)));
         await this.saveButton.click();
     }
 }
