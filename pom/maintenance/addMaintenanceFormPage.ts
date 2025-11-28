@@ -16,6 +16,7 @@ export class AddMaintenanceFormPage {
     readonly equipmentListItems: Locator;
     readonly loadingSpinner: Locator;
 
+
     constructor(page: Page) {
         this.page = page;
         this.maintenanceFormTitle = page.locator('[data-cy="maintenance-dialog-title"]');
@@ -30,26 +31,11 @@ export class AddMaintenanceFormPage {
         this.loadingSpinner = page.locator('span[class="tba-notification-text"]').first();
     }
 
-    async addMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
-        await this.selectEquipment(vehicleCode);
-        await this.fillDate(this.startDateField, startDate);
-        await this.fillDate(this.endDateField, endDate);
-        await this.planMaintenanceButton.click();
-        await Promise.all([
-            this.maintenanceFormTitle.isHidden(),
-            this.equipmentTable.isVisible(),
-            expect(this.loadingSpinner).toBeVisible(),
-            expect(this.loadingSpinner).toBeHidden()
-        ]);
-    }
-
-    async editMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
-        await this.selectEquipment(vehicleCode);
-        await this.fillDate(this.startDateField, startDate);
-        await this.fillDate(this.endDateField, endDate);
-        await this.planMaintenanceButton.click();
-        await this.loadingSpinner.waitFor({state: 'visible'})
-        await this.loadingSpinner.waitFor({state: 'hidden'})
+    private async selectEquipment(equipmentType: vehicleCode) {
+        const listOption = this.page.locator(`//div[@class="tba-select__item"]//div//span[text()='${equipmentType}']`);
+        await this.pieceOfEquipmentField.click();
+        await this.pieceOfEquipmentField.fill(equipmentType)
+        await listOption.click();
     }
 
     private async fillDate(field: Locator, value: string) {
@@ -58,10 +44,30 @@ export class AddMaintenanceFormPage {
         await field.press('Enter');
     }
 
-    private async selectEquipment(equipmentType: vehicleCode) {
-        const listOption = this.page.locator(`//div[@class="tba-select__item"]//div//span[text()='${equipmentType}']`);
-        await this.pieceOfEquipmentField.click();
-        await this.pieceOfEquipmentField.fill(equipmentType)
-        await listOption.click();
+    private async fillInFormData(vehicleCode: vehicleCode, startDate: string, endDate: string) {
+        await this.selectEquipment(vehicleCode);
+        await this.fillDate(this.startDateField, startDate);
+        await this.fillDate(this.endDateField, endDate);
+    }
+
+    async addMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
+        await this.fillInFormData(vehicleCode, startDate, endDate);
+        await this.planMaintenanceButton.click();
+        await Promise.all([
+            this.maintenanceFormTitle.isHidden(),
+            this.equipmentTable.isVisible(),
+            this.waitForSpinnerToDisappear()
+        ]);
+    }
+
+    async editMaintenanceEventForEquipment(vehicleCode: vehicleCode, startDate: string, endDate: string) {
+        await this.fillInFormData(vehicleCode, startDate, endDate);
+        await this.planMaintenanceButton.click();
+        await this.waitForSpinnerToDisappear();
+    }
+
+    private async waitForSpinnerToDisappear() {
+        await this.loadingSpinner.waitFor({state: 'visible'})
+        await this.loadingSpinner.waitFor({state: 'hidden'})
     }
 }

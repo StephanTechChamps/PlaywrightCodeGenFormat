@@ -7,7 +7,6 @@ export class ExportEquipmentFormPage {
     readonly selectAllEquipmentButton: Locator;
     readonly exportButton: Locator;
 
-
     constructor(page: Page) {
         this.page = page;
         this.equipmentExportForm = page.getByText('Export equipment');

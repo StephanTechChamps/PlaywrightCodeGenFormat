@@ -76,10 +76,6 @@ export class MaintenancePage {
         await this.confirmRemoveButton.click();
     }
 
-    async validateNoRowsPresent() {
-        await expect(this.maintenanceTableRow).toHaveCount(0);
-    }
-
     async openCompleteMaintenanceMenu(equipment: vehicleCode, start: string, end: string): Promise<void> {
         const button = this.getCompleteMaintenanceButtonLocator(equipment, start, end);
         await button.hover();
@@ -112,7 +108,7 @@ export class MaintenancePage {
         await headerButton.click();
     }
 
-    async headerLocator(header: "Equipment" | "Planned start date" | "Planned end date"){
+    async headerLocator(header: "Equipment" | "Planned start date" | "Planned end date") {
         return this.page.locator(`//span[text()="${header}"]`)
     }
 
@@ -120,9 +116,6 @@ export class MaintenancePage {
         return this.page.locator(`//span[text()="${header}"]/..//following-sibling::i`)
     }
 
-    async asserDataTableIsVisible() {
-        await expect(this.headerElementPlannedStartDate).toBeVisible();
-    }
 
     async getAllHeadersOfDataTable() {
         await this.navigateToMaintenancePage()
@@ -130,18 +123,13 @@ export class MaintenancePage {
         return headerElements.filter(text => text.trim() !== '');
     }
 
-    // expect datatable to be visible and headers to be present niry in
     async validateHeadersArePresent() {
         const headers = await this.getAllHeadersOfDataTable();
-        expect(headers).toEqual(['Equipment', 'Planned start date', 'Planned end date']);
+        const expectedHeaders = ['Equipment', 'Planned start date', 'Planned end date'];
+        return JSON.stringify(headers) == JSON.stringify(expectedHeaders);
     }
 
     async getActualMaintenanceTableData() {
-        // moet navigateren naar de pagina in deze methodes in de testen?
-        // await this.navigateToMaintenancePage();
-        // await this.asserDataTableIsVisible()
-        // await this.validateHeadersArePresent();
-
         const tableRows: Locator[] = await this.maintenanceTableRow.all();
         const actualWebTableData: MaintenanceTableRowData[] = await Promise.all(
             tableRows.map(async (row) => {

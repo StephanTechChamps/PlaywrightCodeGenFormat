@@ -4,10 +4,8 @@ import {VehiclesTab} from "../pom/equipment/vehiclesTab"
 import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
 import {VehicleType} from "../enums/vehicleType";
 
-// Apply common settings once for this file
 test.use({ ignoreHTTPSErrors: true });
 
-// Log in before each test in this file
 test.beforeEach(async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.login(BASE_URL, USERNAME, PASSWORD);

@@ -9,6 +9,7 @@ import {ConfirmMaintenanceFormPage} from "../pom/maintenance/confirmMaintenanceF
 import {Page} from "playwright/test";
 import {expect} from "@playwright/test";
 import {vehicleCode} from "../enums/MaintenanceVehicleCode";
+import {MaintenanceTestData} from "../test-data/maintenance/MaintenenceTestData"
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -18,14 +19,13 @@ test.beforeEach(async ({page}) => {
     await setAllureProperties();
 });
 
+test.afterEach(async ({page}) => {
+    console.info("Started after")
+})
 async function setAllureProperties() {
     await severity('Critical');
     await tag('Smoke');
     await label('suite', "Maintenance tests");
-}
-
-async function mapTestDataForMaintenanceEvents(data: any) {
-
 }
 
 const setupPages = (page: Page) => {
@@ -53,7 +53,6 @@ test("Create and complete maintenance schedule", async ({page}) => {
     await confirmMaintenance.confirmMaintenance('Nov 21, 2027 (20:00)');
 });
 
-// builder pattern toepassen
 test("Create, edit and delete a maintenance schedule", async ({page}) => {
     const {topMenuBar, maintenancePage, addMaintenance} = setupPages(page);
     await topMenuBar.openMaintenancePage();
@@ -77,7 +76,7 @@ test("Create, edit and delete a maintenance schedule", async ({page}) => {
             }
         ])
     await maintenancePage.removeMaintenanceMaintenanceEvent(vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
-    await maintenancePage.validateNoRowsPresent();
+    await expect(maintenancePage.maintenanceTableRow).toHaveCount(0);
 })
 
 test("Arrange and filter table data", async ({page}) => {
@@ -101,7 +100,7 @@ test("Arrange and filter table data", async ({page}) => {
             {
                 equipmentName: 'AL03',
                 plannedStartDate: 'Nov 10, 2025 (15:47)',
-                plannedEndDate: 'Nov 26, 2026 (10:00)',
+                plannedEndDate: 'Nov 26, 2026 (10:00)'
             },
             {
                 equipmentName: 'AW02',
