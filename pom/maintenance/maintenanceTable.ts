@@ -1,6 +1,8 @@
 import {Page, Locator, expect} from "@playwright/test";
 import {MAINTENANCE_URL} from "../../config/projectConfig";
 import {MaintenanceTableRowData} from "../../interfaces/MaintenanceTableRowData";
+import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
+import {AddMaintenanceFormPage} from "./addMaintenanceFormPage";
 
 export class MaintenanceTable {
     readonly page: Page;
@@ -10,6 +12,10 @@ export class MaintenanceTable {
     readonly plannedStartDateElementInRow: Locator;
     readonly plannedEndDateElementInRow: Locator;
     readonly filterSearchInput: Locator;
+    readonly editButton: Locator;
+    readonly removeButton: Locator;
+    readonly popupTitle: Locator;
+    readonly confirmRemoveButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -19,7 +25,12 @@ export class MaintenanceTable {
         this.plannedStartDateElementInRow = page.locator('td:nth-child(2)')
         this.plannedEndDateElementInRow = page.locator(' //td//div[@class="end-date"]//span[1]');
         this.filterSearchInput = page.locator('input[placeholder="Equipment name"]');
+        this.editButton = page.locator('(//div[text()=" Edit maintenance " and contains(@class, "v-list-item__title")])[1]');
+        this.removeButton = page.locator('(//div[text()=" Remove maintenance " and contains(@class, "v-list-item__title")])[1]');
+        this.popupTitle = page.locator('.tba-dialog-title');
+        this.confirmRemoveButton = page.locator('//span[text()=" Remove maintenance "]/ancestor::button');
     }
+
     private async navigateToMaintenancePage() {
         await this.page.goto(MAINTENANCE_URL);
     }
@@ -72,6 +83,32 @@ export class MaintenanceTable {
 
     async getHeaderFilter(header: string): Promise<Locator> {
         return this.page.locator(`//span[text()="${header}"]/..//following-sibling::i`)
+    }
+
+    async editMaintenanceEvent(equipment: vehicleCode, start: string, end: string, newDate: string, finalDate: string): Promise<void> {
+        await this.openEditMenu(equipment, start, end);
+        await this.editButton.click();
+        const form = new AddMaintenanceFormPage(this.page)
+        await form.editMaintenanceEventForEquipment(equipment, newDate, finalDate);
+    }
+
+    async openEditMenu(equipment: string, start: string, end: string): Promise<void> {
+        const menu = this.getHiddenMenuLocator(equipment, start, end);
+        await menu.hover();
+        await menu.click();
+    }
+
+    getHiddenMenuLocator(equipment: string, start: string, end: string): Locator {
+        return this.page.locator(
+            `//span[text()="${equipment}"]/../../../..//td[text()=' ${start} ']/..//span[text()='${end}']/../../..//button[@class="tba-icon-default-important actions-on-hover v-btn v-btn--icon v-btn--round v-btn--text theme--light v-size--default"]`
+        );
+    }
+
+    async removeMaintenanceMaintenanceEvent(equipment: string, start: string, end: string): Promise<void> {
+        await this.openEditMenu(equipment, start, end);
+        await this.removeButton.click();
+        await expect(this.popupTitle).toHaveText("Remove planned maintenance?");
+        await this.confirmRemoveButton.click();
     }
 }
 
