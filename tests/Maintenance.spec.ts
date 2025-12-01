@@ -10,6 +10,7 @@ import {expect} from "@playwright/test";
 import {vehicleCode} from "../enums/MaintenanceVehicleCode";
 import {MaintenanceTable} from "../pom/maintenance/maintenanceTable";
 import {CompleteMaintenanceForm} from "../pom/maintenance/completeMaintenaceForm";
+import {Timeouts} from "../config/timeouts"
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -20,18 +21,18 @@ test.beforeEach(async ({page}) => {
 });
 
 test.afterEach(async ({ page }) => {
-    const allRows = page.locator('//span[normalize-space(.)="COMPLETE MAINTENANCE"]/ancestor::button');
-    const confirmButton = page.locator('//span[normalize-space(.)="Complete"]/ancestor::button');
+    const rows = () => page.locator('//span[text()=" COMPLETE MAINTENANCE "]/ancestor::button');
+    const confirm = page.locator('//span[text()=" Complete "]/ancestor::button');
 
-    const count = await allRows.count();
-    for (let i = 0; i < count; i++) {
-        const row = allRows.nth(i);
+    while (await rows().count() > 1) {
+        const row = rows().first();
+        await page.waitForSelector('.v-overlay__scrim', { state: 'hidden', timeout: Timeouts.Medium }).catch(() => {});
         await row.hover();
         await row.click();
-        await confirmButton.click();
-        console.log(row.count + "deleted")
+        await confirm.click();
     }
 });
+
 
 async function setAllureProperties() {
     await severity('Critical');
