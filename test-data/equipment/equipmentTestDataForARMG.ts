@@ -1,6 +1,6 @@
-import {EquipmentTableRowData} from "../../pom/equipment/EquipmentTableRowData";
+import {equipmentTableRowDataForARMG} from "../../pom/equipment/interfaces/equipmentTableRowDataForARMG";
 
-export let  expectedDataForTestA: EquipmentTableRowData[] = [
+export let expectedDataForEquipmentARMG: equipmentTableRowDataForARMG[] = [
     {
         name: 'AW01',
         length: '480',

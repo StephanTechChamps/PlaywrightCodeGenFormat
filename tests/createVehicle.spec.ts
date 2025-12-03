@@ -1,7 +1,7 @@
 import {HomePage} from "../pom/navigation/homePage";
 import {LoginPage} from "../pom/auth/loginPage";
 import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
-import {test} from '../fixtures/tests.fixtures'
+import {expect, test} from '../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {VehicleType} from "../enums/vehicleType";
 import {AddEquipmentFormPage} from "../pom/equipment/addEquipmentFormPage";
@@ -30,7 +30,9 @@ function setupPages(page: Page) {
 test("Create a A-RMG (only essential fields)", async ({page}) => {
     const {homePage, equipmentFormPage} = setupPages(page);
     await homePage.selectVehicleType(VehicleType.A_RMG);
-    await equipmentFormPage.createARMG('Test A-RMG', 300, 200, 3000, "1.4", 'vet', 20);
+    await equipmentFormPage.createARMG(
+        'Test A-RMG', 300, 200, 3000, "1.4", 'vet', 20);
+    // expect(await )
 });
 
 test("Create a AGV (only essential fields)", async ({page}) => {

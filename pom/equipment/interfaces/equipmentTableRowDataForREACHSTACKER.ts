@@ -1,15 +1,10 @@
-export interface EquipmentTableRowData {
+export interface equipmentTableRowDataForREACHSTACKER {
     name: string;
-    length: string;
-    width: string;
     maxWeight: string;
     liftCapability: string;
     maxTwinWeightDifference: string;
     maxTierHeight: string;
     softwareVersion: string;
-    hostName: string;
-    automationPort: string;
-    stackProfilingPort: string;
-    craneId: string;
+    defaultPosition: string;
     boundary: string;
 }

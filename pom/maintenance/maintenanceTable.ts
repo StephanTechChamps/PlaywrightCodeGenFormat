@@ -16,26 +16,27 @@ export class MaintenanceTable {
     readonly removeButton: Locator;
     readonly popupTitle: Locator;
     readonly confirmRemoveButton: Locator;
+    readonly openExportEquipmentDetails: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.allTableHeaderElements = page.locator(' [class="header-cell"] span[aria-expanded="false"]');
         this.maintenanceTableRow = page.locator('[class="tba-grid-container"] tr[class=""]');
         this.equipmentElementFieldInRow = page.locator('td span[aria-haspopup="true"]');
-        this.plannedStartDateElementInRow = page.locator('td:nth-child(2)')
-        this.plannedEndDateElementInRow = page.locator(' //td//div[@class="end-date"]//span[1]');
         this.filterSearchInput = page.locator('input[placeholder="Equipment name"]');
+        this.openExportEquipmentDetails = page.locator('//div[@role="menuitem"]//div[text()=" Export equipment details "]');
+        this.removeButton = page.locator('//div[@role="menuitem"]//div[text()=" Remove "]');
+        this.confirmRemoveButton = page.locator('//span[text()=" Remove CHE "]/ancestor::button');
+
         this.editButton = page.locator('(//div[text()=" Edit maintenance " and contains(@class, "v-list-item__title")])[1]');
-        this.removeButton = page.locator('(//div[text()=" Remove maintenance " and contains(@class, "v-list-item__title")])[1]');
         this.popupTitle = page.locator('.tba-dialog-title');
-        this.confirmRemoveButton = page.locator('//span[text()=" Remove maintenance "]/ancestor::button');
     }
 
     private async navigateToMaintenancePage() {
         await this.page.goto(MAINTENANCE_URL);
     }
 
-    async getActualMaintenanceTableData() {
+    async getActualEquipmentTableData() {
         const tableRows: Locator[] = await this.maintenanceTableRow.all();
         const actualWebTableData: MaintenanceTableRowData[] = await Promise.all(
             tableRows.map(async (row) => {
