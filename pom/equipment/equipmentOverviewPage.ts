@@ -40,13 +40,22 @@ export class EquipmentOverviewPage {
         await this.exportButton.click();
     }
 
-    async importAllEquipmentFromFile(fileName: string) {
+    async importAllEquipmentFromHtcFile(fileName: string) {
         console.info('Importing equipment file...');
-        const filePath = path.resolve(__dirname, '../../test-data/equipment', fileName);
+        const filePath = path.resolve(__dirname, '../../test-data/equipment/htc/', fileName);
         const fileChooser = await this.triggerFileChooser();
         await fileChooser.setFiles(filePath);
         console.info('Import completed.');
     }
+
+    async importAllEquipmentFromCtbFile(fileName: string) {
+        console.info('Importing equipment file...');
+        const filePath = path.resolve(__dirname, '../../test-data/equipment/ctb/', fileName);
+        const fileChooser = await this.triggerFileChooser();
+        await fileChooser.setFiles(filePath);
+        console.info('Import completed.');
+    }
+
 
     private async triggerFileChooser() {
         return await Promise.all([

@@ -1,6 +1,6 @@
 import {
     equipmentTableRowDataForREMOTEOPERATINGSTATION
-} from "../../pom/equipment/interfaces/equipmentTableRowDataForREMOTEOPERATINGSTATION";
+} from "../../../pom/equipment/interfaces/equipmentTableRowDataForREMOTEOPERATINGSTATION";
 
 
 export const expectedDataForRemoteOperatingStation: equipmentTableRowDataForREMOTEOPERATINGSTATION[] = [

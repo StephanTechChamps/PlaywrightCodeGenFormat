@@ -29,21 +29,41 @@ export function mapAllValuesToQCObjects(value: string[]): equipmentTableRowDataF
     return {
         name: value[0] ?? '',
         maxWeight: value[1] ?? '',
-        liftCapability: value[2] ?? '',
-        maxTwinWeightDifference: value[3] ?? '',
-        portalTrolley: value[4] ?? '',
-        platform: value[5] ?? '',
-        availableLocationsOnPlatform: value[6] ?? '',
-        sharedLegSpace: value[6] ?? '',
-        berth: value[7] ?? '',
-        lane: value[8] ?? '',
-        typologyIndex: value[9] ?? '',
-        softwareVersion: value[10] ?? '',
-        provider: value[11] ?? '',
-        url: value[12] ?? '',
-        boundary: value[13] ?? '',
+        // liftCapability: value[2] ?? '',
+        maxTwinWeightDifference: value[2] ?? '',
+        // portalTrolley: value[4] ?? '',
+        // platform: value[5] ?? '',
+        availableLocationsOnPlatform: value[3] ?? '',
+        // sharedLegSpace: value[6] ?? '',
+        // berth: value[7] ?? '',
+        // lane: value[8] ?? '',
+        typologyIndex: value[4] ?? '',
+        softwareVersion: value[5] ?? '',
+        provider: value[6] ?? '',
+        url: value[7] ?? '',
+        // boundary: value[13] ?? '',
     };
 }
+
+// export function mapAllValuesToQCObjects(value: string[]): equipmentTableRowDataForQC {
+//     return {
+//         name: value[0] ?? '',
+//         maxWeight: value[1] ?? '',
+//         liftCapability: value[2] ?? '',
+//         maxTwinWeightDifference: value[3] ?? '',
+//         portalTrolley: value[4] ?? '',
+//         platform: value[5] ?? '',
+//         availableLocationsOnPlatform: value[6] ?? '',
+//         sharedLegSpace: value[6] ?? '',
+//         berth: value[7] ?? '',
+//         lane: value[8] ?? '',
+//         typologyIndex: value[9] ?? '',
+//         softwareVersion: value[10] ?? '',
+//         provider: value[11] ?? '',
+//         url: value[12] ?? '',
+//         boundary: value[13] ?? '',
+//     };
+// }
 
 export function mapAllValuesToACSObjects(value: string[]): equipmentTableRowDataForACS {
     return {

@@ -1,4 +1,4 @@
-import {equipmentTableRowDataForARMG} from "../../pom/equipment/interfaces/equipmentTableRowDataForARMG";
+import {equipmentTableRowDataForARMG} from "../../../pom/equipment/interfaces/equipmentTableRowDataForARMG";
 
 export let expectedDataForEquipmentARMG: equipmentTableRowDataForARMG[] = [
     {

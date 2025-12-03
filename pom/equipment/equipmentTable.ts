@@ -29,7 +29,7 @@ export class EquipmentTable {
         await expect(this.equipmentTable).toBeVisible();
     }
 
-    async getActualEquipmentTableDataForAMG(): Promise<equipmentTableRowDataForARMG[]> {
+    async getActualEquipmentTableDataForARMG(): Promise<equipmentTableRowDataForARMG[]> {
         await this.asserDataTableIsVisible();
         return Promise.all(
             (await this.tableRow.all()).map(async (row) => {
