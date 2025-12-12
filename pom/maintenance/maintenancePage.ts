@@ -3,10 +3,10 @@ import {MAINTENANCE_URL} from "../../config/projectConfig";
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 
 export class MaintenancePage {
-    readonly page: Page;
-    readonly maintenancePage: Locator;
-    readonly createButton: Locator;
-    readonly topBar: Locator;
+    private readonly page: Page;
+    private readonly maintenancePage: Locator;
+    private readonly createButton: Locator;
+    private readonly topBar: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -33,7 +33,7 @@ export class MaintenancePage {
         await button.click();
     }
 
-    getCompleteMaintenanceButtonLocator(equipment: string, start: string, end: string): Locator {
+    private getCompleteMaintenanceButtonLocator(equipment: string, start: string, end: string): Locator {
         return this.page.locator(
             `//span[text()="${equipment}"]/../../../..//td[text()=" ${start} "]/..//span[text()="${end}"]/../../..//td[@class="pinned pinned--to-right pinned--to-right-first"]//button`
         ).first();

@@ -1,28 +1,53 @@
 import {expect, Locator, Page} from "@playwright/test";
-import {equipmentTableRowDataForARMG} from "./interfaces/equipmentTableRowDataForARMG";
-import {equipmentTableRowDataForQC} from "./interfaces/equipmentTableRowDataForQC";
-import {equipmentTableRowDataForACS} from "./interfaces/equipmentTableRowDataForACS";
-import {equipmentTableRowForAGV} from "./interfaces/equipmentTableRowDataForAGV";
+import {equipmentTableRowDataForARMG} from "../../interfaces/equipment/equipmentTableRowDataForARMG";
+import {equipmentTableRowDataForQC} from "../../interfaces/equipment/equipmentTableRowDataForQC";
+import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentTableRowDataForACS";
+import {equipmentTableRowForAGV} from "../../interfaces/equipment/equipmentTableRowDataForAGV";
 import {
-    mapAllValuesToARMGObjects, mapAllValuesToQCObjects, mapAllValuesToACSObjects, mapAllValuesToAGVObjects,
-    mapAllValuesToReachStackerObjects, mapAllValuesToRemoteOperatingStationObjects} from './mappers/equipmentMappers'
-import {equipmentTableRowDataForREACHSTACKER} from "./interfaces/equipmentTableRowDataForREACHSTACKER";
+    mapAllValuesToACSObjects,
+    mapAllValuesToAGVObjects,
+    mapAllValuesToARMGObjects,
+    mapAllValuesToQCObjects,
+    mapAllValuesToReachStackerObjects,
+    mapAllValuesToRemoteOperatingStationObjects
+} from '../../mappers/equipment/equipmentMappers'
+import {equipmentTableRowDataForREACHSTACKER} from "../../interfaces/equipment/equipmentTableRowDataForREACHSTACKER";
 import {
     equipmentTableRowDataForREMOTEOPERATINGSTATION
-} from "./interfaces/equipmentTableRowDataForREMOTEOPERATINGSTATION";
+} from "../../interfaces/equipment/equipmentTableRowDataForREMOTEOPERATINGSTATION";
 
 
 export class EquipmentTable {
-    readonly page: Page;
-    readonly equipmentTable: Locator;
-    readonly tableRow: Locator;
-    readonly rowElement: Locator;
+    private readonly page: Page;
+    private readonly equipmentTable: Locator;
+    private readonly tableRow: Locator;
+    private readonly rowElement: Locator;
+    private readonly equipmentOverviewTable: Locator;
+    private readonly removeButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
         this.equipmentTable = page.locator('[class="tba-editable-grid equipment-table"]')
         this.tableRow = page.locator('[class="tba-editable-grid equipment-table"] tr[class=""]');
         this.rowElement = page.locator('[aria-haspopup="true"]');
+        this.equipmentOverviewTable = page.locator('[class="tba-editable-grid equipment-table"]');
+        this.removeButton = page.getByText(' Remove ');
+    }
+
+    async deleteEquipment(equipmentName: string) {
+        await this.equipmentOverviewTable.isVisible();
+        await this.openHamburgerMenu(equipmentName);
+        await this.removeButton.click();
+    }
+
+    private async openHamburgerMenu(equipmentName: string) {
+        const hamburgerMenu = this.getHiddenMenuLocator(equipmentName);
+        await hamburgerMenu.hover();
+        await hamburgerMenu.click();
+    }
+
+    private getHiddenMenuLocator(equipmentName: string): Locator {
+        return this.page.locator(`//span[text()="${equipmentName}"]/../../../..//td//button//span/i`);
     }
 
     async asserDataTableIsVisible() {
@@ -30,65 +55,42 @@ export class EquipmentTable {
     }
 
     async getActualEquipmentTableDataForARMG(): Promise<equipmentTableRowDataForARMG[]> {
-        await this.asserDataTableIsVisible();
-        return Promise.all(
-            (await this.tableRow.all()).map(async (row) => {
-                const values = await row.locator(this.rowElement).allTextContents();
-                return mapAllValuesToARMGObjects(values.map(v => v.trim()));
-            })
-        );
+        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToARMGObjects);
     }
 
     async getActualEquipmentTableDataForQC(): Promise<equipmentTableRowDataForQC[]> {
-        await this.asserDataTableIsVisible();
-        return Promise.all(
-            (await this.tableRow.all()).map(async (row) => {
-                const values = await row.locator(this.rowElement).allTextContents();
-                return mapAllValuesToQCObjects(values.map(v => v.trim()));
-            })
-        );
+        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToQCObjects);
     }
 
     async getActualEquipmentTableDataForACS(): Promise<equipmentTableRowDataForACS[]> {
-        await this.asserDataTableIsVisible();
-        return Promise.all(
-            (await this.tableRow.all()).map(async (row) => {
-                const values = await row.locator(this.rowElement).allTextContents();
-                return mapAllValuesToACSObjects(values.map(v => v.trim()));
-            })
-        );
+        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToACSObjects);
     }
 
     async getActualEquipmentTableDataForAGV(): Promise<equipmentTableRowForAGV[]> {
-        await this.asserDataTableIsVisible();
-        return Promise.all(
-            (await this.tableRow.all()).map(async (row) => {
-                const values = await row.locator(this.rowElement).allTextContents();
-                return mapAllValuesToAGVObjects(values.map(v => v.trim()));
-            })
-        );
+        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToAGVObjects);
     }
 
     async getActualEquipmentTableDataForReachStacker(): Promise<equipmentTableRowDataForREACHSTACKER[]> {
-        await this.asserDataTableIsVisible();
-        return Promise.all(
-            (await this.tableRow.all()).map(async (row) => {
-                const values = await row.locator(this.rowElement).allTextContents();
-                return mapAllValuesToReachStackerObjects(values.map(v => v.trim()));
-            })
-        );
+        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToReachStackerObjects)
     }
 
     async getActualEquipmentTableDataForRemoteOperatingStation(): Promise<equipmentTableRowDataForREMOTEOPERATINGSTATION[]> {
+        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToRemoteOperatingStationObjects);
+    }
+
+    private async getActualEquipmentTableDataAndMap<T>(callback: (value: string[]) => T): Promise<T[]> {
+        const contents: string[][] = await this.getArrayOfTableRowsAsArraysOfStrings();
+        return contents.map(callback);
+    }
+
+    private async getArrayOfTableRowsAsArraysOfStrings(): Promise<string[][]> {
         await this.asserDataTableIsVisible();
-        return Promise.all(
-            (await this.tableRow.all()).map(async (row) => {
+        const tableRows = await this.tableRow.all();
+        return await Promise.all(
+            tableRows.map(async (row) => {
                 const values = await row.locator(this.rowElement).allTextContents();
-                return mapAllValuesToRemoteOperatingStationObjects(values.map(v => v.trim()));
+                return values.map(v => v.trim());
             })
         );
     }
-
-
-
 }

@@ -1,6 +1,6 @@
 import {equipmentTableRowDataForQC} from "../../../interfaces/equipment/equipmentTableRowDataForQC";
 
-export let ctbQcEquipment: equipmentTableRowDataForQC[] = [
+export let ctbValidateCreatedQC: equipmentTableRowDataForQC[] = [
     {
         name: "CB20",
         maxWeight: "40000",
@@ -90,5 +90,15 @@ export let ctbQcEquipment: equipmentTableRowDataForQC[] = [
         softwareVersion: "1",
         provider: "qc-hhla",
         url: "$ITS_url$",
+    },
+    {
+        name: "Test QC",
+        maxWeight: "203",
+        maxTwinWeightDifference: "",
+        availableLocationsOnPlatform: "3",
+        typologyIndex: "45",
+        softwareVersion: "V2",
+        provider: "test",
+        url: "www.koneCranes.com",
     },
 ];

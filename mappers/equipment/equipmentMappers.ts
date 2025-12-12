@@ -1,11 +1,11 @@
-import {equipmentTableRowDataForARMG} from "../interfaces/equipmentTableRowDataForARMG";
-import {equipmentTableRowDataForQC} from "../interfaces/equipmentTableRowDataForQC";
-import {equipmentTableRowDataForACS} from "../interfaces/equipmentTableRowDataForACS";
-import {equipmentTableRowForAGV} from "../interfaces/equipmentTableRowDataForAGV";
-import {equipmentTableRowDataForREACHSTACKER} from "../interfaces/equipmentTableRowDataForREACHSTACKER";
+import {equipmentTableRowDataForARMG} from "../../interfaces/equipment/equipmentTableRowDataForARMG";
+import {equipmentTableRowDataForQC} from "../../interfaces/equipment/equipmentTableRowDataForQC";
+import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentTableRowDataForACS";
+import {equipmentTableRowForAGV} from "../../interfaces/equipment/equipmentTableRowDataForAGV";
+import {equipmentTableRowDataForREACHSTACKER} from "../../interfaces/equipment/equipmentTableRowDataForREACHSTACKER";
 import {
     equipmentTableRowDataForREMOTEOPERATINGSTATION
-} from "../interfaces/equipmentTableRowDataForREMOTEOPERATINGSTATION";
+} from "../../interfaces/equipment/equipmentTableRowDataForREMOTEOPERATINGSTATION";
 
 export function mapAllValuesToARMGObjects(value: string[]): equipmentTableRowDataForARMG {
     return {

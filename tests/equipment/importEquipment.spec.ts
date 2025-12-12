@@ -1,21 +1,21 @@
-import {HomePage} from "../pom/navigation/homePage";
-import {LoginPage} from "../pom/auth/loginPage";
-import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
-import {expect, test} from '../fixtures/tests.fixtures'
+import {HomePage} from "../../pom/navigation/homePage";
+import {LoginPage} from "../../pom/auth/loginPage";
+import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
+import {expect, test} from '../../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
-import {VehicleType} from "../enums/vehicleType";
+import {VehicleType} from "../../enums/vehicleType";
 import {Page} from "@playwright/test";
-import {EquipmentOverviewPage} from "../pom/equipment/equipmentOverviewPage";
-import {ExportEquipmentFormPage} from "../pom/equipment/exportEquipmentFormPage"
-import {expectedDataForEquipmentARMG} from "../test-data/equipment/htc/equipmentTestDataForARMG"
-import {EquipmentTable} from "../pom/equipment/equipmentTable";
+import {EquipmentOverviewPage} from "../../pom/equipment/equipmentOverviewPage";
+import {ExportEquipmentFormPage} from "../../pom/equipment/exportEquipmentFormPage"
+import {expectedDataForEquipmentARMG} from "../../test-data/equipment/htc/equipmentTestDataForARMG"
+import {EquipmentTable} from "../../pom/equipment/equipmentTable";
 // import {expectedDataForQC} from "../test-data/equipment/HTC/equipmentTestDataForQC";
-import {expectedDataForEquipmentACS} from "../test-data/equipment/htc/equipmentTestDataForACS";
-import {equipmentTableRowDataForACS} from "../pom/equipment/interfaces/equipmentTableRowDataForACS";
-import {expectedDataForEquipmentAGV} from "../test-data/equipment/ctb/ctbAGVEquipment";
-import {expectedDataForReachStacker} from "../test-data/equipment/htc/equipmentTestDataForReachStacker";
-import {expectedDataForRemoteOperatingStation} from "../test-data/equipment/htc/equipmentTestDataForRemoteOperatingStation";
-import {ctbQcEquipment} from "../test-data/equipment/ctb/ctbQcEquipment";
+import {expectedDataForEquipmentACS} from "../../test-data/equipment/htc/equipmentTestDataForACS";
+import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentTableRowDataForACS";
+import {expectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
+import {expectedDataForReachStacker} from "../../test-data/equipment/htc/equipmentTestDataForReachStacker";
+import {expectedDataForRemoteOperatingStation} from "../../test-data/equipment/htc/equipmentTestDataForRemoteOperatingStation";
+import {ctbQcEquipment} from "../../test-data/equipment/ctb/ctbQcEquipment";
 
 test.use({ignoreHTTPSErrors: true});
 

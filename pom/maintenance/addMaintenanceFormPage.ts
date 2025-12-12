@@ -3,14 +3,14 @@ import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 
 export class AddMaintenanceFormPage {
 
-    readonly page: Page;
-    readonly maintenanceFormTitle: Locator;
-    readonly pieceOfEquipmentField: Locator;
-    readonly startDateField: Locator;
-    readonly endDateField: Locator;
-    readonly planMaintenanceButton: Locator;
-    readonly equipmentTable: Locator;
-    readonly loadingSpinner: Locator;
+    private readonly page: Page;
+    private readonly maintenanceFormTitle: Locator;
+    private readonly pieceOfEquipmentField: Locator;
+    private readonly startDateField: Locator;
+    private readonly endDateField: Locator;
+    private readonly planMaintenanceButton: Locator;
+    private readonly equipmentTable: Locator;
+    private readonly loadingSpinner: Locator;
 
 
     constructor(page: Page) {

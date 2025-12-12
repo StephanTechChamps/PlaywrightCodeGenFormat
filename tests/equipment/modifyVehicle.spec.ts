@@ -1,8 +1,8 @@
 import {test} from "@playwright/test";
-import {LoginPage} from "../pom/auth/loginPage";
-import {VehiclesTab} from "../pom/equipment/vehiclesTab"
-import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
-import {VehicleType} from "../enums/vehicleType";
+import {LoginPage} from "../../pom/auth/loginPage";
+import {VehiclesTab} from "../../pom/equipment/vehiclesTab"
+import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
+import {VehicleType} from "../../enums/vehicleType";
 
 test.use({ ignoreHTTPSErrors: true });
 

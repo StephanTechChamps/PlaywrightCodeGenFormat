@@ -1,6 +1,6 @@
 import {
     equipmentTableRowDataForREACHSTACKER
-} from "../../../pom/equipment/interfaces/equipmentTableRowDataForREACHSTACKER";
+} from "../../../interfaces/equipment/equipmentTableRowDataForREACHSTACKER";
 
 export const expectedDataForReachStacker: equipmentTableRowDataForREACHSTACKER[] = [
     {

@@ -1,13 +1,13 @@
 import {expect, Locator, Page} from "@playwright/test";
 
 export class topMenuBarPage {
-    readonly page: Page;
-    readonly leftMainMenuButton: Locator;
-    readonly navigationMenuButton: Locator;
-    readonly equipmentManagementButton: Locator;
-    readonly maintenanceButton: Locator;
-    readonly createMaintenanceItem: Locator;
-    readonly topBarTitle: Locator;
+    private readonly page: Page;
+    private readonly leftMainMenuButton: Locator;
+    private readonly navigationMenuButton: Locator;
+    private readonly equipmentManagementButton: Locator;
+    private readonly maintenanceButton: Locator;
+    private readonly createMaintenanceItem: Locator;
+    private readonly topBarTitle: Locator;
 
     constructor(page: Page) {
         this.page = page;

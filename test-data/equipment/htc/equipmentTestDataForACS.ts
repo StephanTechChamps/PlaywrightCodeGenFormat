@@ -1,4 +1,4 @@
-import {equipmentTableRowDataForACS} from "../../../pom/equipment/interfaces/equipmentTableRowDataForACS";
+import {equipmentTableRowDataForACS} from "../../../interfaces/equipment/equipmentTableRowDataForACS";
 
 
 export let expectedDataForEquipmentACS: equipmentTableRowDataForACS[] = [

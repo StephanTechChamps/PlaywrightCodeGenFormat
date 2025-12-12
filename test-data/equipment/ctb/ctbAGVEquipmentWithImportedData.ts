@@ -1,6 +1,6 @@
 import {equipmentTableRowForAGV} from "../../../interfaces/equipment/equipmentTableRowDataForAGV";
 
-export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
+export let expectedDataForEquipmentAGVAfterImport: equipmentTableRowForAGV[] = [
     {
         name: 'AGV601',
         maxWeight: '40000',
@@ -135,21 +135,34 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         chassisSpecification: '',
         twentyContainerOffset: '',
         boundary: ''
+    },
+    {
+        name: 'AGV610',
+        maxWeight: '40000',
+        liftCapability: '100000',
+        maxTwinWeightDifference: '1',
+        softwareVersion: '$(SIMULATION_HOST)',
+        hostName: '10050',
+        portNumber: 'BAGV',
+        SubType: 'NavimaticGen2',
+        protocolType: '383',
+        energySourceType: '',
+        chassisSpecification: '',
+        twentyContainerOffset: '',
+        boundary: ''
+    }, {
+        name: 'AGV611',
+        maxWeight: '40000',
+        liftCapability: '100000',
+        maxTwinWeightDifference: '1',
+        softwareVersion: '$(SIMULATION_HOST)',
+        hostName: '10005',
+        portNumber: 'BAGV',
+        SubType: 'NavimaticGen2',
+        protocolType: '383',
+        energySourceType: '',
+        chassisSpecification: '',
+        twentyContainerOffset: '',
+        boundary: ''
     }
-    // ,
-    // {
-    //     name: 'AGV610',
-    //     maxWeight: '40000',
-    //     liftCapability: '100000',
-    //     maxTwinWeightDifference: '1',
-    //     softwareVersion: '$(SIMULATION_HOST)',
-    //     hostName: '10050',
-    //     portNumber: 'BAGV',
-    //     SubType: 'NavimaticGen2',
-    //     protocolType: '383',
-    //     energySourceType: '',
-    //     chassisSpecification: '',
-    //     twentyContainerOffset: '',
-    //     boundary: ''
-    // }
 ];

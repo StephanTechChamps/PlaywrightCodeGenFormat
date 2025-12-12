@@ -1,12 +1,12 @@
-import {HomePage} from "../pom/navigation/homePage";
-import {LoginPage} from "../pom/auth/loginPage";
-import {BASE_URL, PASSWORD, USERNAME} from "../config/projectConfig";
-import {test} from '../fixtures/tests.fixtures'
+import {HomePage} from "../../pom/navigation/homePage";
+import {LoginPage} from "../../pom/auth/loginPage";
+import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
+import {test} from '../../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
-import {VehicleType} from "../enums/vehicleType";
+import {VehicleType} from "../../enums/vehicleType";
 import {Page} from "@playwright/test";
-import {EquipmentOverviewPage} from "../pom/equipment/equipmentOverviewPage";
-import {ExportEquipmentFormPage} from "../pom/equipment/exportEquipmentFormPage"
+import {EquipmentOverviewPage} from "../../pom/equipment/equipmentOverviewPage";
+import {ExportEquipmentFormPage} from "../../pom/equipment/exportEquipmentFormPage"
 
 test.use({ignoreHTTPSErrors: true});
 
