@@ -54,7 +54,7 @@ function setupPages(page: Page) {
 // });
 
 test("Create and delete AGV equipment (only essential fields)", async ({page}) => {
-        const {homePage, equipmentFormPage, equipmentTable, confirmDeleteEquipmentFormPage, agvFormPage} = setupPages(page);
+        const {homePage, equipmentTable, confirmDeleteEquipmentFormPage, agvFormPage} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.AGV);
         const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
 
@@ -75,7 +75,7 @@ test("Create and delete AGV equipment (only essential fields)", async ({page}) =
 
 
 test("Create and delete QC equipment (only essential fields)", async ({page}) => {
-        const {homePage, equipmentFormPage, equipmentTable, confirmDeleteEquipmentFormPage,qcFormPage} = setupPages(page);
+        const {homePage, equipmentTable, confirmDeleteEquipmentFormPage,qcFormPage} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.QC);
         const actualData = await equipmentTable.getActualEquipmentTableDataForQC();
 
@@ -99,7 +99,7 @@ test("Create and delete QC equipment (only essential fields)", async ({page}) =>
 
 // test needs work with locator fields of table
 test("Create and delete ACS equipment (only essential fields)", async ({page}) => {
-    const {homePage, equipmentFormPage, equipmentTable, confirmDeleteEquipmentFormPage,acsFormPage} = setupPages(page);
+    const {homePage, equipmentTable, confirmDeleteEquipmentFormPage,acsFormPage} = setupPages(page);
     await homePage.selectVehicleType(VehicleType.ACS);
     await equipmentTable.navigateToTablePage(2)
     const actualData = await equipmentTable.getActualEquipmentTableDataForACS();

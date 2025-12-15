@@ -1,7 +1,6 @@
-import {expect, Locator, Page} from "@playwright/test";
+import { Locator, Page} from "@playwright/test";
 
 export class topMenuBarPage {
-    private readonly page: Page;
     private readonly leftMainMenuButton: Locator;
     private readonly navigationMenuButton: Locator;
     private readonly equipmentManagementButton: Locator;
@@ -10,7 +9,6 @@ export class topMenuBarPage {
     private readonly topBarTitle: Locator;
 
     constructor(page: Page) {
-        this.page = page;
         this.leftMainMenuButton = page.locator('[class="tba-nav-bar__left"] button');
         this.navigationMenuButton = page.locator('[class="tba-navigation-menu-apps"]');
         this.equipmentManagementButton = page.locator('//span[text()=" Equipment Management "]/../button');

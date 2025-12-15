@@ -13,7 +13,6 @@ import {ExportEquipmentFormPage} from "../../pom/equipment/exportEquipmentFormPa
 import {EquipmentTable} from "../../pom/equipment/equipmentTable";
 import {ConfirmDeleteEquipmentFormPage} from "../../pom/equipment/confirmDeleteEquipmentFormPage";
 import {label, severity, tag} from "allure-js-commons";
-import {mapAllValuesToAGVObjects} from "../../mappers/equipment/equipmentMappers";
 
 test.beforeEach(async ({page}) => {
     const loginPage = new LoginPage(page);
