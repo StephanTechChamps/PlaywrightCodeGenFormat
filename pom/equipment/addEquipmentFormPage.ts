@@ -3,23 +3,19 @@ import {HomePage} from "../navigation/homePage";
 import {FieldSpec} from "../../interfaces/equipment/fieldspec";
 import {Action} from "../../enums/Action";
 
-
 export class AddEquipmentFormPage {
     private readonly saveButton: Locator;
     private readonly name: Locator;
     private readonly maxWeight: Locator;
-
     private readonly softwareVersion: Locator;
     private readonly hostName: Locator;
     private readonly portNumber: Locator;
-
     private readonly craneId: Locator;
     private readonly maxTierHeight: Locator;
     private readonly stackProfilingPort: Locator;
     private readonly homePage: HomePage;
 
     constructor(page: Page) {
-        // this.page = page;
         this.homePage = new HomePage(page);
         this.name = page.locator('(//label[text()="* Name"]/following-sibling::input)[1]');
         this.maxWeight = page.locator('//label[text()="* Max weight (kg)"]/following-sibling::input');

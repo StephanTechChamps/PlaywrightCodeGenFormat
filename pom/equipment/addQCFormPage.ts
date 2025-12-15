@@ -1,11 +1,11 @@
 import {Page, Locator} from '@playwright/test';
 import {HomePage} from "../navigation/homePage";
-import {FieldSpec} from "../../interfaces/equipment/fieldspec";
 import {Action} from "../../enums/Action";
+import {BaseFormPage} from "../../helpers/BaseFormPage";
 
 
-export class AddQCFormPage {
-    private readonly saveButton: Locator;
+export class AddQCFormPage extends BaseFormPage{
+    protected readonly saveButton: Locator;
     private readonly name: Locator;
     private readonly maxWeight: Locator;
     private readonly softwareVersion: Locator;
@@ -20,11 +20,9 @@ export class AddQCFormPage {
     private readonly lanedTPlow: Locator
     private readonly lanedTPCenter: Locator
     private readonly lanedTPHighBollard: Locator
-    private readonly homePage: HomePage;
 
     constructor(page: Page) {
-        // this.page = page;
-        this.homePage = new HomePage(page);
+        super(new HomePage(page));
         this.name = page.locator('(//label[text()="* Name"]/following-sibling::input)[1]');
         this.maxWeight = page.locator('//label[text()="* Max weight (kg)"]/following-sibling::input');
         this.softwareVersion = page.locator('//label[text()="* Software version"]/following-sibling::input');
@@ -41,9 +39,6 @@ export class AddQCFormPage {
         this.lanedTPCenter = page.locator('//label[text()="* Transfer point (Center)"]/following-sibling::input');
         this.lanedTPHighBollard = page.locator('//label[text()="* Transfer point (High bollard)"]/following-sibling::input');
    }
-
-
-
 
     async createQC(name: string, maxWeight: number, availableLocationOnPlatform: number, laneName: string, distanceToQ: number,
                    transferPointL: string, transferPointCenter: string, transferPointH: string, topologyIndex: number,
@@ -65,34 +60,5 @@ export class AddQCFormPage {
             {locator: this.provider, action: Action.FILL, value: provider},
             {locator: this.url, action: Action.FILL, value: url},
         ]);
-    }
-
-
-    private async interact(field: FieldSpec) {
-        const {locator, action, value} = field;
-        await locator.scrollIntoViewIfNeeded();
-
-        switch (action) {
-            case Action.FILL:
-                if (value !== undefined) {
-                    await locator.fill(String(value));
-                }
-                break;
-            case Action.CLICK:
-                await locator.click();
-                break;
-            default:
-                throw new Error(`Unknown action: ${action}`);
-        }
-    }
-
-
-    private async openAndFillInCreationForm(fields: FieldSpec[]): Promise<void> {
-        await this.homePage.clickCreateVehicleButton();
-
-        for (const field of fields) {
-            await this.interact(field);
-        }
-        await this.saveButton.click();
     }
 }

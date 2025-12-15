@@ -1,10 +1,10 @@
 import {Page, Locator} from '@playwright/test';
 import {HomePage} from "../navigation/homePage";
-import {FieldSpec} from "../../interfaces/equipment/fieldspec";
 import {Action} from "../../enums/Action";
+import {BaseFormPage} from "../../helpers/BaseFormPage";
 
-export class AddAcsFormPage {
-    private readonly saveButton: Locator;
+export class AddAcsFormPage extends BaseFormPage {
+    protected readonly saveButton: Locator;
     private readonly acsName: Locator;
     private readonly prefix: Locator;
     private readonly orientation: Locator;
@@ -18,10 +18,9 @@ export class AddAcsFormPage {
     private readonly locationCoordinatesY: Locator;
     private readonly locationDimensionsLength: Locator;
     private readonly locationDimensionsWidth: Locator;
-    private readonly homePage: HomePage;
 
     constructor(page: Page) {
-        this.homePage = new HomePage(page);
+        super(new HomePage(page));
         this.saveButton = page.locator('//span[text()=" Save "]/parent::button');
         this.acsName = page.locator('//label[text()="* Name"]/following-sibling::input');
         this.prefix = page.locator('//label[text()="* Prefix"]/following-sibling::input');
@@ -59,34 +58,6 @@ export class AddAcsFormPage {
             {locator: this.locationDimensionsWidth, action: Action.FILL, value: locationDimensionWidth},
             {locator: this.locationOrientation, action: Action.FILL, value: locationOrientation},
         ]);
-    }
-
-    private async interact(field: FieldSpec) {
-        const {locator, action, value} = field;
-        await locator.scrollIntoViewIfNeeded();
-
-        switch (action) {
-            case Action.FILL:
-                if (value !== undefined) {
-                    await locator.fill(String(value));
-                }
-                break;
-            case Action.CLICK:
-                await locator.click();
-                break;
-            default:
-                throw new Error(`Unknown action: ${action}`);
-        }
-    }
-
-
-    private async openAndFillInCreationForm(fields: FieldSpec[]): Promise<void> {
-        await this.homePage.clickCreateVehicleButton();
-
-        for (const field of fields) {
-            await this.interact(field);
-        }
-        await this.saveButton.click();
     }
 }
 
