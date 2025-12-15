@@ -15,7 +15,7 @@ import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentT
 import {expectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
 import {expectedDataForReachStacker} from "../../test-data/equipment/htc/equipmentTestDataForReachStacker";
 import {expectedDataForRemoteOperatingStation} from "../../test-data/equipment/htc/equipmentTestDataForRemoteOperatingStation";
-import {ctbQcEquipment} from "../../test-data/equipment/ctb/ctbQcEquipment";
+import {expectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -79,7 +79,7 @@ test("Verify test data for QC", async ({page}) => {
     const {homePage, equipmentTable} = setupPages(page);
     await homePage.selectVehicleType(VehicleType.QC);
     const actualData = await equipmentTable.getActualEquipmentTableDataForQC();
-    expect(actualData).toEqual(ctbQcEquipment)
+    expect(actualData).toEqual(expectedDataForQc)
 });
 
 test("Verify test data for Reach-stacker", async ({page}) => {

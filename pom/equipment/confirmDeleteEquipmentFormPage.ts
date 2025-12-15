@@ -1,5 +1,4 @@
 import { Locator, Page} from '@playwright/test';
-import {VehicleType} from "../../enums/vehicleType";
 
 export class ConfirmDeleteEquipmentFormPage {
     private readonly confirmPopup: Locator;

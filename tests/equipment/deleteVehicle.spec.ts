@@ -8,14 +8,8 @@ import {EquipmentOverviewPage} from "../../pom/equipment/equipmentOverviewPage";
 import {EquipmentTable} from "../../pom/equipment/equipmentTable";
 import {Page} from "@playwright/test";
 import {ExportEquipmentFormPage} from "../../pom/equipment/exportEquipmentFormPage";
-import {equipmentTableRowDataForQC} from "../../interfaces/equipment/equipmentTableRowDataForQC";
 
 test.use({ignoreHTTPSErrors: true});
-
-let homePage;
-let equipmentOverviewPage;
-let exportEquipmentFormPage;
-let equipmentTable;
 
 
 test.beforeEach(async ({page}) => {

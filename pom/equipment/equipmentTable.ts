@@ -29,9 +29,17 @@ export class EquipmentTable {
         this.page = page;
         this.equipmentTable = page.locator('[class="tba-editable-grid equipment-table"]')
         this.tableRow = page.locator('[class="tba-editable-grid equipment-table"] tr[class=""]');
-        this.rowElement = page.locator('[aria-haspopup="true"]');
+        this.rowElement = page.locator('td[class=""]');
         this.equipmentOverviewTable = page.locator('[class="tba-editable-grid equipment-table"]');
         this.removeButton = page.getByText(' Remove ');
+    }
+    private async getTablePageLocator(page: number){
+        return this.page.locator(`//button[text()="${page}"]`)
+    }
+
+    async navigateToTablePage(page:number){
+        const selectPage = await this.getTablePageLocator(page)
+        await selectPage.click();
     }
 
     async deleteEquipment(equipmentName: string) {
