@@ -7,7 +7,7 @@ import {AddMaintenanceFormPage} from "./addMaintenanceFormPage";
 export class MaintenanceTable {
     private readonly page: Page;
     private readonly allTableHeaderElements: Locator;
-    readonly maintenanceTableRow: Locator;
+    private readonly maintenanceTableRow: Locator;
     private readonly equipmentElementFieldInRow: Locator;
     private readonly plannedStartDateElementInRow: Locator;
     private readonly plannedEndDateElementInRow: Locator;
@@ -22,9 +22,11 @@ export class MaintenanceTable {
         this.allTableHeaderElements = page.locator(' [class="header-cell"] span[aria-expanded="false"]');
         this.maintenanceTableRow = page.locator('[class="tba-grid-container"] tr[class=""]');
         this.equipmentElementFieldInRow = page.locator('td span[aria-haspopup="true"]');
+        this.plannedStartDateElementInRow = page.locator('td:nth-child(2)')
+        this.plannedEndDateElementInRow = page.locator(' //td//div[@class="end-date"]//span[1]');
         this.filterSearchInput = page.locator('input[placeholder="Equipment name"]');
-        this.removeButton = page.locator('//div[@role="menuitem"]//div[text()=" Remove "]');
-        this.confirmRemoveButton = page.locator('//span[text()=" Remove CHE "]/ancestor::button');
+        this.removeButton = page.locator('//div[@role="menuitem"]//div[text()=" Remove maintenance "]');
+        this.confirmRemoveButton = page.locator('//span[text()=" Remove maintenance "]/ancestor::button');
         this.editButton = page.locator('(//div[text()=" Edit maintenance " and contains(@class, "v-list-item__title")])[1]');
         this.popupTitle = page.locator('.tba-dialog-title');
     }
@@ -107,6 +109,10 @@ export class MaintenanceTable {
         await this.removeButton.click();
         await expect(this.popupTitle).toHaveText("Remove planned maintenance?");
         await this.confirmRemoveButton.click();
+    }
+
+    async getMaintenanceTableRowCount(): Promise<number> {
+        return await this.maintenanceTableRow.count();
     }
 }
 

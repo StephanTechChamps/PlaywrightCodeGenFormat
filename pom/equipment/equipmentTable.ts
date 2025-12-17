@@ -33,11 +33,12 @@ export class EquipmentTable {
         this.equipmentOverviewTable = page.locator('[class="tba-editable-grid equipment-table"]');
         this.removeButton = page.getByText(' Remove ');
     }
-    private async getTablePageLocator(page: number){
+
+    private async getTablePageLocator(page: number) {
         return this.page.locator(`//button[text()="${page}"]`)
     }
 
-    async navigateToTablePage(page:number){
+    async navigateToTablePage(page: number) {
         const selectPage = await this.getTablePageLocator(page)
         await selectPage.click();
     }
@@ -63,27 +64,27 @@ export class EquipmentTable {
     }
 
     async getActualEquipmentTableDataForARMG(): Promise<equipmentTableRowDataForARMG[]> {
-        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToARMGObjects);
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToARMGObjects);
     }
 
     async getActualEquipmentTableDataForQC(): Promise<equipmentTableRowDataForQC[]> {
-        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToQCObjects);
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToQCObjects);
     }
 
     async getActualEquipmentTableDataForACS(): Promise<equipmentTableRowDataForACS[]> {
-        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToACSObjects);
-    }
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToACSObjects);
 
+    }
     async getActualEquipmentTableDataForAGV(): Promise<equipmentTableRowForAGV[]> {
-        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToAGVObjects);
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToAGVObjects);
     }
 
     async getActualEquipmentTableDataForReachStacker(): Promise<equipmentTableRowDataForREACHSTACKER[]> {
-        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToReachStackerObjects)
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToReachStackerObjects)
     }
 
     async getActualEquipmentTableDataForRemoteOperatingStation(): Promise<equipmentTableRowDataForREMOTEOPERATINGSTATION[]> {
-        return await this.getActualEquipmentTableDataAndMap(mapAllValuesToRemoteOperatingStationObjects);
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToRemoteOperatingStationObjects);
     }
 
     private async getActualEquipmentTableDataAndMap<T>(callback: (value: string[]) => T): Promise<T[]> {

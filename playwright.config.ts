@@ -1,5 +1,5 @@
-// playwright.config.ts
-import { defineConfig, devices } from '@playwright/test';
+import {defineConfig, devices} from '@playwright/test';
+import {BASE_URL} from "./config/projectConfig";
 
 export default defineConfig({
     testDir: './tests',
@@ -9,33 +9,37 @@ export default defineConfig({
         timeout: 30000,
     },
     use: {
-        // Belangrijk voor debugging:
         screenshot: 'only-on-failure',
         trace: 'retain-on-failure',
         video: 'retain-on-failure',
 
         actionTimeout: 10000,
         navigationTimeout: 30000,
+
+    baseURL: BASE_URL,
+    storageState: '.aut/login.json',   // gebruik de login state
     },
 
-    fullyParallel: true,
+    fullyParallel: false,
     forbidOnly: !!process.env.CI,
     retries: process.env.CI ? 2 : 0,
     workers: process.env.CI ? 1 : undefined,
 
     reporter: [
         ['line'],
-        ['allure-playwright', { outputFolder: 'allure-results' }],
+        ['allure-playwright', {outputFolder: 'allure-results'}],
         ['html']
     ],
+
+    globalSetup: './global-setup.ts',
 
     projects: [
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            use: {
+                ...devices['Desktop Chrome']
+            }
         },
-        // Extra browsers kunnen later weer aan.
     ],
 
-    // webServer: { ... },
 });

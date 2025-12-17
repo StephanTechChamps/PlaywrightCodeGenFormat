@@ -1,7 +1,7 @@
 import {Page, Locator} from '@playwright/test';
-import {HomePage} from "../navigation/homePage";
-import {Action} from "../../enums/Action";
-import {BaseFormPage} from "../../helpers/BaseFormPage";
+import {HomePage} from "../../navigation/homePage";
+import {Action} from "../../../enums/Action";
+import {BaseFormPage} from "../../../helpers/equipment/BaseFormPage";
 
 export class AddAcsFormPage extends BaseFormPage {
     protected readonly saveButton: Locator;

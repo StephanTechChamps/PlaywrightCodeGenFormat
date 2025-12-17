@@ -1,7 +1,7 @@
 import { Locator } from '@playwright/test';
-import { FieldSpec } from '../interfaces/equipment/fieldspec'
-import { Action } from '../enums/Action';
-import { HomePage } from '../pom/navigation/homePage';
+import { FieldSpec } from '../../interfaces/equipment/fieldspec'
+import { Action } from '../../enums/Action';
+import { HomePage } from '../../pom/navigation/homePage';
 
 export abstract class BaseFormPage {
     protected readonly homePage: HomePage;

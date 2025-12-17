@@ -1,46 +1,30 @@
-import {Page} from '@playwright/test';
 import {LoginPage} from "./pom/auth/loginPage";
-import {Teams} from "./pom/navigation/teams";
 import { FullConfig } from '@playwright/test';
+import {BASE_URL, PASSWORD, USERNAME} from "./config/projectConfig";
+import {chromium} from "playwright";
 
-async function globalSetup(config: FullConfig,page: Page) {
+async function globalSetup(config: FullConfig) {
     console.info('🔧 Global setup started');
 
-    const playwrightDev1 = new Teams(page);
-    await  page.goto("https://teamssrvse01.de.ad.tba.nl:9303/")
-    await playwrightDev1.selectEquipmentApp();
+    const browser = await chromium.launch();
+    const context = await browser.newContext({
+        baseURL: BASE_URL
+    });
 
-    const playwrightDev = new LoginPage(page);
-    // await playwrightDev.login("admin","donotusethisaccountfortesting");
+    const page = await context.newPage();
 
-    await page.context().storageState({path: 'storageState.json'});
+    console.info('Login process started');
 
+    const loginPage = new LoginPage(page);
+    await page.goto(BASE_URL)
 
+    console.info('Enter login credentials')
 
+    await loginPage.login(BASE_URL, USERNAME, PASSWORD)
+    await page.context().storageState({path: ".aut/login.json"});
 
-    console.log('✅ Setup voltooid');
+    console.log('Login successful, end of global setup');
 }
-
 export default globalSetup;
 
-
-
-
-
-
-// export const test = base.extend({
-// });
-//
-// test.beforeAll(async ({page}) => {
-//     const playwrightDev1 = new Teams(page);
-//     await  page.goto("https://teamssrvse01.de.ad.tba.nl:9303/")
-//     await playwrightDev1.selectEquipmentApp();
-//
-//     const playwrightDev = new LoginPage(page);
-//     await playwrightDev.login("admin","donotusethisaccountfortesting");
-// });
-//
-// test.afterAll(async () => {
-//     console.info('Globale teardown ná alle tests');
-// });
 

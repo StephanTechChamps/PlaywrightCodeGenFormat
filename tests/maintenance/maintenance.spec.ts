@@ -1,22 +1,20 @@
 import {LoginPage} from "../../pom/auth/loginPage";
 import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
-import {test} from '../../fixtures/tests.fixtures'
+// import {test} from '../../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {MaintenancePage} from "../../pom/maintenance/maintenancePage";
 import {topMenuBarPage} from "../../pom/navigation/topMenuBarPage"
 import {AddMaintenanceFormPage} from "../../pom/maintenance/addMaintenanceFormPage";
 import {Page} from "playwright/test";
-import {expect} from "@playwright/test";
+import {expect, test} from "@playwright/test";
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 import {MaintenanceTable} from "../../pom/maintenance/maintenanceTable";
 import {CompleteMaintenanceForm} from "../../pom/maintenance/completeMaintenaceForm";
 import {Timeouts} from "../../config/timeouts"
-
 test.use({ignoreHTTPSErrors: true});
 
 test.beforeEach(async ({page}) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.login(BASE_URL, USERNAME, PASSWORD);
+    await page.goto("/");
     await setAllureProperties();
 });
 
@@ -89,7 +87,9 @@ test("Create, edit and delete a maintenance schedule", async ({page}) => {
             }
         ])
     await maintenanceTable.removeMaintenanceMaintenanceEvent(vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
-    await expect(maintenanceTable.maintenanceTableRow).toHaveCount(0);
+    await expect.poll(async () => {
+        return await maintenanceTable.getActualEquipmentTableData();
+    }, {timeout: Timeouts.Long}).toHaveLength(0)
 })
 
 test("Arrange and filter table data", async ({page}) => {

@@ -4,8 +4,8 @@ import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
 import {expect, test} from '../../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {VehicleType} from "../../enums/vehicleType";
-import {AddEquipmentFormPage} from "../../pom/equipment/addEquipmentFormPage";
-import {AddAcsFormPage} from "../../pom/equipment/addAcsFormPage";
+import {AddEquipmentFormPage} from "../../pom/equipment/addForm/addEquipmentFormPage";
+import {AddAcsFormPage} from "../../pom/equipment/addForm/addAcsFormPage";
 import {Page} from "@playwright/test";
 import {expectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
 import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/ctbValidateCreatedAGV";
@@ -16,8 +16,8 @@ import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCre
 import {expectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
 import {expectedDataForAcs} from "../../test-data/equipment/ctb/ctbAcsEquipment";
 import {expectedDataForAcsAfterImport} from "../../test-data/equipment/ctb/ctbAcsEquipmentWithImportedData";
-import {AddAgvFormPage} from "../../pom/equipment/addAgvFormPage";
-import {AddQCFormPage} from "../../pom/equipment/addQCFormPage";
+import {AddAgvFormPage} from "../../pom/equipment/addForm/addAgvFormPage";
+import {AddQCFormPage} from "../../pom/equipment/addForm/addQCFormPage";
 
 test.use({ignoreHTTPSErrors: true});
 
