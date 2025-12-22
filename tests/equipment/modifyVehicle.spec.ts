@@ -95,7 +95,7 @@ test("Create, edit and delete a QC equipment (only essential fields)",
             45, "V2", "test", "www.koneCranes.com");
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: Duration.VeryLong}).toEqual(ctbValidateCreatedQC);
+        }, {timeout: Duration.Medium}).toEqual(ctbValidateCreatedQC);
 
 
         await equipmentTable.openEditEquipmentMenu("Test QC");
@@ -105,17 +105,22 @@ test("Create, edit and delete a QC equipment (only essential fields)",
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: Duration.VeryLong}).toEqual(ctbValidateEditedQC);
+        }, {timeout: Duration.Medium}).toEqual(ctbValidateEditedQC);
 
         await editQCFormPage.closeEditForm();
         await equipmentTable.deleteEquipment("Edited QC");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: Duration.VeryLong}).toEqual(ctbExpectedDataForQc);
+        }, {timeout: Duration.Medium}).toEqual(ctbExpectedDataForQc);
     }
 )
 
+// BUG IN NEW EQUIPMENT MANAGER:  CS and EST are variables.
+//     -     "chassisSpecification": "Without trailer rack",
+//     -     "energySourceType": "Battery",
+//     +     "chassisSpecification": "app.constants.chassisTypeOptions.",
+//     +     "energySourceType": "app.constants.energySourceTypes.",
 test("Create, edit and delete an AGV equipment (only essential fields",
     {
         tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
@@ -181,7 +186,7 @@ test("Create, edit and delete an ACS equipment (only essential fields",
         await equipmentTable.navigateToTablePage(2);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: Duration.VeryLong}).toEqual(ctbValidateCreatedACS);
+        }, {timeout: Duration.Medium}).toEqual(ctbValidateCreatedACS);
 
         await equipmentTable.openEditEquipmentMenu("Test ACS");
         await editACSFormPage.editACS("Edited ACS", "Edited", 30, 30, 30, 600,
@@ -189,7 +194,7 @@ test("Create, edit and delete an ACS equipment (only essential fields",
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: Duration.ExtremelyLong}).toEqual(ctbValidateEditedACS);
+        }, {timeout: Duration.Medium}).toEqual(ctbValidateEditedACS);
 
         await editACSFormPage.closeEditForm();
 
@@ -197,5 +202,5 @@ test("Create, edit and delete an ACS equipment (only essential fields",
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: Duration.ExtremelyLong}).toEqual(ctbExpectedDataForAcsPage2);
+        }, {timeout: Duration.Medium}).toEqual(ctbExpectedDataForAcsPage2);
     })

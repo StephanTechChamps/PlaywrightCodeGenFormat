@@ -1,5 +1,5 @@
 import {LoginPage} from "../../pom/auth/loginPage";
-import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
+
 // import {test} from '../../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {MaintenancePage} from "../../pom/maintenance/maintenancePage";
