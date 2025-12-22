@@ -1,6 +1,6 @@
 import {equipmentTableRowForAGV} from "../../../interfaces/equipment/equipmentTableRowDataForAGV";
 
-export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
+export let ctbExpectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
     {
         name: "AGV601",
         maxWeight: "40000",
@@ -11,8 +11,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10005",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -26,8 +26,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10010",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -41,8 +41,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10015",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -56,8 +56,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10020",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -71,8 +71,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10025",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -86,8 +86,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10030",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -101,8 +101,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10035",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -116,8 +116,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10040",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -131,8 +131,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10045",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     },
@@ -146,8 +146,8 @@ export let expectedDataForEquipmentAGV: equipmentTableRowForAGV[] = [
         portNumber: "10050",
         SubType: "BAGV",
         protocolType: "NavimaticGen2",
-        energySourceType: "app.constants.energySourceTypes.",
-        chassisSpecification: "app.constants.chassisTypeOptions.",
+        energySourceType: "Battery",
+        chassisSpecification: "Without trailer rack",
         twentyContainerOffset: "383",
         boundary: "-"
     }

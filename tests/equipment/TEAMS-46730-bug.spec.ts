@@ -3,9 +3,9 @@ import {LoginPage} from "../../pom/auth/loginPage";
 import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
 import {VehicleType} from "../../enums/vehicleType";
 import {expect} from "../../fixtures/tests.fixtures";
-import {expectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
+import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
 import {expectedDataForEquipmentAGVAfterImport} from "../../test-data/equipment/ctb/ctbAGVEquipmentWithImportedData"
-import {Timeouts} from "../../config/timeouts"
+import {Duration} from "../../config/duration"
 
 import {HomePage} from "../../pom/navigation/homePage";
 import {EquipmentOverviewPage} from "../../pom/equipment/equipmentOverviewPage";
@@ -35,24 +35,28 @@ function setAllureProperties() {
     label("suite", "Import equipment");
 }
 
-test("TEAMS-46730: Import file and delete AGV equipment", async ({page}) => {
-    const {homePage, equipmentTable, equipmentOverviewPage,confirmDeleteEquipmentFormPage} = setupPages(page);
-    const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
-    await homePage.selectVehicleType(VehicleType.AGV);
-    expect(actualData).toEqual(expectedDataForEquipmentAGV)
+test("TEAMS-46730: Import file and delete AGV equipment",
+    {
+        tag: ["@ctb", "@smoke", "@regression"]
+    }, async ({page}) => {
 
-    await equipmentOverviewPage.importAllEquipmentFromCtbFile("ctbAGV611.csv");
-    await expect.poll(async () => {
-        return await equipmentTable.getActualEquipmentTableDataForAGV();
-    }, {timeout: Timeouts.VeryLong}).toEqual(expectedDataForEquipmentAGVAfterImport);
+        const {homePage, equipmentTable, equipmentOverviewPage, confirmDeleteEquipmentFormPage} = setupPages(page);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
+        await homePage.selectVehicleType(VehicleType.AGV);
+        expect(actualData).toEqual(ctbExpectedDataForEquipmentAGV)
 
-    await equipmentOverviewPage.searchEquipment('AGV611')
-    await equipmentTable.deleteEquipment("AGV611");
-    await confirmDeleteEquipmentFormPage.confirmDeleteEquipment()
-    await equipmentOverviewPage.clearSearchInput();
+        await equipmentOverviewPage.importAllEquipmentFromCtbFile("ctbAGV611.csv");
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForAGV();
+        }, {timeout: Duration.VeryLong}).toEqual(expectedDataForEquipmentAGVAfterImport);
 
-    await expect.poll(async () => {
-        return await equipmentTable.getActualEquipmentTableDataForAGV();
-    }, {timeout: Timeouts.VeryLong}).toEqual(expectedDataForEquipmentAGV);
-});
+        await equipmentOverviewPage.searchEquipment('AGV611')
+        await equipmentTable.deleteEquipment("AGV611");
+        await confirmDeleteEquipmentFormPage.confirmDeleteEquipment()
+        await equipmentOverviewPage.clearSearchInput();
+
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForAGV();
+        }, {timeout: Duration.VeryLong}).toEqual(ctbExpectedDataForEquipmentAGV);
+    });
 

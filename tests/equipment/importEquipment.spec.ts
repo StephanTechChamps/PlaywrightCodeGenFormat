@@ -7,15 +7,17 @@ import {VehicleType} from "../../enums/vehicleType";
 import {Page} from "@playwright/test";
 import {EquipmentOverviewPage} from "../../pom/equipment/equipmentOverviewPage";
 import {ExportEquipmentFormPage} from "../../pom/equipment/exportEquipmentFormPage"
-import {expectedDataForEquipmentARMG} from "../../test-data/equipment/htc/equipmentTestDataForARMG"
+import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/htc/htcEquipmentTestDataForARMG"
 import {EquipmentTable} from "../../pom/equipment/equipmentTable";
 // import {expectedDataForQC} from "../test-data/equipment/HTC/equipmentTestDataForQC";
 import {expectedDataForEquipmentACS} from "../../test-data/equipment/htc/equipmentTestDataForACS";
 import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentTableRowDataForACS";
-import {expectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
+import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
 import {expectedDataForReachStacker} from "../../test-data/equipment/htc/equipmentTestDataForReachStacker";
-import {expectedDataForRemoteOperatingStation} from "../../test-data/equipment/htc/equipmentTestDataForRemoteOperatingStation";
-import {expectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
+import {
+    expectedDataForRemoteOperatingStation
+} from "../../test-data/equipment/htc/equipmentTestDataForRemoteOperatingStation";
+import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -45,53 +47,73 @@ function setAllureProperties() {
 //     await equipmentOverviewPage.importAllEquipmentFromFile("REACH_STACKER_IMPORT.csv")
 // });
 //
-test("Import A-RMG equipment from a file", async ({page}) => {
-    const {homePage, equipmentOverviewPage} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.A_RMG);
-    await equipmentOverviewPage.importAllEquipmentFromHtcFile("A_RMG_IMPORT.csv")
-});
+test("Import A-RMG equipment from a file",
+    {
+        tag: ["@htc", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentOverviewPage} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.A_RMG);
+        await equipmentOverviewPage.importAllEquipmentFromHtcFile("A_RMG_IMPORT.csv")
+    });
 
-test("Verify test data for A-RMG", async ({page}) => {
-    const {homePage, equipmentTable} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.A_RMG);
-    const actualData = await equipmentTable.getActualEquipmentTableDataForARMG();
-    expect(actualData).toEqual(expectedDataForEquipmentARMG)
-});
+test("Verify test data for A-RMG",
+    {
+        tag: ["@htc", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentTable} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.A_RMG);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForARMG();
+        expect(actualData).toEqual(htcExpectedDataForEquipmentARMG)
+    });
 
 
+test("Verify test data for ACS",
+    {
+        tag: ["@ctb", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentTable} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.ACS);
+        const actualData: equipmentTableRowDataForACS[] = await equipmentTable.getActualEquipmentTableDataForACS();
+        expect(actualData).toEqual(expectedDataForEquipmentACS)
+    });
 
-test("Verify test data for ACS", async ({page}) => {
-    const {homePage, equipmentTable} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.ACS);
-    const actualData: equipmentTableRowDataForACS[] = await equipmentTable.getActualEquipmentTableDataForACS();
-    expect(actualData).toEqual(expectedDataForEquipmentACS)
-});
+test("Verify test data for AGV",
+    {
+        tag: ["@ctb", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentTable} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.AGV);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
+        expect(actualData).toEqual(ctbExpectedDataForEquipmentAGV)
 
-test("Verify test data for AGV", async ({page}) => {
-    const {homePage, equipmentTable} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.AGV);
-    const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
-    expect(actualData).toEqual(expectedDataForEquipmentAGV)
+    })
 
-})
+test("Verify test data for QC",
+    {
+        tag: ["@htc", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentTable} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.QC);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForQC();
+        expect(actualData).toEqual(ctbExpectedDataForQc)
+    });
 
-test("Verify test data for QC", async ({page}) => {
-    const {homePage, equipmentTable} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.QC);
-    const actualData = await equipmentTable.getActualEquipmentTableDataForQC();
-    expect(actualData).toEqual(expectedDataForQc)
-});
+test("Verify test data for Reach-stacker",
+    {
+        tag: ["@htc", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentTable} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.REACH_STACKER);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForReachStacker();
+        expect(actualData).toEqual(expectedDataForReachStacker)
+    })
 
-test("Verify test data for Reach-stacker", async ({page}) => {
-    const {homePage, equipmentTable} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.REACH_STACKER);
-    const actualData = await equipmentTable.getActualEquipmentTableDataForReachStacker();
-    expect(actualData).toEqual(expectedDataForReachStacker)
-})
-
-test("Verify test data for Remote operating Station", async ({page}) => {
-    const {homePage, equipmentTable} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
-    const actualData = await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();
-    expect(actualData).toEqual(expectedDataForRemoteOperatingStation)
-})
+test("Verify test data for Remote operating Station",
+    {
+        tag: ["@htc", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentTable} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();
+        expect(actualData).toEqual(expectedDataForRemoteOperatingStation)
+    })

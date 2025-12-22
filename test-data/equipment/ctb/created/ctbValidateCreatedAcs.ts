@@ -1,6 +1,6 @@
-import {equipmentTableRowDataForACS} from "../../../interfaces/equipment/equipmentTableRowDataForACS";
+import {equipmentTableRowDataForACS} from "../../../../interfaces/equipment/equipmentTableRowDataForACS";
 
-export let ctbExpectedDataForAcsAfterImport: equipmentTableRowDataForACS[] = [
+export let ctbValidateCreatedACS: equipmentTableRowDataForACS[] = [
     {name: "ACS Ost 5", associatedLocations: "ACPO.5", associatedBuffer: "-"},
     {name: "ACS Ost 4", associatedLocations: "ACPO.4", associatedBuffer: "-"},
     {name: "ACS Ost 3", associatedLocations: "ACPO.3", associatedBuffer: "-"},

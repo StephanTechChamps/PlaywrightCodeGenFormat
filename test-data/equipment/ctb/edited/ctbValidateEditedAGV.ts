@@ -1,6 +1,6 @@
-import {equipmentTableRowForAGV} from "../../../interfaces/equipment/equipmentTableRowDataForAGV";
+import {equipmentTableRowForAGV} from "../../../../interfaces/equipment/equipmentTableRowDataForAGV";
 
-export let ctbValidateCreatedAGV: equipmentTableRowForAGV[] = [
+export let ctbValidateEditedAGV: equipmentTableRowForAGV[] = [
     {
         name: "AGV601",
         maxWeight: "40000",
@@ -152,18 +152,18 @@ export let ctbValidateCreatedAGV: equipmentTableRowForAGV[] = [
         boundary: "-"
     },
     {
-        name: "Test AGV",
-        maxWeight: "203",
+        name: "Edited AGV",
+        maxWeight: "600",
         liftCapability: "Single only",
-        maxTwinWeightDifference: "0",
-        softwareVersion: "v2",
+        maxTwinWeightDifference: "",
+        softwareVersion: "edited v2.1",
         hostName: "Creative",
-        portNumber: "10",
+        portNumber: "30",
         SubType: "SC_KT",
         protocolType: "NavimaticSc",
         energySourceType: "Fuel",
         chassisSpecification: "Without trailer rack",
-        twentyContainerOffset: "96000",
+        twentyContainerOffset: "600",
         boundary: "-"
     }
 ];

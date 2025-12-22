@@ -6,7 +6,7 @@ import {equipmentTableRowForAGV} from "../../interfaces/equipment/equipmentTable
 import {
     mapAllValuesToACSObjects,
     mapAllValuesToAGVObjects,
-    mapAllValuesToARMGObjects,
+    mapAllValuesToARMGObjects, mapAllValuesToMSCObjects,
     mapAllValuesToQCObjects,
     mapAllValuesToReachStackerObjects,
     mapAllValuesToRemoteOperatingStationObjects
@@ -15,6 +15,7 @@ import {equipmentTableRowDataForREACHSTACKER} from "../../interfaces/equipment/e
 import {
     equipmentTableRowDataForREMOTEOPERATINGSTATION
 } from "../../interfaces/equipment/equipmentTableRowDataForREMOTEOPERATINGSTATION";
+import {equipmentTableRowDataForMSC} from "../../interfaces/equipment/equipmentTableRowDataMSC";
 
 
 export class EquipmentTable {
@@ -24,6 +25,7 @@ export class EquipmentTable {
     private readonly rowElement: Locator;
     private readonly equipmentOverviewTable: Locator;
     private readonly removeButton: Locator;
+    private readonly editButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -32,6 +34,7 @@ export class EquipmentTable {
         this.rowElement = page.locator('td[class=""]');
         this.equipmentOverviewTable = page.locator('[class="tba-editable-grid equipment-table"]');
         this.removeButton = page.getByText(' Remove ');
+        this.editButton = page.locator('//span[text()=" Edit "]/parent::button')
     }
 
     private async getTablePageLocator(page: number) {
@@ -49,6 +52,19 @@ export class EquipmentTable {
         await this.removeButton.click();
     }
 
+    async openEditEquipmentMenu(equipmentName: string) {
+        await this.equipmentOverviewTable.isVisible();
+        await this.openViewButtonMenu(equipmentName);
+        await this.editButton.click();
+    }
+
+    private async openViewButtonMenu(equipmentName: string) {
+        const viewMenu = this.getHiddenViewButtonLocator(equipmentName);
+        await viewMenu.hover()
+        await viewMenu.click()
+
+    }
+
     private async openHamburgerMenu(equipmentName: string) {
         const hamburgerMenu = this.getHiddenMenuLocator(equipmentName);
         await hamburgerMenu.hover();
@@ -57,6 +73,10 @@ export class EquipmentTable {
 
     private getHiddenMenuLocator(equipmentName: string): Locator {
         return this.page.locator(`//span[text()="${equipmentName}"]/../../../..//td//button//span/i`);
+    }
+
+    private getHiddenViewButtonLocator(equipmentName: string): Locator {
+        return this.page.locator(`//span[text()="${equipmentName}"]/../../../..//td//button//span[text()=' View ']`);
     }
 
     async asserDataTableIsVisible() {
@@ -73,6 +93,11 @@ export class EquipmentTable {
 
     async getActualEquipmentTableDataForACS(): Promise<equipmentTableRowDataForACS[]> {
         return this.getActualEquipmentTableDataAndMap(mapAllValuesToACSObjects);
+
+    }
+
+    async getActualEquipmentTableDataForMSC(): Promise<equipmentTableRowDataForMSC[]> {
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToMSCObjects);
 
     }
     async getActualEquipmentTableDataForAGV(): Promise<equipmentTableRowForAGV[]> {

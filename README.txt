@@ -9,10 +9,6 @@ Allure usage (avoid opening index.html directly):
 3) Open the Allure report via a local HTTP server (fixes endless loading spinner):
     allure serve allure-results
 
-Notes:
-- Opening allure-report/index.html with file:// can cause the page to stay on the loading spinner due to browser security blocking XHR requests.
-- The project is configured to output Allure results via the Playwright reporter. If you change reporters, ensure 'allure-playwright' remains enabled.
-
 
 Improvements in terms of structure:
 
@@ -68,9 +64,35 @@ Instead of hard-coding vehicle codes everywhere:
     MaintenanceFactory.futureEvent();
     EquipmentFactory.random();
 
-6. Split POM further once pages exceed ~600 lines
-maintenancePage/
-     index.ts
-     createForm.ts
-     editForm.ts
-     table.ts
+
+
+
+
+
+
+Running Tests with Tags in Playwright
+
+We use tags to group and filter tests in Playwright. This allows us to run specific subsets of tests depending on the
+terminal and the equipment that is available.
+
+Available Tags
+    • @smoke: quick smoke tests to validate core functionality
+    • @ctb: CTB‑specific tests
+    • @htc: HTC‑specific tests
+    • @regression: regression tests for broader coverage
+    • @api: API‑focused tests
+
+How to run the tags
+    - Run only one tag: npx playwright test --grep "@smoke"
+    - Run tests that contain either of two tests: npx playwright test --grep "@smoke|@regression"
+    - Run tests that contains both tags: npx playwright test --grep "@smoke" --grep "@regression"
+
+Terminal‑Specific Combinations
+
+Because certain terminals have different equipment available, you can combine tags to run the right subset:
+    - HTC terminal with CTB equipment: npx playwright test --grep "@htc" --grep "@ctb"
+
+Excluding Tags
+
+Run smoke tests but exclude regression:
+    - npx playwright test --grep "@smoke" --grep-invert "@regression"

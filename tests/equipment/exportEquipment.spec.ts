@@ -29,17 +29,23 @@ function setAllureProperties() {
     label("suite", "Export equipment");
 }
 
-test("Export a specific selection of equipment", async ({page}) => {
-    const {homePage, equipmentOverviewPage, exportEquipmentFormPage} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.REACH_STACKER);
-    await equipmentOverviewPage.openExportAllEquipmentMenu();
-    await exportEquipmentFormPage.exportSelectedEquipment("TwoFiles",["RS01","EH01"]);
-});
+test("Export a specific selection of equipment",
+    {
+        tag: ["@htc", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentOverviewPage, exportEquipmentFormPage} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.REACH_STACKER);
+        await equipmentOverviewPage.openExportAllEquipmentMenu();
+        await exportEquipmentFormPage.exportSelectedEquipment("TwoFiles", ["RS01", "EH01"]);
+    });
 
-test("Export all equipment", async ({page}) => {
-    const {homePage, equipmentOverviewPage, exportEquipmentFormPage} = setupPages(page);
-    await homePage.selectVehicleType(VehicleType.REACH_STACKER);
-    await equipmentOverviewPage.openExportAllEquipmentMenu();
-    await exportEquipmentFormPage.exportAllEquipment("AllFiles");
-})
+test("Export all equipment",
+    {
+        tag: ["@htc", "@smoke", "@regression"]
+    }, async ({page}) => {
+        const {homePage, equipmentOverviewPage, exportEquipmentFormPage} = setupPages(page);
+        await homePage.selectVehicleType(VehicleType.REACH_STACKER);
+        await equipmentOverviewPage.openExportAllEquipmentMenu();
+        await exportEquipmentFormPage.exportAllEquipment("AllFiles");
+    })
 

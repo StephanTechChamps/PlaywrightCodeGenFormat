@@ -36,5 +36,15 @@ export abstract class BaseFormPage {
             await this.interact(field);
         }
         await this.saveButton.click();
+        await this.saveButton.waitFor({state:"hidden"})
+    }
+
+    protected async openAndFillInEditForm(fields: FieldSpec[]): Promise<void> {
+
+        for (const field of fields) {
+            await this.interact(field);
+        }
+        await this.saveButton.click();
+        await this.saveButton.waitFor({state:"hidden"})
     }
 }

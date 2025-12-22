@@ -1,10 +1,11 @@
 import {Page, Locator} from '@playwright/test';
 import {Action} from "../../../enums/Action";
-import {openAndFillInCreationForm} from "../../../utils/openAndFillInCreationForm";
 import {BaseFormPage} from "../../../helpers/equipment/BaseFormPage";
 import {HomePage} from "../../navigation/homePage";
+// @ts-ignore
+import {EditARMGEquipmentOptions} from '../../../interfaces/equipment/edit/EditARMGEquipmentOptions'
 
-export class AddArmgFormPage extends BaseFormPage {
+export class EditArmgFormPage extends BaseFormPage {
     private readonly name: Locator;
     private readonly maxWeight: Locator;
     private readonly softwareVersion: Locator;
@@ -28,16 +29,18 @@ export class AddArmgFormPage extends BaseFormPage {
         this.saveButton = page.locator('//span[text()=" Save "]/parent::button');
     }
 
-    async createARMG(name: string, maxWeight: number, craneId: number, maxTierHeight: number, softwareVersion: string,
-                     hostName: string, portNumber: number) {
-        await this.openAndFillInCreationForm([
-            {locator: this.name, action: Action.FILL, value: name},
-            {locator: this.craneId, action: Action.FILL, value: craneId},
-            {locator: this.maxWeight, action: Action.FILL, value: maxWeight},
-            {locator: this.maxTierHeight, action: Action.FILL, value: maxTierHeight},
-            {locator: this.softwareVersion, action: Action.FILL, value: softwareVersion},
-            {locator: this.hostName, action: Action.FILL, value: hostName},
-            {locator: this.portNumber, action: Action.FILL, value: portNumber},
-        ]);
+    async editEquipment(options: EditARMGEquipmentOptions) {
+        await this.openAndFillInCreationForm(
+            [
+                {locator: this.name, value: options.name},
+                {locator: this.maxWeight, value: options.maxWeight},
+                {locator: this.craneId, value: options.craneId},
+                {locator: this.maxTierHeight, value: options.maxTierHeight},
+                {locator: this.softwareVersion, value: options.softwareVersion},
+                {locator: this.hostName, value: options.hostName},
+                {locator: this.portNumber, value: options.portNumber},
+            ].filter(f => f.value !== undefined)
+                .map(f => ({...f, action: Action.FILL}))
+        );
     }
 }

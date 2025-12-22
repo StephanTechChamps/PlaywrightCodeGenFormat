@@ -6,6 +6,7 @@ import {equipmentTableRowDataForREACHSTACKER} from "../../interfaces/equipment/e
 import {
     equipmentTableRowDataForREMOTEOPERATINGSTATION
 } from "../../interfaces/equipment/equipmentTableRowDataForREMOTEOPERATINGSTATION";
+import {equipmentTableRowDataForMSC} from "../../interfaces/equipment/equipmentTableRowDataMSC";
 
 export function mapAllValuesToARMGObjects(value: string[]): equipmentTableRowDataForARMG {
     return {
@@ -112,4 +113,19 @@ export function mapAllValuesToRemoteOperatingStationObjects(value: string[]): eq
         allowedOperations: value[3] ?? '',
     };
 }
+
+export function mapAllValuesToMSCObjects(value: string[]): equipmentTableRowDataForMSC {
+    return {
+        name: value[0] ?? '',
+        maxWeight: value[1] ?? '',
+        liftCapability: value[2] ?? '',
+        maxTwinWeightDifference: value [3] ?? '',
+        maxTierHeight: value [4] ?? '',
+        softwareVersion: value [5] ?? '',
+        hostName: value [6] ?? '',
+        portNumber: value [7] ?? '',
+        boundary: value[8] ?? '',
+    };
+}
+
 

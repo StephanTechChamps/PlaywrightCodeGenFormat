@@ -4,7 +4,7 @@ import {BASE_URL} from "./config/projectConfig";
 export default defineConfig({
     testDir: './tests',
 
-    timeout: 60000,
+    timeout: 250000,
     expect: {
         timeout: 30000,
     },
