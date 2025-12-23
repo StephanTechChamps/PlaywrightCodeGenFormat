@@ -1,6 +1,6 @@
 import { Locator, Page} from "@playwright/test";
 
-export class topMenuBarPage {
+export class TopMenuBarPage {
     private readonly leftMainMenuButton: Locator;
     private readonly navigationMenuButton: Locator;
     private readonly equipmentManagementButton: Locator;

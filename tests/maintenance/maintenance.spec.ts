@@ -1,23 +1,14 @@
-import {label, severity, tag} from "allure-js-commons";
-import {MaintenancePage} from "../../pom/maintenance/maintenancePage";
-import {topMenuBarPage} from "../../pom/navigation/topMenuBarPage"
-import {AddMaintenanceFormPage} from "../../pom/maintenance/addMaintenanceFormPage";
-import {Page} from "playwright/test";
-import {expect, test} from "@playwright/test";
+
+import {expect, test} from '../../fixtures/tests.fixtures'
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
-import {MaintenanceTable} from "../../pom/maintenance/maintenanceTable";
-import {CompleteMaintenanceForm} from "../../pom/maintenance/completeMaintenaceForm";
 import {DURATION} from "../../config/DURATION"
 import {Tag} from "../../enums/tag";
+import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
+import {Severity} from "../../enums/Severity";
 
 test.use({ignoreHTTPSErrors: true});
 
-//@TODO: move this method so it doesn't have to written in every test
-test.beforeEach(async ({page}) => {
-    await page.goto("/");
-    await setAllureProperties();
-});
-
+//@TODO: tests for CTB USE OTHER TEST DATA FOR EQUIPMENT!
 //@TODO: optimize this method: is now used as a setup/teardown for maintenance
 test.afterEach(async ({page}) => {
     const rows = () => page.locator('//span[text()=" COMPLETE MAINTENANCE "]/ancestor::button');
@@ -33,37 +24,20 @@ test.afterEach(async ({page}) => {
     }
 });
 
-//@TODO: move this method so it doesn't have to written in every test
-async function setAllureProperties() {
-    await severity('Critical');
-    await tag('Smoke');
-    await label('suite', "Maintenance tests");
-}
-
-const setupPages = (page: Page) => {
-    const topMenuBar = new topMenuBarPage(page);
-    const maintenancePage = new MaintenancePage(page);
-    const addMaintenanceForm = new AddMaintenanceFormPage(page)
-    const completeMaintenance = new CompleteMaintenanceForm(page);
-    const maintenanceTable = new MaintenanceTable(page);
-    return {topMenuBar, maintenancePage, addMaintenanceForm, maintenanceTable, completeMaintenance};
-}
-
 test("Create and complete maintenance schedule",
-    {
-        tag: [Tag.HTC, Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
-    },
-    async ({page}) => {
-        const {
-            topMenuBar,
-            maintenancePage,
-            addMaintenanceForm,
-            completeMaintenance,
-            maintenanceTable
-        } = setupPages(page);
-        await topMenuBar.openMaintenancePage();
+    {tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]},
+    async ({
+               topMenuBarPage,
+               maintenancePage,
+               addMaintenanceFormPage,
+               completeMaintenanceForm,
+               maintenanceTable
+           }) => {
+        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD maintenance"}]);
+
+        await topMenuBarPage.openMaintenancePage();
         await maintenancePage.openCreateMaintenancePage();
-        await addMaintenanceForm.addMaintenanceEventForEquipment(vehicleCode.QC8, 'Nov 20, 2025 (15:20)', 'Nov 20, 2026 (20:00)');
+        await addMaintenanceFormPage.addMaintenanceEventForEquipment(vehicleCode.QC8, 'Nov 20, 2025 (15:20)', 'Nov 20, 2026 (20:00)');
         expect(await maintenanceTable.validateHeadersArePresent()).toBe(true);
         expect(await maintenanceTable.getActualEquipmentTableData()).toEqual(
             [
@@ -73,18 +47,25 @@ test("Create and complete maintenance schedule",
                     plannedEndDate: 'Nov 20, 2026 (20:00)'
                 }
             ]);
+
         await maintenancePage.openCompletePlannedMaintenanceMenu(vehicleCode.QC8, 'Nov 20, 2025 (15:20)', 'Nov 20, 2026 (20:00)');
-        await completeMaintenance.confirmMaintenance('Nov 21, 2027 (20:00)');
+        await completeMaintenanceForm.confirmMaintenance('Nov 21, 2027 (20:00)');
     });
 
 test("Create, edit and delete a maintenance schedule", {
-        tag: [Tag.HTC, Tag.CTB, Tag.REGRESSION]
+        tag: [Tag.HTC, Tag.REGRESSION]
     },
-    async ({page}) => {
-        const {topMenuBar, maintenancePage, addMaintenanceForm, maintenanceTable} = setupPages(page);
-        await topMenuBar.openMaintenancePage();
+    async ({
+               topMenuBarPage,
+               maintenancePage,
+               addMaintenanceFormPage,
+               maintenanceTable
+           }) => {
+        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD maintenance"}]);
+
+        await topMenuBarPage.openMaintenancePage();
         await maintenancePage.openCreateMaintenancePage();
-        await addMaintenanceForm.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 20, 2026 (10:00)');
+        await addMaintenanceFormPage.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 20, 2026 (10:00)');
         expect(await maintenanceTable.getActualEquipmentTableData()).toEqual(
             [
                 {
@@ -110,18 +91,19 @@ test("Create, edit and delete a maintenance schedule", {
 
 test("Arrange and filter table data",
     {
-        tag: [Tag.HTC, Tag.CTB, Tag.REGRESSION]
-    }, async ({page}) => {
-        const {topMenuBar, maintenancePage, addMaintenanceForm, maintenanceTable} = setupPages(page);
-        await topMenuBar.openMaintenancePage();
+        tag: [Tag.HTC, Tag.REGRESSION]
+    }, async ({topMenuBarPage, maintenancePage, addMaintenanceFormPage, maintenanceTable}) => {
+        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD maintenance"}]);
+
+        await topMenuBarPage.openMaintenancePage();
         await maintenancePage.openCreateMaintenancePage();
-        await addMaintenanceForm.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 21, 2026 (10:00)');
+        await addMaintenanceFormPage.addMaintenanceEventForEquipment(vehicleCode.AL1, 'Nov 15, 2025 (15:47)', 'Nov 21, 2026 (10:00)');
         await maintenancePage.openCreateMaintenancePage();
-        await addMaintenanceForm.addMaintenanceEventForEquipment(vehicleCode.AL3, 'Nov 10, 2025 (15:47)', 'Nov 26, 2026 (10:00)');
+        await addMaintenanceFormPage.addMaintenanceEventForEquipment(vehicleCode.AL3, 'Nov 10, 2025 (15:47)', 'Nov 26, 2026 (10:00)');
         await maintenancePage.openCreateMaintenancePage();
-        await addMaintenanceForm.addMaintenanceEventForEquipment(vehicleCode.AW2, 'Nov 09, 2025 (15:47)', 'Nov 26, 2026 (10:00)');
+        await addMaintenanceFormPage.addMaintenanceEventForEquipment(vehicleCode.AW2, 'Nov 09, 2025 (15:47)', 'Nov 26, 2026 (10:00)');
         await maintenancePage.openCreateMaintenancePage();
-        await addMaintenanceForm.addMaintenanceEventForEquipment(vehicleCode.AW3, 'Nov 27, 2025 (15:47)', 'Nov 27, 2026 (10:00)');
+        await addMaintenanceFormPage.addMaintenanceEventForEquipment(vehicleCode.AW3, 'Nov 27, 2025 (15:47)', 'Nov 27, 2026 (10:00)');
         expect(await maintenanceTable.getActualEquipmentTableData()).toEqual(
             [
                 {
