@@ -57,8 +57,6 @@ type PagesFixture = {
     completeMaintenanceForm: CompleteMaintenanceForm;
     maintenancePage: MaintenancePage;
     maintenanceTable: MaintenanceTable;
-
-
 };
 
 export const test = base.extend<PagesFixture>({
@@ -66,7 +64,6 @@ export const test = base.extend<PagesFixture>({
         await page.goto('/');
 
         const net: string[] = [];
-
         page.on('request', req => {
             net.push(`--> ${req.method()} ${req.url()}`);
         });
@@ -94,7 +91,6 @@ export const test = base.extend<PagesFixture>({
         }
     },
 
-    // navigation
     homePage: async ({ page }, use) => use(new HomePage(page)),
     topMenuBarPage: async ({ page }, use) => use(new TopMenuBarPage(page)),
 
