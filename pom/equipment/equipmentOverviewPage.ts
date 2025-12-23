@@ -39,7 +39,7 @@ export class EquipmentOverviewPage {
 
     async importAllEquipmentFromCtbFile(fileName: string) {
         console.info('Importing equipment file...');
-        const filePath = path.resolve(__dirname, '../../test-data/equipment/ctb/', fileName);
+        const filePath = path.resolve(__dirname, '../../test-data/equipment/ctb', fileName);
         const fileChooser = await this.triggerFileChooser();
         await fileChooser.setFiles(filePath);
         console.info('Import completed.');

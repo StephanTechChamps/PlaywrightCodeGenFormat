@@ -1,19 +1,18 @@
 import {HomePage} from "../../pom/navigation/homePage";
-import {LoginPage} from "../../pom/auth/loginPage";
-import {BASE_URL, PASSWORD, USERNAME} from "../../config/projectConfig";
 import {test} from '../../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {VehicleType} from "../../enums/vehicleType";
 import {Page} from "@playwright/test";
 import {EquipmentOverviewPage} from "../../pom/equipment/equipmentOverviewPage";
 import {ExportEquipmentFormPage} from "../../pom/equipment/exportEquipmentFormPage"
+import {Tag} from "../../enums/tag";
 
 test.use({ignoreHTTPSErrors: true});
 
+//@TODO: move this method so it doesn't have to written in every test
 test.beforeEach(async ({page}) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.login(BASE_URL, USERNAME, PASSWORD);
-    setAllureProperties();
+    await page.goto("/");
+    await setAllureProperties();
 });
 
 function setupPages(page: Page) {
@@ -23,15 +22,15 @@ function setupPages(page: Page) {
     return {homePage, equipmentOverviewPage, exportEquipmentFormPage};
 }
 
-function setAllureProperties() {
-    severity("Critical");
-    tag("Smoke");
-    label("suite", "Export equipment");
+async function setAllureProperties() {
+    await severity("Critical");
+    await tag("Smoke");
+    await label("suite", "Export equipment");
 }
 
 test("Export a specific selection of equipment",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     }, async ({page}) => {
         const {homePage, equipmentOverviewPage, exportEquipmentFormPage} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);
@@ -41,7 +40,7 @@ test("Export a specific selection of equipment",
 
 test("Export all equipment",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     }, async ({page}) => {
         const {homePage, equipmentOverviewPage, exportEquipmentFormPage} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);

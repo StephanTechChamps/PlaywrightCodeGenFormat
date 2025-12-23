@@ -1,6 +1,3 @@
-import {LoginPage} from "../../pom/auth/loginPage";
-
-// import {test} from '../../fixtures/tests.fixtures'
 import {label, severity, tag} from "allure-js-commons";
 import {MaintenancePage} from "../../pom/maintenance/maintenancePage";
 import {topMenuBarPage} from "../../pom/navigation/topMenuBarPage"
@@ -10,22 +7,25 @@ import {expect, test} from "@playwright/test";
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 import {MaintenanceTable} from "../../pom/maintenance/maintenanceTable";
 import {CompleteMaintenanceForm} from "../../pom/maintenance/completeMaintenaceForm";
-import {Duration} from "../../config/duration"
+import {DURATION} from "../../config/DURATION"
+import {Tag} from "../../enums/tag";
 
 test.use({ignoreHTTPSErrors: true});
 
+//@TODO: move this method so it doesn't have to written in every test
 test.beforeEach(async ({page}) => {
     await page.goto("/");
     await setAllureProperties();
 });
 
+//@TODO: optimize this method: is now used as a setup/teardown for maintenance
 test.afterEach(async ({page}) => {
     const rows = () => page.locator('//span[text()=" COMPLETE MAINTENANCE "]/ancestor::button');
     const confirm = page.locator('//span[text()=" Complete "]/ancestor::button');
 
     while (await rows().count() > 1) {
         const row = rows().first();
-        await page.waitForSelector('.v-overlay__scrim', {state: 'hidden', timeout: Duration.Medium}).catch(() => {
+        await page.waitForSelector('.v-overlay__scrim', {state: 'hidden', timeout: DURATION.MEDIUM}).catch(() => {
         });
         await row.hover();
         await row.click();
@@ -33,6 +33,7 @@ test.afterEach(async ({page}) => {
     }
 });
 
+//@TODO: move this method so it doesn't have to written in every test
 async function setAllureProperties() {
     await severity('Critical');
     await tag('Smoke');
@@ -50,7 +51,7 @@ const setupPages = (page: Page) => {
 
 test("Create and complete maintenance schedule",
     {
-        tag: ["@htc", "@ctb", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({page}) => {
         const {
@@ -77,7 +78,7 @@ test("Create and complete maintenance schedule",
     });
 
 test("Create, edit and delete a maintenance schedule", {
-        tag: ["@htc", "@ctb", "@regression"]
+        tag: [Tag.HTC, Tag.CTB, Tag.REGRESSION]
     },
     async ({page}) => {
         const {topMenuBar, maintenancePage, addMaintenanceForm, maintenanceTable} = setupPages(page);
@@ -104,12 +105,12 @@ test("Create, edit and delete a maintenance schedule", {
         await maintenanceTable.removeMaintenanceMaintenanceEvent(vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
         await expect.poll(async () => {
             return await maintenanceTable.getActualEquipmentTableData();
-        }, {timeout: Duration.Long}).toHaveLength(0)
+        }, {timeout: DURATION.LONG}).toHaveLength(0)
     })
 
 test("Arrange and filter table data",
     {
-        tag: ["@htc", "@ctb", "@regression"]
+        tag: [Tag.HTC, Tag.CTB, Tag.REGRESSION]
     }, async ({page}) => {
         const {topMenuBar, maintenancePage, addMaintenanceForm, maintenanceTable} = setupPages(page);
         await topMenuBar.openMaintenancePage();

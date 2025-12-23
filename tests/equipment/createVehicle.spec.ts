@@ -9,7 +9,7 @@ import {Page} from "@playwright/test";
 import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
 import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/ctbValidateCreatedAGV";
 import {EquipmentTable} from "../../pom/equipment/equipmentTable";
-import {Duration} from "../../config/duration";
+import {DURATION} from "../../config/DURATION";
 import {ConfirmDeleteEquipmentFormPage} from "../../pom/equipment/confirmDeleteEquipmentFormPage"
 import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
 import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
@@ -23,20 +23,24 @@ import {AddMscFormPage} from "../../pom/equipment/addForm/addMscFormPage";
 import {htcValidateCreatedARMG} from "../../test-data/equipment/htc/htcValidateCreatedARMG"
 import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/htc/htcEquipmentTestDataForARMG";
 import {EditArmgFormPage} from "../../pom/equipment/editForm/editArmgFormPage";
+import {Tag} from "../../enums/tag";
 
 test.use({ignoreHTTPSErrors: true});
 
+//@TODO: move this method so it doesn't have to written in every test
 test.beforeEach(async ({page}) => {
     await page.goto("/");
     await setAllureProperties();
 });
 
+//@TODO: move this method so it doesn't have to written in every test
 async function setAllureProperties() {
     await severity('Critical');
     await tag('Smoke');
     await label('suite', "Create equipment");
 }
 
+////@TODO: move this method so it doesn't have to written in every test
 function setupPages(page: Page) {
     const homePage = new HomePage(page);
     const equipmentFormPage = new AddEquipmentFormPage(page);
@@ -49,17 +53,15 @@ function setupPages(page: Page) {
     const mscFormPage = new AddMscFormPage(page);
     const editArmgFormPage = new EditArmgFormPage(page);
 
-
     return {
         homePage, equipmentFormPage, equipmentTable, confirmDeleteEquipmentFormPage,
-        acsFormPage, agvFormPage, qcFormPage, mscFormPage, armgFormPage,  editArmgFormPage
+        acsFormPage, agvFormPage, qcFormPage, mscFormPage, armgFormPage, editArmgFormPage
     };
-
 }
 
 test("Create and delete a A-RMG (only essential fields)",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({page}) => {
         const {homePage, armgFormPage, equipmentTable, confirmDeleteEquipmentFormPage} = setupPages(page);
@@ -72,19 +74,20 @@ test("Create and delete a A-RMG (only essential fields)",
             'Test A-RMG', 300, 200, 3000, "1.4", 'newHost', 20);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForARMG();
-        }, {timeout: Duration.Short}).toEqual(htcValidateCreatedARMG);
+        }, {timeout: DURATION.SHORT}).toEqual(htcValidateCreatedARMG);
 
         await equipmentTable.deleteEquipment("Test A-RMG");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: Duration.Long}).toEqual(htcExpectedDataForEquipmentARMG);
+        }, {timeout: DURATION.LONG}).toEqual(htcExpectedDataForEquipmentARMG);
 
     });
 
+// @TODO: alter the edut step of the test
 test("Create and edit a A-RMG (only essential fields)",
     {
-        tag: ["@htc", "@smoke", "@regression", "@stephan"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({page}) => {
         const {
@@ -103,29 +106,29 @@ test("Create and edit a A-RMG (only essential fields)",
             'Test A-RMG', 300, 200, 3000, "1.4", 'newHost', 20);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForARMG();
-        }, {timeout: Duration.Long}).toEqual(htcValidateCreatedARMG);
+        }, {timeout: DURATION.LONG}).toEqual(htcValidateCreatedARMG);
 
         await equipmentTable.openEditEquipmentMenu('Test A-RMG');
         await editArmgFormPage.editEquipment({
-            name: "Test Adjusted",
-            craneId: "3",
-            }
-        )
+                name: "Test Adjusted",
+                craneId: "3",
+            })
+
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForARMG();
-        }, {timeout: Duration.Short}).toEqual(htcValidateCreatedARMG);
+        }, {timeout: DURATION.SHORT}).toEqual(htcValidateCreatedARMG);
 
         await equipmentTable.deleteEquipment("Test A-RMG");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: Duration.Long}).toEqual(htcExpectedDataForEquipmentARMG);
+        }, {timeout: DURATION.LONG}).toEqual(htcExpectedDataForEquipmentARMG);
 
     });
 
 test("Create and delete AGV equipment (only essential fields)",
     {
-        tag: ["@ctb", "@smoke", "@regression"]
+        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({page}) => {
         const {homePage, equipmentTable, confirmDeleteEquipmentFormPage, agvFormPage} = setupPages(page);
@@ -137,20 +140,20 @@ test("Create and delete AGV equipment (only essential fields)",
         await agvFormPage.createAGV("Test AGV", 203, "v2", "Creative", 10, 96000);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: Duration.Short}).toEqual(ctbValidateCreatedAGV);
+        }, {timeout: DURATION.SHORT}).toEqual(ctbValidateCreatedAGV);
 
         await equipmentTable.deleteEquipment("Test AGV");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: Duration.Long}).toEqual(ctbExpectedDataForEquipmentAGV);
+        }, {timeout: DURATION.LONG}).toEqual(ctbExpectedDataForEquipmentAGV);
     }
 )
 
 
 test("Create and delete QC equipment (only essential fields)",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({page}) => {
         const {homePage, equipmentTable, confirmDeleteEquipmentFormPage, qcFormPage} = setupPages(page);
@@ -165,20 +168,20 @@ test("Create and delete QC equipment (only essential fields)",
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: Duration.Short}).toEqual(ctbValidateCreatedQC);
+        }, {timeout: DURATION.SHORT}).toEqual(ctbValidateCreatedQC);
 
         await equipmentTable.deleteEquipment("Test QC");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: Duration.Medium}).toEqual(ctbExpectedDataForQc);
+        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForQc);
     }
 )
 
 
 test("Create and delete ACS equipment (only essential fields)",
     {
-        tag: ["@ctb", "@smoke", "@regression"]
+        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
     }, async ({page}) => {
         const {homePage, equipmentTable, confirmDeleteEquipmentFormPage, acsFormPage} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.ACS);
@@ -194,18 +197,18 @@ test("Create and delete ACS equipment (only essential fields)",
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: Duration.Medium}).toEqual(ctbExpectedDataForAcsAfterImport);
+        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForAcsAfterImport);
 
         await equipmentTable.deleteEquipment("Test ACS");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: Duration.Medium}).toEqual(ctbExpectedDataForAcs);
+        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForAcs);
     });
 
 test("Create a MSC (only essential fields)",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     }, async ({page}) => {
         const {homePage, mscFormPage, equipmentTable} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.MSC);
@@ -219,7 +222,7 @@ test("Create a MSC (only essential fields)",
 
 test("Create a REACH STACKER (only essential fields)",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     }, async ({page}) => {
         const {homePage, mscFormPage, equipmentTable} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);
@@ -233,7 +236,7 @@ test("Create a REACH STACKER (only essential fields)",
 
 test("Create a remote operating station (only essential fields)",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     }, async ({page}) => {
         const {homePage, mscFormPage, equipmentTable} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
@@ -242,12 +245,12 @@ test("Create a remote operating station (only essential fields)",
         expect(actualData).toEqual(expectedDataForEquipmentACS)
 
         await mscFormPage.createMSC(
-            'Test A-RMG', 300, 200,  "v2","1.4", 1);
+            'Test A-RMG', 300, 200, "v2", "1.4", 1);
     });
 
 test("Create a Terminal truck (only essential fields)",
     {
-        tag: ["@htc", "@smoke", "@regression"]
+        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
     }, async ({page}) => {
         const {homePage, mscFormPage, equipmentTable} = setupPages(page);
         await homePage.selectVehicleType(VehicleType.TERMINAL_TRUCK);
