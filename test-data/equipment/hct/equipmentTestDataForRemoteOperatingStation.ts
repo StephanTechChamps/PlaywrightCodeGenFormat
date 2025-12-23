@@ -7,37 +7,37 @@ export const expectedDataForRemoteOperatingStation: equipmentTableRowDataForREMO
     {
         name: "ROS01",
         id: "1",
-        type: "",
+        type: "Remote operating station",
         allowedOperations: ""
     },
     {
         name: "ROS02",
         id: "2",
-        type: "",
+        type: "Remote operating station",
         allowedOperations: ""
     },
     {
         name: "ROS03",
         id: "3",
-        type: "",
+        type: "Remote operating station",
         allowedOperations: ""
     },
     {
         name: "ROS04",
         id: "4",
-        type: "",
+        type: "Remote operating station",
         allowedOperations: ""
     },
     {
         name: "ROS05",
         id: "5",
-        type: "",
+        type: "Remote operating station",
         allowedOperations: ""
     },
     {
         name: "ROS06",
         id: "6",
-        type: "",
+        type: "Remote operating station",
         allowedOperations: ""
     }
 ];
