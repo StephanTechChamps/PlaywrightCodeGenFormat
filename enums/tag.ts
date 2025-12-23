@@ -1,5 +1,5 @@
 export enum Tag {
-    HTC = "@htc",
+    HCT = "@hct",
     CTB = "@ctb",
     SMOKE = '@smoke',
     REGRESSION = '@regression',

@@ -1,13 +1,13 @@
 import {expect, test} from '../../fixtures/tests.fixtures'
 import {VehicleType} from "../../enums/vehicleType";
-import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/htc/htcEquipmentTestDataForARMG"
-import {expectedDataForEquipmentACS} from "../../test-data/equipment/htc/equipmentTestDataForACS";
+import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/hct/htcEquipmentTestDataForARMG"
+import {expectedDataForEquipmentACS} from "../../test-data/equipment/hct/equipmentTestDataForACS";
 import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentTableRowDataForACS";
 import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
-import {expectedDataForReachStacker} from "../../test-data/equipment/htc/equipmentTestDataForReachStacker";
+import {expectedDataForReachStacker} from "../../test-data/equipment/hct/equipmentTestDataForReachStacker";
 import {
     expectedDataForRemoteOperatingStation
-} from "../../test-data/equipment/htc/equipmentTestDataForRemoteOperatingStation";
+} from "../../test-data/equipment/hct/equipmentTestDataForRemoteOperatingStation";
 import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
 import {Tag} from "../../enums/tag";
 import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
@@ -51,7 +51,7 @@ test("BUG: TEAMS-46730: Import file and delete AGV equipment",
 
 test("Import A-RMG equipment from a file",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage, equipmentOverviewPage}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
@@ -78,7 +78,7 @@ test("Import QC equipment from a file",
 
 test("Verify test data for A-RMG",
     {
-        tag: [Tag.HTC, Tag.REGRESSION],
+        tag: [Tag.HCT, Tag.REGRESSION],
     }, async ({homePage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
@@ -124,7 +124,7 @@ test("Verify test data for QC",
 
 test("Verify test data for Reach-stacker",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
@@ -135,7 +135,7 @@ test("Verify test data for Reach-stacker",
 
 test("Verify test data for Remote operating Station",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 

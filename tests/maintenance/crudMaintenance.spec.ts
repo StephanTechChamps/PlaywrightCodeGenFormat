@@ -25,7 +25,7 @@ test.afterEach(async ({page}) => {
 });
 
 test("Create and complete maintenance schedule",
-    {tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]},
+    {tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]},
     async ({
                topMenuBarPage,
                maintenancePage,
@@ -53,7 +53,7 @@ test("Create and complete maintenance schedule",
     });
 
 test("Create, edit and delete a maintenance schedule", {
-        tag: [Tag.HTC, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.REGRESSION]
     },
     async ({
                topMenuBarPage,
@@ -91,7 +91,7 @@ test("Create, edit and delete a maintenance schedule", {
 
 test("Arrange and filter table data",
     {
-        tag: [Tag.HTC, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.REGRESSION]
     }, async ({topMenuBarPage, maintenancePage, addMaintenanceFormPage, maintenanceTable}) => {
         await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD maintenance"}]);
 

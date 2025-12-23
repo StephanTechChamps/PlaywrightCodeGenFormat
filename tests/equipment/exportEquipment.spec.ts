@@ -15,7 +15,7 @@ async function setAllureProperties() {
 
 test("Export a specific selection of equipment",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage,equipmentOverviewPage,exportEquipmentFormPage}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{ name: "suite", value: "Export equipment" }]);
 
@@ -26,7 +26,7 @@ test("Export a specific selection of equipment",
 
 test("Export all equipment",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage,equipmentOverviewPage,exportEquipmentFormPage}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{ name: "suite", value: "Export equipment" }]);
 

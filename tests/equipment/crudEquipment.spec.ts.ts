@@ -8,9 +8,9 @@ import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDat
 import {ctbExpectedDataForAcs} from "../../test-data/equipment/ctb/expect/ctbAcsEquipment";
 import {ctbExpectedDataForAcsAfterImport} from "../../test-data/equipment/ctb/ctbAcsEquipmentWithImportedData";
 
-import {expectedDataForEquipmentACS} from "../../test-data/equipment/htc/equipmentTestDataForACS";
-import {htcValidateCreatedARMG} from "../../test-data/equipment/htc/htcValidateCreatedARMG"
-import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/htc/htcEquipmentTestDataForARMG";
+import {expectedDataForEquipmentACS} from "../../test-data/equipment/hct/equipmentTestDataForACS";
+import {htcValidateCreatedARMG} from "../../test-data/equipment/hct/htcValidateCreatedARMG"
+import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/hct/htcEquipmentTestDataForARMG";
 import {Tag} from "../../enums/tag";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
@@ -19,7 +19,7 @@ test.use({ignoreHTTPSErrors: true});
 
 test("Create and delete a A-RMG (only essential fields)",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({homePage, addArmgFormPage, equipmentTable, confirmDeleteEquipmentFormPage}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
@@ -45,7 +45,7 @@ test("Create and delete a A-RMG (only essential fields)",
 // @TODO: alter the edit step of the test
 test("Create and edit a A-RMG (only essential fields)",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({homePage, addArmgFormPage, equipmentTable, confirmDeleteEquipmentFormPage, editArmgFormPage}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
@@ -105,7 +105,7 @@ test("Create and delete AGV equipment (only essential fields)",
 
 test("Create and delete QC equipment (only essential fields)",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     },
     async ({homePage, equipmentTable, confirmDeleteEquipmentFormPage, addQCFormPage}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
@@ -159,7 +159,7 @@ test("Create and delete ACS equipment (only essential fields)",
 // @TODO: finish validation for creation of MSC
 test("Create a MSC (only essential fields)",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage, addMscFormPage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
@@ -174,7 +174,7 @@ test("Create a MSC (only essential fields)",
 // @TODO: finish validation for creation of REACH STACKER
 test("Create a REACH STACKER (only essential fields)",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage, addMscFormPage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
@@ -189,7 +189,7 @@ test("Create a REACH STACKER (only essential fields)",
 // @TODO: finish validation for creation of REMOTE OPERATING WORK STATION
 test("Create a remote operating station (only essential fields)",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage, addMscFormPage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
@@ -204,7 +204,7 @@ test("Create a remote operating station (only essential fields)",
 // @TODO: finish validation for creation of TERMINAL TRUCK
 test("Create a Terminal truck (only essential fields)",
     {
-        tag: [Tag.HTC, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
     }, async ({homePage, addMscFormPage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 

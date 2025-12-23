@@ -8,7 +8,7 @@ test.use({ignoreHTTPSErrors: true});
 
 
 test("Delete equipment-type A-RMG", {
-    tag: [Tag.HTC, Tag.REGRESSION]
+    tag: [Tag.HCT, Tag.REGRESSION]
 }, async ({homePage, equipmentTable}) => {
     await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
@@ -17,7 +17,7 @@ test("Delete equipment-type A-RMG", {
 });
 
 test("Delete equipment-type MSC", {
-    tag: [Tag.HTC, Tag.REGRESSION]
+    tag: [Tag.HCT, Tag.REGRESSION]
 }, async ({homePage, equipmentTable}) => {
     await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
@@ -26,7 +26,7 @@ test("Delete equipment-type MSC", {
 })
 
 test("Delete equipment-type QC", {
-    tag: [Tag.HTC, Tag.REGRESSION]
+    tag: [Tag.HCT, Tag.REGRESSION]
 }, async ({homePage, equipmentTable}) => {
     await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
@@ -35,7 +35,7 @@ test("Delete equipment-type QC", {
 })
 
 test("Delete equipment-type REACH-STACKER", {
-    tag: [Tag.HTC, Tag.REGRESSION]
+    tag: [Tag.HCT, Tag.REGRESSION]
 }, async ({homePage, equipmentTable}) => {
     await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
@@ -44,7 +44,7 @@ test("Delete equipment-type REACH-STACKER", {
 })
 
 test("Delete equipment-type Terminal Truck", {
-    tag: [Tag.HTC, Tag.REGRESSION]
+    tag: [Tag.HCT, Tag.REGRESSION]
 }, async ({homePage, equipmentTable}) => {
     await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
