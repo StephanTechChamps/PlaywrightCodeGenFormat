@@ -1,17 +1,10 @@
 import {test} from '../../fixtures/tests.fixtures'
-import {label, severity, tag} from "allure-js-commons";
 import {VehicleType} from "../../enums/vehicleType";
 import {Tag} from "../../enums/tag";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
 
 test.use({ignoreHTTPSErrors: true});
-
-async function setAllureProperties() {
-    await severity("Critical");
-    await tag("Smoke");
-    await label("suite", "Export equipment");
-}
 
 test("Export a specific selection of equipment",
     {
