@@ -133,7 +133,7 @@ test("Verify test data for Reach-stacker",
         expect(actualData).toEqual(expectedDataForReachStacker)
     })
 
-//@TODO: Possible bug in new EquipmentManager. Check if type field is set tp Remote Operating station in datatable.
+//@TODO: Possible bug in new EquipmentManager. Check if type field is set to Remote Operating station in datatable.
 // Or just run this test in the new equipment manager
 test("Verify test data for Remote operating Station",
     {
