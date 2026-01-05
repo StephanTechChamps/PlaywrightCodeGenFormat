@@ -8,7 +8,6 @@ import { EquipmentOverviewPage } from '../pom/equipment/equipmentOverviewPage';
 import { ExportEquipmentFormPage } from '../pom/equipment/exportEquipmentFormPage';
 import { ConfirmDeleteEquipmentFormPage } from '../pom/equipment/confirmDeleteEquipmentFormPage';
 
-import { AddEquipmentFormPage } from '../pom/equipment/addForm/addEquipmentFormPage';
 import { AddAcsFormPage } from '../pom/equipment/addForm/addAcsFormPage';
 import { AddAgvFormPage } from '../pom/equipment/addForm/addAgvFormPage';
 import { AddArmgFormPage } from '../pom/equipment/addForm/addArmgFormPage';
@@ -38,7 +37,6 @@ type PagesFixture = {
     addArmgFormPage: AddArmgFormPage;
     addArtgFormPage: AddArtgFormPage;
     addAstradFormPage: AddAstradFormPage;
-    addEquipmentFormPage: AddEquipmentFormPage;
     addMscFormPage: AddMscFormPage;
     addQCFormPage: AddQCFormPage;
     addRemoteOperatingStationFormPage: AddRemoteOperatingStationFormPage;
@@ -100,7 +98,6 @@ export const test = base.extend<PagesFixture>({
     confirmDeleteEquipmentFormPage: async ({ page }, use) =>
         use(new ConfirmDeleteEquipmentFormPage(page)),
 
-    addEquipmentFormPage: async ({ page }, use) => use(new AddEquipmentFormPage(page)),
     addAcsFormPage: async ({ page }, use) => use(new AddAcsFormPage(page)),
     addAgvFormPage: async ({ page }, use) => use(new AddAgvFormPage(page)),
     addArmgFormPage: async ({ page }, use) => use(new AddArmgFormPage(page)),

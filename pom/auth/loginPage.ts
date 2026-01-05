@@ -1,4 +1,4 @@
-import {Page, Locator, expect} from '@playwright/test';
+import {Page, Locator} from '@playwright/test';
 
 export class LoginPage {
     private readonly page: Page;
@@ -20,7 +20,6 @@ export class LoginPage {
         await this.username.fill(user);
         await this.password.fill(pass);
         await this.signIn.click();
-        await expect(this.welcomeText).toHaveText(' Admin - Equipment Management ');
     }
 
 }

@@ -1,4 +1,4 @@
-import {expect, Locator, Page} from "@playwright/test";
+import {Locator, Page} from "@playwright/test";
 import {equipmentTableRowDataForARMG} from "../../interfaces/equipment/equipmentTableRowDataForARMG";
 import {equipmentTableRowDataForQC} from "../../interfaces/equipment/equipmentTableRowDataForQC";
 import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentTableRowDataForACS";
@@ -80,7 +80,7 @@ export class EquipmentTable {
     }
 
     async asserDataTableIsVisible() {
-        await expect(this.equipmentTable).toBeVisible();
+        await this.equipmentTable.waitFor({ state: 'visible' });
     }
 
     async getActualEquipmentTableDataForARMG(): Promise<equipmentTableRowDataForARMG[]> {

@@ -1,4 +1,4 @@
-import {expect, Locator, Page} from "@playwright/test";
+import {Locator, Page} from "@playwright/test";
 
 export class ExportEquipmentFormPage {
     private readonly page: Page;
@@ -32,7 +32,7 @@ export class ExportEquipmentFormPage {
     }
 
     private async exportFile(fileName: string) {
-        await expect(this.equipmentExportForm).toBeVisible();
+        await this.equipmentExportForm.waitFor({ state: 'visible' });
         await this.fileInput.fill(fileName);
     }
 
