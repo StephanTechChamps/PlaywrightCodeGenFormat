@@ -1,4 +1,4 @@
-export const DURATION = {
+export const Duration = {
     SHORT: 1000,
     MEDIUM: 5000,
     LONG: 10000,

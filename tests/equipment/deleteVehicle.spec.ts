@@ -2,7 +2,7 @@ import {test} from "../../fixtures/tests.fixtures";
 import {VehicleType} from "../../enums/vehicleType";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
-import {Tag} from "../../enums/tag";
+import {Tag} from "../../enums/Tag";
 
 test.use({ignoreHTTPSErrors: true});
 

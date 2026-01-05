@@ -2,12 +2,12 @@ import {test} from "../../fixtures/tests.fixtures";
 import {VehicleType} from "../../enums/vehicleType";
 import {expect} from "../../fixtures/tests.fixtures";
 import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
-import {DURATION} from "../../config/DURATION";
+import {Duration} from "../../config/Duration";
 import {ctbValidateEditedQC} from "../../test-data/equipment/ctb/edited/ctbValidateEditedQc";
 import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
 import {ctbValidateEditedAGV} from "../../test-data/equipment/ctb/edited/ctbValidateEditedAGV";
 import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
-import {Tag} from "../../enums/tag";
+import {Tag} from "../../enums/Tag";
 import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/ctbValidateCreatedAGV";
 import {ctbExpectedDataForAcs} from "../../test-data/equipment/ctb/expect/ctbAcsEquipment";
 import {ctbValidateCreatedACS} from "../../test-data/equipment/ctb/created/ctbValidateCreatedAcs";
@@ -34,7 +34,7 @@ test("Create, edit and delete a QC equipment (only essential fields)",
             45, "V2", "test", "www.koneCranes.com");
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbValidateCreatedQC);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbValidateCreatedQC);
 
         await equipmentTable.openEditEquipmentMenu("Test QC");
         await editQCFormPage.editQC(
@@ -42,7 +42,7 @@ test("Create, edit and delete a QC equipment (only essential fields)",
             90, "V2-edited", "edited-test", "www.editKoneCranes.com");
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbValidateEditedQC);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbValidateEditedQC);
 
         await editQCFormPage.closeEditForm();
         await equipmentTable.deleteEquipment("Edited QC");
@@ -50,7 +50,7 @@ test("Create, edit and delete a QC equipment (only essential fields)",
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForQc);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForQc);
     }
 )
 
@@ -71,21 +71,21 @@ test("Create, edit and delete an AGV equipment (only essential fields",
         await addAgvFormPage.createAGV("Test AGV", 203, "v2", "Creative", 10, 96000);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.EXTREMELY_LONG}).toEqual(ctbValidateCreatedAGV,);
+        }, {timeout: Duration.EXTREMELY_LONG}).toEqual(ctbValidateCreatedAGV,);
 
         await equipmentTable.openEditEquipmentMenu("Test AGV");
         await editAgvFormPage.editAGV("Edited AGV", 600, "edited v2.1", "Edited", 30, 600);
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.EXTREMELY_LONG}).toEqual(ctbValidateEditedAGV);
+        }, {timeout: Duration.EXTREMELY_LONG}).toEqual(ctbValidateEditedAGV);
 
         await editAgvFormPage.closeEditForm();
         await equipmentTable.deleteEquipment("Edited AGV");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: DURATION.EXTREMELY_LONG}).toEqual(ctbExpectedDataForQc);
+        }, {timeout: Duration.EXTREMELY_LONG}).toEqual(ctbExpectedDataForQc);
     })
 
 test("Create, edit and delete an ACS equipment (only essential fields",
@@ -107,7 +107,7 @@ test("Create, edit and delete an ACS equipment (only essential fields",
         await equipmentTable.navigateToTablePage(2);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbValidateCreatedACS);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbValidateCreatedACS);
 
         await equipmentTable.openEditEquipmentMenu("Test ACS");
         await editAcsFormPage.editACS("Edited ACS", "Edited", 30, 30, 30, 600,
@@ -115,7 +115,7 @@ test("Create, edit and delete an ACS equipment (only essential fields",
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbValidateEditedACS);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbValidateEditedACS);
 
         await editAcsFormPage.closeEditForm();
 
@@ -123,5 +123,5 @@ test("Create, edit and delete an ACS equipment (only essential fields",
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForAcsPage2);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcsPage2);
     })

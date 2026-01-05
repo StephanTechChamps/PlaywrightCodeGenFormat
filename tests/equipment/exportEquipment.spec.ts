@@ -1,6 +1,6 @@
 import {test} from '../../fixtures/tests.fixtures'
 import {VehicleType} from "../../enums/vehicleType";
-import {Tag} from "../../enums/tag";
+import {Tag} from "../../enums/Tag";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
 

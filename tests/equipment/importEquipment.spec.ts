@@ -9,9 +9,9 @@ import {
     expectedDataForRemoteOperatingStation
 } from "../../test-data/equipment/hct/equipmentTestDataForRemoteOperatingStation";
 import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
-import {Tag} from "../../enums/tag";
+import {Tag} from "../../enums/Tag";
 import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
-import {DURATION} from "../../config/DURATION";
+import {Duration} from "../../config/Duration";
 import {expectedDataForEquipmentAGVAfterImport} from "../../test-data/equipment/ctb/ctbAGVEquipmentWithImportedData";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
@@ -37,7 +37,7 @@ test("BUG: TEAMS-46730: Import file and delete AGV equipment",
         await equipmentOverviewPage.importAllEquipmentFromCtbFile("ctbAGV611.csv");
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.VERY_LONG}).toEqual(expectedDataForEquipmentAGVAfterImport);
+        }, {timeout: Duration.VERY_LONG}).toEqual(expectedDataForEquipmentAGVAfterImport);
 
         await equipmentOverviewPage.searchEquipment('AGV611')
         await equipmentTable.deleteEquipment("AGV611");
@@ -45,7 +45,7 @@ test("BUG: TEAMS-46730: Import file and delete AGV equipment",
         await equipmentOverviewPage.clearSearchInput();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.VERY_LONG}).toEqual(ctbExpectedDataForEquipmentAGV);
+        }, {timeout: Duration.VERY_LONG}).toEqual(ctbExpectedDataForEquipmentAGV);
     });
 
 
@@ -72,7 +72,7 @@ test("Import QC equipment from a file",
         await equipmentOverviewPage.importAllEquipmentFromCtbFile("expect/ctbImportQCdata.csv")
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: DURATION.VERY_LONG}).toEqual(ctbValidateCreatedQC);
+        }, {timeout: Duration.VERY_LONG}).toEqual(ctbValidateCreatedQC);
     });
 
 

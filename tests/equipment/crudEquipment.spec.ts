@@ -1,8 +1,8 @@
-import {expect, test} from '../../fixtures/tests.fixtures'
+import {expect,test} from "../../fixtures/tests.fixtures";
 import {VehicleType} from "../../enums/vehicleType";
 import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
 import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/ctbValidateCreatedAGV";
-import {DURATION} from "../../config/DURATION";
+import {Duration} from "../../config/Duration";
 import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
 import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
 import {ctbExpectedDataForAcs} from "../../test-data/equipment/ctb/expect/ctbAcsEquipment";
@@ -11,7 +11,7 @@ import {ctbExpectedDataForAcsAfterImport} from "../../test-data/equipment/ctb/ct
 import {expectedDataForEquipmentACS} from "../../test-data/equipment/hct/equipmentTestDataForACS";
 import {htcValidateCreatedARMG} from "../../test-data/equipment/hct/htcValidateCreatedARMG"
 import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/hct/htcEquipmentTestDataForARMG";
-import {Tag} from "../../enums/tag";
+import {Tag} from "../../enums/Tag";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
 
@@ -32,13 +32,13 @@ test("Create and delete a A-RMG (only essential fields)",
             'Test A-RMG', 300, 200, 3000, "1.4", 'newHost', 20);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForARMG();
-        }, {timeout: DURATION.SHORT}).toEqual(htcValidateCreatedARMG);
+        }, {timeout: Duration.SHORT}).toEqual(htcValidateCreatedARMG);
 
         await equipmentTable.deleteEquipment("Test A-RMG");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
-            return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.LONG}).toEqual(htcExpectedDataForEquipmentARMG);
+            return await equipmentTable.getActualEquipmentTableDataForARMG();
+        }, {timeout: Duration.LONG}).toEqual(htcExpectedDataForEquipmentARMG);
 
     });
 
@@ -58,7 +58,7 @@ test("Create and edit a A-RMG (only essential fields)",
             'Test A-RMG', 300, 200, 3000, "1.4", 'newHost', 20);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForARMG();
-        }, {timeout: DURATION.LONG}).toEqual(htcValidateCreatedARMG);
+        }, {timeout: Duration.LONG}).toEqual(htcValidateCreatedARMG);
 
         await equipmentTable.openEditEquipmentMenu('Test A-RMG');
         await editArmgFormPage.editEquipment({
@@ -67,13 +67,13 @@ test("Create and edit a A-RMG (only essential fields)",
         })
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForARMG();
-        }, {timeout: DURATION.SHORT}).toEqual(htcValidateCreatedARMG);
+        }, {timeout: Duration.SHORT}).toEqual(htcValidateCreatedARMG);
 
         await equipmentTable.deleteEquipment("Test A-RMG");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.LONG}).toEqual(htcExpectedDataForEquipmentARMG);
+        }, {timeout: Duration.LONG}).toEqual(htcExpectedDataForEquipmentARMG);
 
     });
 
@@ -92,13 +92,13 @@ test("Create and delete AGV equipment (only essential fields)",
         await addAgvFormPage.createAGV("Test AGV", 203, "v2", "Creative", 10, 96000);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.SHORT}).toEqual(ctbValidateCreatedAGV);
+        }, {timeout: Duration.SHORT}).toEqual(ctbValidateCreatedAGV);
 
         await equipmentTable.deleteEquipment("Test AGV");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: DURATION.LONG}).toEqual(ctbExpectedDataForEquipmentAGV);
+        }, {timeout: Duration.LONG}).toEqual(ctbExpectedDataForEquipmentAGV);
     }
 )
 
@@ -119,13 +119,13 @@ test("Create and delete QC equipment (only essential fields)",
             45, "V2", "test", "www.koneCranes.com");
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: DURATION.SHORT}).toEqual(ctbValidateCreatedQC);
+        }, {timeout: Duration.SHORT}).toEqual(ctbValidateCreatedQC);
 
         await equipmentTable.deleteEquipment("Test QC");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForQC();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForQc);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForQc);
     }
 )
 
@@ -147,13 +147,13 @@ test("Create and delete ACS equipment (only essential fields)",
             40000, 7, 43);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForAcsAfterImport);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcsAfterImport);
 
         await equipmentTable.deleteEquipment("Test ACS");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: DURATION.MEDIUM}).toEqual(ctbExpectedDataForAcs);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcs);
     });
 
 // @TODO: finish validation for creation of MSC

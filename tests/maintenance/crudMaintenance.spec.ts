@@ -1,8 +1,8 @@
 
 import {expect, test} from '../../fixtures/tests.fixtures'
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
-import {DURATION} from "../../config/DURATION"
-import {Tag} from "../../enums/tag";
+import {Duration} from "../../config/Duration"
+import {Tag} from "../../enums/Tag";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
 
@@ -16,7 +16,7 @@ test.afterEach(async ({page}) => {
 
     while (await rows().count() > 1) {
         const row = rows().first();
-        await page.waitForSelector('.v-overlay__scrim', {state: 'hidden', timeout: DURATION.MEDIUM}).catch(() => {
+        await page.waitForSelector('.v-overlay__scrim', {state: 'hidden', timeout: Duration.MEDIUM}).catch(() => {
         });
         await row.hover();
         await row.click();
@@ -86,7 +86,7 @@ test("Create, edit and delete a maintenance schedule", {
         await maintenanceTable.removeMaintenanceMaintenanceEvent(vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
         await expect.poll(async () => {
             return await maintenanceTable.getActualEquipmentTableData();
-        }, {timeout: DURATION.LONG}).toHaveLength(0)
+        }, {timeout: Duration.LONG}).toHaveLength(0)
     })
 
 test("Arrange and filter table data",
