@@ -7,6 +7,10 @@ import {
     equipmentTableRowDataForREMOTEOPERATINGSTATION
 } from "../../interfaces/equipment/equipmentTableRowDataForREMOTEOPERATINGSTATION";
 import {equipmentTableRowDataForMSC} from "../../interfaces/equipment/equipmentTableRowDataMSC";
+import {equipmentTableRowDataForBES} from "../../interfaces/equipment/equipmentTableRowDataForBES";
+import {equipmentTableRowDataForAUTOTT} from "../../interfaces/equipment/equipmentTableRowDataForAUTOTT";
+import {equipmentTableRowForARTG} from "../../interfaces/equipment/equipmentTableRowDataForARTG";
+import {equipmentTableRowDataForASTRAD} from "../../interfaces/equipment/equipmentTableRowDataForASTRAD";
 
 export function mapAllValuesToARMGObjects(value: string[]): equipmentTableRowDataForARMG {
     return {
@@ -23,6 +27,23 @@ export function mapAllValuesToARMGObjects(value: string[]): equipmentTableRowDat
         stackProfilingPort: value[10] ?? '',
         craneId: value[11] ?? '',
         boundary: value[12] ?? '',
+    };
+}
+
+export function mapAllValuesToASTRADObjects(value: string[]): equipmentTableRowDataForASTRAD {
+    return {
+        name: value[0] ?? '',
+        maxWeight: value[1] ?? '',
+        liftCapability: value[2] ?? '',
+        maxTwinWeightDifference: value[3] ?? "",
+        maxTierHeight: value[4] ?? "",
+        softwareVersion:  value[5] ?? "",
+        hostName:  value[6] ?? "",
+        portNumber:  value[7] ?? "",
+        subType:  value[8] ?? "",
+        protocolType:  value[9] ?? "",
+        energySource:  value[10] ?? "",
+        boundary:  value[11] ?? "",
     };
 }
 
@@ -46,25 +67,6 @@ export function mapAllValuesToQCObjects(value: string[]): equipmentTableRowDataF
     };
 }
 
-// export function mapAllValuesToQCObjects(value: string[]): equipmentTableRowDataForQC {
-//     return {
-//         name: value[0] ?? '',
-//         maxWeight: value[1] ?? '',
-//         liftCapability: value[2] ?? '',
-//         maxTwinWeightDifference: value[3] ?? '',
-//         portalTrolley: value[4] ?? '',
-//         platform: value[5] ?? '',
-//         availableLocationsOnPlatform: value[6] ?? '',
-//         sharedLegSpace: value[6] ?? '',
-//         berth: value[7] ?? '',
-//         lane: value[8] ?? '',
-//         typologyIndex: value[9] ?? '',
-//         softwareVersion: value[10] ?? '',
-//         provider: value[11] ?? '',
-//         url: value[12] ?? '',
-//         boundary: value[13] ?? '',
-//     };
-// }
 
 export function mapAllValuesToACSObjects(value: string[]): equipmentTableRowDataForACS {
     return {
@@ -113,6 +115,45 @@ export function mapAllValuesToRemoteOperatingStationObjects(value: string[]): eq
         allowedOperations: value[3] ?? '',
     };
 }
+
+export function mapAllValuesToBESObjects(value: string[]): equipmentTableRowDataForBES {
+    return {
+        name: value[0] ?? '',
+        associatedLocations: value[1] ?? '',
+        associatedBuffer: value[2] ?? '',
+    };
+}
+
+export function mapAllValuesToAUTOTTObjects(value: string[]): equipmentTableRowDataForAUTOTT {
+    return {
+        name: value[0] ?? '',
+        maxWeight: value[1] ?? '',
+        liftCapability: value[2] ?? '',
+        maxTwinWeightDifference: value[3] ?? '',
+        provider: value[4] ?? '',
+        url: value[5] ?? '',
+        boundary: value[6] ?? ''
+    };
+}
+
+export function mapAllValuesToARTGObjects(value: string[]): equipmentTableRowForARTG {
+    return {
+        name: value[0] ?? '',
+        length: value[1] ?? '',
+        width: value[2] ?? '',
+        maxWeight: value[3] ?? '',
+        liftCapability: value[4] ?? '',
+        maxTwinWeightDifference: value[5] ?? '',
+        maxTierHeight: value[6] ?? '',
+        softwareVersion: value[7] ?? '',
+        hostName: value[8] ?? '',
+        automationPort: value[9] ?? '',
+        stackProfilingPort: value[10] ?? '',
+        craneId: value[11] ?? '',
+        boundary: value[12] ?? '',
+    };
+}
+
 
 export function mapAllValuesToMSCObjects(value: string[]): equipmentTableRowDataForMSC {
     return {

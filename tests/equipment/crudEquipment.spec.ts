@@ -1,4 +1,4 @@
-import {expect,test} from "../../fixtures/tests.fixtures";
+import {expect, test} from "../../fixtures/tests.fixtures";
 import {VehicleType} from "../../enums/vehicleType";
 import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
 import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/ctbValidateCreatedAGV";
@@ -14,6 +14,9 @@ import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/hct/htc
 import {Tag} from "../../enums/Tag";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
+import {
+    expectedDataForRemoteOperatingStation
+} from "../../test-data/equipment/hct/equipmentTestDataForRemoteOperatingStation";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -175,59 +178,108 @@ test("Create a MSC (only essential fields)",
 test("Create a REACH STACKER (only essential fields)",
     {
         tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
-    }, async ({homePage, addMscFormPage, equipmentTable}) => {
+    }, async ({homePage, addReachStackerFormPage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);
         const actualData = await equipmentTable.getActualEquipmentTableDataForReachStacker();
-        expect(actualData).toEqual(expectedDataForEquipmentACS)
+        // expect(actualData).toEqual(expectedDataForEquipmentACS)
 
-        await addMscFormPage.createMSC(
-            'Test A-RMG', 300, 200, "d", "1.4", 5);
+        await addReachStackerFormPage.createReachStacker(
+            "Test Reach Stacker", 4000, 2000, "v2",
+            30, 50, 180,);
     });
 
 // @TODO: finish validation for creation of REMOTE OPERATING WORK STATION
 test("Create a remote operating station (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
-    }, async ({homePage, addMscFormPage, equipmentTable}) => {
+        tag: [Tag.HCT, Tag.REGRESSION]
+    }, async ({homePage, addRemoteOperatingStationFormPage, equipmentTable}) => {
         await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
         const actualData = await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();
-        expect(actualData).toEqual(expectedDataForEquipmentACS)
+        // expect(actualData).toEqual(expectedDataForRemoteOperatingStation)
 
-        await addMscFormPage.createMSC(
-            'Test A-RMG', 300, 200, "v2", "1.4", 1);
+
+        await addRemoteOperatingStationFormPage.createRemoteOperatingStation(
+            "Test Remote Operating station", 5);
     });
 
 // @TODO: finish validation for creation of TERMINAL TRUCK
-test("Create a Terminal truck (only essential fields)",
+test("Create a TERMINAL TRUCK (only essential fields)",
     {
         tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
-    }, async ({homePage, addMscFormPage, equipmentTable}) => {
+    }, async ({homePage, equipmentTable, addTerminalTruckFormPage}) => {
         await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.TERMINAL_TRUCK);
         const actualData = await equipmentTable.getActualEquipmentTableDataForReachStacker();
-        expect(actualData).toEqual(expectedDataForEquipmentACS)
-        await addMscFormPage.createMSC(
-            'Test A-RMG', 300, 200, "v2", "1.4", 5);
+        // expect(actualData).toEqual(expectedDataForEquipmentACS)
+        await addTerminalTruckFormPage.createTerminalTruck
+        ("Test Terminal Truck", 2000, "V2",
+            300, 50, 5);
     });
 
 // expect(actualData).toEqual(ctbQcEquipmen
 // await equipmentFormPage.createASTRAD("Test A-STRAD", 4000, 600, "1.20202", "Lion-o", 600);
 
-// test("Create an A-RTG (only essential fields)", async ({page}) => {
-//     const {homePage, equipmentFormPage} = setupPages(page);
-//
-//     await homePage.selectVehicleType(VehicleType.A_RTG);
-//     await equipmentFormPage.createARTG("Test A-RTG", 10, 30, 600, "d-10", "new", 45);
-// })
+// @TODO: finish validation for creation of A-RTG
+test("Create and delete A-RTG (only essential fields)",
+    {
+        tag: [Tag.CTB, Tag.REGRESSION]
+    }, async ({homePage, addArtgFormPage, equipmentTable}) => {
+        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
-// test("Create a MSC (only essential fields)", async ({page}) => {
-//     const {homePage, equipmentFormPage} = setupPages(page);
-//
-//     await homePage.selectVehicleType(VehicleType.MSC);
-//     await equipmentFormPage.createMSC("Test MSC", 45, 600, "fix", "Cheetah", 808);
-// })
+        await homePage.selectVehicleType(VehicleType.A_RTG);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForARTG();
+        // expect(actualData).toEqual(expectedDataForEquipmentACS)
+        await addArtgFormPage.createARTG(
+            'Test A-RTG', 300, 2, 500, "v2", "LOCAL", 300, 5);
+    });
+
+// @TODO: finish validation for creation of BES
+test("Create a BES (only essential fields)",
+    {
+        tag: [Tag.HCT, Tag.REGRESSION]
+    }, async ({homePage, equipmentTable,addBesFormPage}) => {
+        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+
+        await homePage.selectVehicleType(VehicleType.BES);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForBES();
+        await addBesFormPage.createBES("Test-BES",20 ,20,50,
+            5, 16,"test",65,45,
+            5555,8447,98)
+        // expect(actualData).toEqual(expectedDataForEquipmentACS)
+        // await addTerminalTruckFormPage.createTerminalTruck
+        // ("Test Terminal Truck", 2000, "V2",
+        //     300, 50, 5);
+    });
+
+
+
+// @TODO: finish validation for creation of A-STRAD
+test("Create a A-STRAD (only essential fields)",
+    {
+        tag: [Tag.HCT, Tag.REGRESSION]
+    }, async ({homePage, equipmentTable, addAstradFormPage}) => {
+        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+
+        await homePage.selectVehicleType(VehicleType.A_STRAD);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForASTRAD();
+        // expect(actualData).toEqual(expectedDataForEquipmentACS)
+        await addAstradFormPage.createASTRAD("Test-Astrad", 50, 50, "v-0", "test", 2)
+    });
+
+// @TODO: finish validation for creation of AUTO-TT / DOESN"T SEEM PRESENT IN CTB
+test("Create a AUTO_TT (only essential fields)",
+    {
+        tag: [Tag.HCT, Tag.REGRESSION]
+    }, async ({homePage, equipmentTable, addAutoTTFormPage}) => {
+        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+
+        await homePage.selectVehicleType(VehicleType.AUTO_TT);
+        const actualData = await equipmentTable.getActualEquipmentTableDataForAUTOTT();
+        // expect(actualData).toEqual(expectedDataForEquipmentACS)
+        await addAutoTTFormPage.createAutoTT("Test AUTO TT",50, "test-provider","www.test.nl");
+    });

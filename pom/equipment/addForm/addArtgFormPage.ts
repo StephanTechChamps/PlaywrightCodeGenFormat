@@ -17,13 +17,12 @@ export class AddArtgFormPage extends BaseFormPage {
 
     constructor(page: Page) {
         super(new HomePage(page));
+        this.saveButton = page.locator('//span[text()=" Save "]/parent::button');
         this.name = page.locator('(//label[text()="* Name"]/following-sibling::input)[1]');
         this.maxWeight = page.locator('//label[text()="* Max weight (kg)"]/following-sibling::input');
-
         this.softwareVersion = page.locator('//label[text()="* Software version"]/following-sibling::input');
         this.hostName = page.locator('//label[text()="* Host name"]/following-sibling::input');
         this.portNumber = page.locator('//label[text()="* Port number"]/following-sibling::input');
-
         this.craneId = page.locator('//label[text()="* Crane id"]/following-sibling::input');
         this.maxTierHeight = page.locator('//label[text()="* Max tier height"]/following-sibling::input');
         this.stackProfilingPort = page.locator('//label[text()="* Stack Profiling Port"]/following-sibling::input');
@@ -40,14 +39,6 @@ export class AddArtgFormPage extends BaseFormPage {
             {locator: this.hostName, action: Action.FILL, value: hostName},
             {locator: this.portNumber, action: Action.FILL, value: portNumber},
             {locator: this.stackProfilingPort, action: Action.FILL, value: stackProfilingPort},
-            // [this.name, name],
-            // [this.craneId, craneId],
-            // [this.maxWeight, maxWeight],
-            // [this.maxTierHeight, maxTierHeight],
-            // [this.softwareVersion, softwareVersion],
-            // [this.hostName, hostName],
-            // [this.portNumber, portNumber],
-            // [this.stackProfilingPort, portNumber],
         ]);
     }
 

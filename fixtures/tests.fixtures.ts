@@ -1,31 +1,35 @@
-import { test as base, expect as baseExpect } from '@playwright/test';
+import {test as base, expect as baseExpect} from '@playwright/test';
 
-import { HomePage } from '../pom/navigation/homePage';
-import { TopMenuBarPage } from '../pom/navigation/topMenuBarPage';
+import {HomePage} from '../pom/navigation/homePage';
+import {TopMenuBarPage} from '../pom/navigation/topMenuBarPage';
 
-import { EquipmentTable } from '../pom/equipment/equipmentTable';
-import { EquipmentOverviewPage } from '../pom/equipment/equipmentOverviewPage';
-import { ExportEquipmentFormPage } from '../pom/equipment/exportEquipmentFormPage';
-import { ConfirmDeleteEquipmentFormPage } from '../pom/equipment/confirmDeleteEquipmentFormPage';
+import {EquipmentTable} from '../pom/equipment/equipmentTable';
+import {EquipmentOverviewPage} from '../pom/equipment/equipmentOverviewPage';
+import {ExportEquipmentFormPage} from '../pom/equipment/exportEquipmentFormPage';
+import {ConfirmDeleteEquipmentFormPage} from '../pom/equipment/confirmDeleteEquipmentFormPage';
 
-import { AddAcsFormPage } from '../pom/equipment/addForm/addAcsFormPage';
-import { AddAgvFormPage } from '../pom/equipment/addForm/addAgvFormPage';
-import { AddArmgFormPage } from '../pom/equipment/addForm/addArmgFormPage';
-import { AddArtgFormPage } from '../pom/equipment/addForm/addArtgFormPage';
-import { AddAstradFormPage } from '../pom/equipment/addForm/addAstradFormPage';
-import { AddMscFormPage } from '../pom/equipment/addForm/addMscFormPage';
-import { AddQCFormPage } from '../pom/equipment/addForm/addQCFormPage';
-import { AddRemoteOperatingStationFormPage } from '../pom/equipment/addForm/addRemoteOperatingStationFormPage';
+import {AddAcsFormPage} from '../pom/equipment/addForm/addAcsFormPage';
+import {AddAgvFormPage} from '../pom/equipment/addForm/addAgvFormPage';
+import {AddArmgFormPage} from '../pom/equipment/addForm/addArmgFormPage';
+import {AddArtgFormPage} from '../pom/equipment/addForm/addArtgFormPage';
+import {AddAstradFormPage} from '../pom/equipment/addForm/addAstradFormPage';
+import {AddMscFormPage} from '../pom/equipment/addForm/addMscFormPage';
+import {AddQCFormPage} from '../pom/equipment/addForm/addQCFormPage';
+import {AddRemoteOperatingStationFormPage} from '../pom/equipment/addForm/addRemoteOperatingStationFormPage';
+import {AddReachStackerFormPage} from "../pom/equipment/addForm/addReachStackerFormPage";
+import {AddTerminalTruckFormPage} from "../pom/equipment/addForm/addTerminalTruckFormPage";
+import {AddBesFormPage} from "../pom/equipment/addForm/addBesFormPage";
 
-import { EditAcsFormPage } from '../pom/equipment/editForm/editAcsFormPage';
-import { EditAgvFormPage } from '../pom/equipment/editForm/editAgvFormPage';
-import { EditArmgFormPage } from '../pom/equipment/editForm/editArmgFormPage';
-import { EditQCFormPage } from '../pom/equipment/editForm/editQCFormPage';
+import {EditAcsFormPage} from '../pom/equipment/editForm/editAcsFormPage';
+import {EditAgvFormPage} from '../pom/equipment/editForm/editAgvFormPage';
+import {EditArmgFormPage} from '../pom/equipment/editForm/editArmgFormPage';
+import {EditQCFormPage} from '../pom/equipment/editForm/editQCFormPage';
 
-import { AddMaintenanceFormPage } from '../pom/maintenance/addMaintenanceFormPage';
-import { CompleteMaintenanceForm } from '../pom/maintenance/completeMaintenaceForm';
-import { MaintenancePage } from '../pom/maintenance/maintenancePage';
-import { MaintenanceTable } from '../pom/maintenance/maintenanceTable';
+import {AddMaintenanceFormPage} from '../pom/maintenance/addMaintenanceFormPage';
+import {CompleteMaintenanceForm} from '../pom/maintenance/completeMaintenaceForm';
+import {MaintenancePage} from '../pom/maintenance/maintenancePage';
+import {MaintenanceTable} from '../pom/maintenance/maintenanceTable';
+import {AddAutottFormPage} from "../pom/equipment/addForm/addAutottFormPage";
 
 type PagesFixture = {
 
@@ -39,7 +43,11 @@ type PagesFixture = {
     addAstradFormPage: AddAstradFormPage;
     addMscFormPage: AddMscFormPage;
     addQCFormPage: AddQCFormPage;
+    addReachStackerFormPage: AddReachStackerFormPage;
     addRemoteOperatingStationFormPage: AddRemoteOperatingStationFormPage;
+    addTerminalTruckFormPage: AddTerminalTruckFormPage;
+    addBesFormPage: AddBesFormPage;
+    addAutoTTFormPage: AddAutottFormPage;
 
     editAcsFormPage: EditAcsFormPage;
     editAgvFormPage: EditAgvFormPage;
@@ -58,7 +66,7 @@ type PagesFixture = {
 };
 
 export const test = base.extend<PagesFixture>({
-    page: async ({ page }, use, testInfo) => {
+    page: async ({page}, use, testInfo) => {
         await page.goto('/');
 
         const net: string[] = [];
@@ -80,7 +88,7 @@ export const test = base.extend<PagesFixture>({
             });
 
             const shotPath = testInfo.outputPath('last-state.png');
-            await page.screenshot({ path: shotPath, fullPage: true });
+            await page.screenshot({path: shotPath, fullPage: true});
 
             await testInfo.attach('last-state.png', {
                 path: shotPath,
@@ -89,35 +97,40 @@ export const test = base.extend<PagesFixture>({
         }
     },
 
-    homePage: async ({ page }, use) => use(new HomePage(page)),
-    topMenuBarPage: async ({ page }, use) => use(new TopMenuBarPage(page)),
+    homePage: async ({page}, use) => use(new HomePage(page)),
+    topMenuBarPage: async ({page}, use) => use(new TopMenuBarPage(page)),
 
-    equipmentTable: async ({ page }, use) => use(new EquipmentTable(page)),
-    equipmentOverviewPage: async ({ page }, use) => use(new EquipmentOverviewPage(page)),
-    exportEquipmentFormPage: async ({ page }, use) => use(new ExportEquipmentFormPage(page)),
-    confirmDeleteEquipmentFormPage: async ({ page }, use) =>
+
+    equipmentTable: async ({page}, use) => use(new EquipmentTable(page)),
+    equipmentOverviewPage: async ({page}, use) => use(new EquipmentOverviewPage(page)),
+    exportEquipmentFormPage: async ({page}, use) => use(new ExportEquipmentFormPage(page)),
+    confirmDeleteEquipmentFormPage: async ({page}, use) =>
         use(new ConfirmDeleteEquipmentFormPage(page)),
 
-    addAcsFormPage: async ({ page }, use) => use(new AddAcsFormPage(page)),
-    addAgvFormPage: async ({ page }, use) => use(new AddAgvFormPage(page)),
-    addArmgFormPage: async ({ page }, use) => use(new AddArmgFormPage(page)),
-    addArtgFormPage: async ({ page }, use) => use(new AddArtgFormPage(page)),
-    addAstradFormPage: async ({ page }, use) => use(new AddAstradFormPage(page)),
-    addMscFormPage: async ({ page }, use) => use(new AddMscFormPage(page)),
-    addQCFormPage: async ({ page }, use) => use(new AddQCFormPage(page)),
-    addRemoteOperatingStationFormPage: async ({ page }, use) =>
+    addAcsFormPage: async ({page}, use) => use(new AddAcsFormPage(page)),
+    addAgvFormPage: async ({page}, use) => use(new AddAgvFormPage(page)),
+    addArmgFormPage: async ({page}, use) => use(new AddArmgFormPage(page)),
+    addArtgFormPage: async ({page}, use) => use(new AddArtgFormPage(page)),
+    addAstradFormPage: async ({page}, use) => use(new AddAstradFormPage(page)),
+    addMscFormPage: async ({page}, use) => use(new AddMscFormPage(page)),
+    addQCFormPage: async ({page}, use) => use(new AddQCFormPage(page)),
+    addRemoteOperatingStationFormPage: async ({page}, use) =>
         use(new AddRemoteOperatingStationFormPage(page)),
+    addReachStackerFormPage: async ({page}, use) => use(new AddReachStackerFormPage(page)),
+    addTerminalTruckFormPage: async ({page}, use) => use(new AddTerminalTruckFormPage(page)),
+    addBesFormPage: async ({page}, use) => use(new AddBesFormPage(page)),
+    addAutoTTFormPage: async ({page}, use) => use(new AddAutottFormPage(page)),
 
-    editAcsFormPage: async ({ page }, use) => use(new EditAcsFormPage(page)),
-    editAgvFormPage: async ({ page }, use) => use(new EditAgvFormPage(page)),
-    editArmgFormPage: async ({ page }, use) => use(new EditArmgFormPage(page)),
-    editQCFormPage: async ({ page }, use) => use(new EditQCFormPage(page)),
+    editAcsFormPage: async ({page}, use) => use(new EditAcsFormPage(page)),
+    editAgvFormPage: async ({page}, use) => use(new EditAgvFormPage(page)),
+    editArmgFormPage: async ({page}, use) => use(new EditArmgFormPage(page)),
+    editQCFormPage: async ({page}, use) => use(new EditQCFormPage(page)),
 
-    addMaintenanceFormPage: async ({ page }, use) => use(new AddMaintenanceFormPage(page)),
-    completeMaintenanceForm: async ({ page }, use) =>
+    addMaintenanceFormPage: async ({page}, use) => use(new AddMaintenanceFormPage(page)),
+    completeMaintenanceForm: async ({page}, use) =>
         use(new CompleteMaintenanceForm(page)),
-    maintenancePage: async ({ page }, use) => use(new MaintenancePage(page)),
-    maintenanceTable: async ({ page }, use) => use(new MaintenanceTable(page)),
+    maintenancePage: async ({page}, use) => use(new MaintenancePage(page)),
+    maintenanceTable: async ({page}, use) => use(new MaintenanceTable(page)),
 });
 
 export const expect = baseExpect;

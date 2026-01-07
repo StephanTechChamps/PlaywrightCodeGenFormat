@@ -23,6 +23,7 @@ export class AddQCFormPage extends BaseFormPage{
 
     constructor(page: Page) {
         super(new HomePage(page));
+        this.saveButton = page.locator('//span[text()=" Save "]/parent::button');
         this.name = page.locator('(//label[text()="* Name"]/following-sibling::input)[1]');
         this.maxWeight = page.locator('//label[text()="* Max weight (kg)"]/following-sibling::input');
         this.softwareVersion = page.locator('//label[text()="* Software version"]/following-sibling::input');
@@ -32,7 +33,6 @@ export class AddQCFormPage extends BaseFormPage{
         this.provider = page.locator('//label[text()="* Provider"]/following-sibling::input');
         this.url = page.locator('//label[text()="* Url"]/following-sibling::input');
         this.berthOption = page.locator('[class="tba-select__item"]');
-        this.saveButton = page.locator('//span[text()=" Save "]/parent::button');
         this.laneName = page.locator('(//label[text()="* Name"]/following-sibling::input)[2]');
         this.laneDistanceToQuay = page.locator('//label[text()="* Distance to quay (cm)"]/following-sibling::input');
         this.lanedTPlow = page.locator('//label[text()="* Transfer point (Low bollard)"]/following-sibling::input');

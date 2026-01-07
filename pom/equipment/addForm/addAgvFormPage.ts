@@ -14,13 +14,13 @@ export class AddAgvFormPage extends BaseFormPage {
 
     constructor(page: Page) {
         super(new HomePage(page));
+        this.saveButton = page.locator('//span[text()=" Save "]/parent::button');
         this.name = page.locator('(//label[text()="* Name"]/following-sibling::input)[1]');
         this.maxWeight = page.locator('//label[text()="* Max weight (kg)"]/following-sibling::input');
         this.softwareVersion = page.locator('//label[text()="* Software version"]/following-sibling::input');
         this.hostName = page.locator('//label[text()="* Host name"]/following-sibling::input');
         this.portNumber = page.locator('//label[text()="* Port number"]/following-sibling::input');
         this.twentyFeetContainerOffset = page.locator('//label[text()="* 20ft container offset (cm)"]/following-sibling::input');
-        this.saveButton = page.locator('//span[text()=" Save "]/parent::button');
     }
 
     async createAGV(name: string, maxWeight: number, softwareVersion: string, hostName: string, portNumber: number, twentyFeetContainerOffset: number) {

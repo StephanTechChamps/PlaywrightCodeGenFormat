@@ -4,9 +4,11 @@ import {equipmentTableRowDataForQC} from "../../interfaces/equipment/equipmentTa
 import {equipmentTableRowDataForACS} from "../../interfaces/equipment/equipmentTableRowDataForACS";
 import {equipmentTableRowForAGV} from "../../interfaces/equipment/equipmentTableRowDataForAGV";
 import {
+    mapAllValuesToASTRADObjects,
     mapAllValuesToACSObjects,
     mapAllValuesToAGVObjects,
-    mapAllValuesToARMGObjects, mapAllValuesToMSCObjects,
+    mapAllValuesToARMGObjects,
+    mapAllValuesToARTGObjects, mapAllValuesToAUTOTTObjects, mapAllValuesToBESObjects, mapAllValuesToMSCObjects,
     mapAllValuesToQCObjects,
     mapAllValuesToReachStackerObjects,
     mapAllValuesToRemoteOperatingStationObjects
@@ -16,6 +18,10 @@ import {
     equipmentTableRowDataForREMOTEOPERATINGSTATION
 } from "../../interfaces/equipment/equipmentTableRowDataForREMOTEOPERATINGSTATION";
 import {equipmentTableRowDataForMSC} from "../../interfaces/equipment/equipmentTableRowDataMSC";
+import {equipmentTableRowDataForBES} from "../../interfaces/equipment/equipmentTableRowDataForBES";
+import {equipmentTableRowDataForAUTOTT} from "../../interfaces/equipment/equipmentTableRowDataForAUTOTT";
+import {equipmentTableRowForARTG} from "../../interfaces/equipment/equipmentTableRowDataForARTG";
+import {equipmentTableRowDataForASTRAD} from "../../interfaces/equipment/equipmentTableRowDataForASTRAD";
 
 
 export class EquipmentTable {
@@ -91,6 +97,10 @@ export class EquipmentTable {
         return this.getActualEquipmentTableDataAndMap(mapAllValuesToQCObjects);
     }
 
+    async getActualEquipmentTableDataForASTRAD(): Promise<equipmentTableRowDataForASTRAD[]> {
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToASTRADObjects);
+    }
+
     async getActualEquipmentTableDataForACS(): Promise<equipmentTableRowDataForACS[]> {
         return this.getActualEquipmentTableDataAndMap(mapAllValuesToACSObjects);
 
@@ -111,6 +121,19 @@ export class EquipmentTable {
     async getActualEquipmentTableDataForRemoteOperatingStation(): Promise<equipmentTableRowDataForREMOTEOPERATINGSTATION[]> {
         return this.getActualEquipmentTableDataAndMap(mapAllValuesToRemoteOperatingStationObjects);
     }
+
+    async getActualEquipmentTableDataForBES(): Promise<equipmentTableRowDataForBES[]> {
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToBESObjects);
+    }
+
+    async getActualEquipmentTableDataForAUTOTT(): Promise<equipmentTableRowDataForAUTOTT[]> {
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToAUTOTTObjects);
+    }
+
+    async getActualEquipmentTableDataForARTG(): Promise<equipmentTableRowForARTG[]> {
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToARTGObjects);
+    }
+
 
     private async getActualEquipmentTableDataAndMap<T>(callback: (value: string[]) => T): Promise<T[]> {
         const contents: string[][] = await this.getArrayOfTableRowsAsArraysOfStrings();
