@@ -11,6 +11,8 @@ import {equipmentTableRowDataForBES} from "../../interfaces/equipment/equipmentT
 import {equipmentTableRowDataForAUTOTT} from "../../interfaces/equipment/equipmentTableRowDataForAUTOTT";
 import {equipmentTableRowForARTG} from "../../interfaces/equipment/equipmentTableRowDataForARTG";
 import {equipmentTableRowDataForASTRAD} from "../../interfaces/equipment/equipmentTableRowDataForASTRAD";
+import {equipmentTableRowForRAILGANTRYCRANE} from "../../interfaces/equipment/equipmentTableRowDataForRAILGANTRYCRANE";
+import {equipmentTableRowDataForTERMINALTRUCK} from "../../interfaces/equipment/equipmentTableRowDataForTERMINALTRUCK";
 
 export function mapAllValuesToARMGObjects(value: string[]): equipmentTableRowDataForARMG {
     return {
@@ -37,13 +39,13 @@ export function mapAllValuesToASTRADObjects(value: string[]): equipmentTableRowD
         liftCapability: value[2] ?? '',
         maxTwinWeightDifference: value[3] ?? "",
         maxTierHeight: value[4] ?? "",
-        softwareVersion:  value[5] ?? "",
-        hostName:  value[6] ?? "",
-        portNumber:  value[7] ?? "",
-        subType:  value[8] ?? "",
-        protocolType:  value[9] ?? "",
-        energySource:  value[10] ?? "",
-        boundary:  value[11] ?? "",
+        softwareVersion: value[5] ?? "",
+        hostName: value[6] ?? "",
+        portNumber: value[7] ?? "",
+        subType: value[8] ?? "",
+        protocolType: value[9] ?? "",
+        energySource: value[10] ?? "",
+        boundary: value[11] ?? "",
     };
 }
 
@@ -154,7 +156,6 @@ export function mapAllValuesToARTGObjects(value: string[]): equipmentTableRowFor
     };
 }
 
-
 export function mapAllValuesToMSCObjects(value: string[]): equipmentTableRowDataForMSC {
     return {
         name: value[0] ?? '',
@@ -166,6 +167,37 @@ export function mapAllValuesToMSCObjects(value: string[]): equipmentTableRowData
         hostName: value [6] ?? '',
         portNumber: value [7] ?? '',
         boundary: value[8] ?? '',
+    };
+}
+
+export function mapAllValuesToRailGantryCraneObjects(value: string[]): equipmentTableRowForRAILGANTRYCRANE {
+    return {
+        name: value[0] ?? '',
+        length: value[1] ?? '',
+        width: value[2] ?? '',
+        maxWeight: value[3] ?? '',
+        liftCapability: value[4] ?? '',
+        maxTwinWeightDifference: value [5] ?? '',
+        maxTierHeight: value [6] ?? '',
+        softwareVersion: value [7] ?? '',
+        hostName: value [8] ?? '',
+        automationPort: value[9] ?? '',
+        stackProfilingPort: value [10] ?? '',
+        craneId: value[11] ?? '',
+        boundary: value[12] ?? '',
+    };
+}
+
+export function mapAllValuesToTerminalTruckObjects(value: string[]): equipmentTableRowDataForTERMINALTRUCK {
+    return {
+        name: value[0] ?? '',
+        maxWeight: value[1] ?? '',
+        liftCapability: value[2] ?? '',
+        maxTwinWeightDifference: value [3] ?? '',
+        maxTierHeight: value [4] ?? '',
+        softwareVersion: value [5] ?? '',
+        defaultPosition: value[6] ?? '',
+        boundary: value[7] ?? '',
     };
 }
 

@@ -11,5 +11,5 @@ export enum VehicleType {
     ACS = 'acs',
     BES = 'bes',
     AUTO_TT = 'a-tt',
-    RAIL_GANTRY_CRANE = 'rail-gantry-crane',
+    RAIL_GANTRY_CRANE = 'rgc',
 }

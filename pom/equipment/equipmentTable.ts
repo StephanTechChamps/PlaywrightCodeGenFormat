@@ -11,7 +11,7 @@ import {
     mapAllValuesToARTGObjects, mapAllValuesToAUTOTTObjects, mapAllValuesToBESObjects, mapAllValuesToMSCObjects,
     mapAllValuesToQCObjects,
     mapAllValuesToReachStackerObjects,
-    mapAllValuesToRemoteOperatingStationObjects
+    mapAllValuesToRemoteOperatingStationObjects, mapAllValuesToTerminalTruckObjects
 } from '../../mappers/equipment/equipmentMappers'
 import {equipmentTableRowDataForREACHSTACKER} from "../../interfaces/equipment/equipmentTableRowDataForREACHSTACKER";
 import {
@@ -22,7 +22,8 @@ import {equipmentTableRowDataForBES} from "../../interfaces/equipment/equipmentT
 import {equipmentTableRowDataForAUTOTT} from "../../interfaces/equipment/equipmentTableRowDataForAUTOTT";
 import {equipmentTableRowForARTG} from "../../interfaces/equipment/equipmentTableRowDataForARTG";
 import {equipmentTableRowDataForASTRAD} from "../../interfaces/equipment/equipmentTableRowDataForASTRAD";
-
+import {equipmentTableRowForRAILGANTRYCRANE} from "../../interfaces/equipment/equipmentTableRowDataForRAILGANTRYCRANE";
+import {equipmentTableRowDataForTERMINALTRUCK} from "../../interfaces/equipment/equipmentTableRowDataForTERMINALTRUCK";
 
 export class EquipmentTable {
     private readonly page: Page;
@@ -134,6 +135,13 @@ export class EquipmentTable {
         return this.getActualEquipmentTableDataAndMap(mapAllValuesToARTGObjects);
     }
 
+    async getActualEquipmentTableDataForTerminalTruck(): Promise<equipmentTableRowDataForTERMINALTRUCK[]> {
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToTerminalTruckObjects);
+    }
+
+    async getActualEquipmentTableDataForRailGantryCrane(): Promise<equipmentTableRowForRAILGANTRYCRANE[]> {
+        return this.getActualEquipmentTableDataAndMap(mapAllValuesToARTGObjects);
+    }
 
     private async getActualEquipmentTableDataAndMap<T>(callback: (value: string[]) => T): Promise<T[]> {
         const contents: string[][] = await this.getArrayOfTableRowsAsArraysOfStrings();

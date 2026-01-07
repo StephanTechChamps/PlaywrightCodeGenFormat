@@ -30,6 +30,7 @@ import {CompleteMaintenanceForm} from '../pom/maintenance/completeMaintenaceForm
 import {MaintenancePage} from '../pom/maintenance/maintenancePage';
 import {MaintenanceTable} from '../pom/maintenance/maintenanceTable';
 import {AddAutottFormPage} from "../pom/equipment/addForm/addAutottFormPage";
+import {AddRailGantryCraneFormPage} from "../pom/equipment/addForm/addRailGantryCraneFormPage";
 
 type PagesFixture = {
 
@@ -48,6 +49,7 @@ type PagesFixture = {
     addTerminalTruckFormPage: AddTerminalTruckFormPage;
     addBesFormPage: AddBesFormPage;
     addAutoTTFormPage: AddAutottFormPage;
+    addRailGantryCraneFormPage: AddRailGantryCraneFormPage
 
     editAcsFormPage: EditAcsFormPage;
     editAgvFormPage: EditAgvFormPage;
@@ -120,6 +122,7 @@ export const test = base.extend<PagesFixture>({
     addTerminalTruckFormPage: async ({page}, use) => use(new AddTerminalTruckFormPage(page)),
     addBesFormPage: async ({page}, use) => use(new AddBesFormPage(page)),
     addAutoTTFormPage: async ({page}, use) => use(new AddAutottFormPage(page)),
+    addRailGantryCraneFormPage: async ({page}, use) => use(new AddRailGantryCraneFormPage(page)),
 
     editAcsFormPage: async ({page}, use) => use(new EditAcsFormPage(page)),
     editAgvFormPage: async ({page}, use) => use(new EditAgvFormPage(page)),

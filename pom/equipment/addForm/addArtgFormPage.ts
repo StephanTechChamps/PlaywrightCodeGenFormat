@@ -1,6 +1,5 @@
 import {Page, Locator} from '@playwright/test';
 import {Action} from "../../../enums/Action";
-import {openAndFillInCreationForm} from "../../../utils/openAndFillInCreationForm";
 import {BaseFormPage} from "../../../helpers/equipment/BaseFormPage";
 import {HomePage} from "../../navigation/homePage";
 
