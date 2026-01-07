@@ -1,13 +1,11 @@
 import {expect, Locator, Page} from "@playwright/test";
 
 export class CompleteMaintenanceForm {
-    readonly page: Page;
-    readonly popupTitle: Locator;
-    readonly dateInput: Locator;
-    readonly confirmBtn: Locator;
+    private readonly popupTitle: Locator;
+    private readonly dateInput: Locator;
+    private readonly confirmBtn: Locator;
 
     constructor(page: Page) {
-        this.page = page;
         this.popupTitle = page.locator('.tba-dialog-title');
         this.dateInput = page.locator('//div[@class="tba-datetime-icon"]/parent::*//input');
         this.confirmBtn = page.locator('.tba-btn-outlined-lg.v-btn--has-bg');
@@ -25,7 +23,7 @@ export class CompleteMaintenanceForm {
         await this.clickConfirm();
     }
 
-    async clickConfirm(): Promise<void> {
+    private async clickConfirm(): Promise<void> {
         await this.confirmBtn.click();
     }
 }

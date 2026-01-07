@@ -2,13 +2,13 @@ import { Locator, Page} from '@playwright/test';
 import {VehicleType} from "../../enums/vehicleType";
 
 export class VehiclesTab {
-    readonly page: Page;
+    private readonly page: Page;
 
     constructor(page: Page) {
         this.page = page;
     }
 
-    getVehicleTypInputLocator(vehicle: VehicleType): Locator{
+    private getVehicleTypInputLocator(vehicle: VehicleType): Locator{
         return this.page.locator(`[data-cy='${vehicle}']`);
     }
 

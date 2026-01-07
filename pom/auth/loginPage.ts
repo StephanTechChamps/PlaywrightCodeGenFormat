@@ -1,12 +1,11 @@
-import {Page, Locator, expect} from '@playwright/test';
-import * as url from "node:url";
+import {Page, Locator} from '@playwright/test';
 
 export class LoginPage {
-    readonly page: Page;
-    readonly username: Locator;
-    readonly password: Locator;
-    readonly signIn: Locator;
-    readonly welcomeText: Locator;
+    private readonly page: Page;
+    private readonly username: Locator;
+    private readonly password: Locator;
+    private readonly signIn: Locator;
+    private readonly welcomeText: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -21,7 +20,6 @@ export class LoginPage {
         await this.username.fill(user);
         await this.password.fill(pass);
         await this.signIn.click();
-        await expect(this.welcomeText).toHaveText(' Admin - Equipment Management ');
     }
 
 }

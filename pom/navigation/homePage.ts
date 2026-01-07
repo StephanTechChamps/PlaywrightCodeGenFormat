@@ -2,10 +2,10 @@ import {expect, Locator, Page} from '@playwright/test';
 import {VehicleType} from "../../enums/vehicleType";
 
 export class HomePage {
-    readonly page: Page;
-    readonly createButton: Locator;
-    readonly  selectInput: Locator;
-    readonly closeButton: Locator;
+    private readonly page: Page;
+    private readonly createButton: Locator;
+    private readonly  selectInput: Locator;
+    private readonly closeButton: Locator;
 
     constructor(page: Page) {
         this.page = page;

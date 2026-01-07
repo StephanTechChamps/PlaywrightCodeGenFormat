@@ -1,9 +1,9 @@
 import {expect, Locator, Page} from "@playwright/test";
 
 export class Teams{
-    readonly page:Page;
-    readonly pageOverview: Locator;
-    readonly equipmentAppButton:Locator;
+    private readonly page:Page;
+    private readonly pageOverview: Locator;
+    private readonly equipmentAppButton:Locator;
 
     constructor(page:Page){
     this.page = page;

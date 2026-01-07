@@ -1,21 +1,21 @@
 import {Page, Locator, expect} from "@playwright/test";
 import {MAINTENANCE_URL} from "../../config/projectConfig";
-import {MaintenanceTableRowData} from "../../interfaces/MaintenanceTableRowData";
+import {MaintenanceTableRowData} from "../../interfaces/maintenance/MaintenanceTableRowData";
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 import {AddMaintenanceFormPage} from "./addMaintenanceFormPage";
 
 export class MaintenanceTable {
-    readonly page: Page;
-    readonly allTableHeaderElements: Locator;
-    readonly maintenanceTableRow: Locator;
-    readonly equipmentElementFieldInRow: Locator;
-    readonly plannedStartDateElementInRow: Locator;
-    readonly plannedEndDateElementInRow: Locator;
-    readonly filterSearchInput: Locator;
-    readonly editButton: Locator;
-    readonly removeButton: Locator;
-    readonly popupTitle: Locator;
-    readonly confirmRemoveButton: Locator;
+    private readonly page: Page;
+    private readonly allTableHeaderElements: Locator;
+    private readonly maintenanceTableRow: Locator;
+    private readonly equipmentElementFieldInRow: Locator;
+    private readonly plannedStartDateElementInRow: Locator;
+    private readonly plannedEndDateElementInRow: Locator;
+    private readonly filterSearchInput: Locator;
+    private readonly editButton: Locator;
+    private readonly removeButton: Locator;
+    private readonly popupTitle: Locator;
+    private readonly confirmRemoveButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -25,17 +25,17 @@ export class MaintenanceTable {
         this.plannedStartDateElementInRow = page.locator('td:nth-child(2)')
         this.plannedEndDateElementInRow = page.locator(' //td//div[@class="end-date"]//span[1]');
         this.filterSearchInput = page.locator('input[placeholder="Equipment name"]');
-        this.editButton = page.locator('(//div[text()=" Edit maintenance " and contains(@class, "v-list-item__title")])[1]');
-        this.removeButton = page.locator('(//div[text()=" Remove maintenance " and contains(@class, "v-list-item__title")])[1]');
-        this.popupTitle = page.locator('.tba-dialog-title');
+        this.removeButton = page.locator('//div[@role="menuitem"]//div[text()=" Remove maintenance "]');
         this.confirmRemoveButton = page.locator('//span[text()=" Remove maintenance "]/ancestor::button');
+        this.editButton = page.locator('(//div[text()=" Edit maintenance " and contains(@class, "v-list-item__title")])[1]');
+        this.popupTitle = page.locator('.tba-dialog-title');
     }
 
     private async navigateToMaintenancePage() {
         await this.page.goto(MAINTENANCE_URL);
     }
 
-    async getActualMaintenanceTableData() {
+    async getActualEquipmentTableData() {
         const tableRows: Locator[] = await this.maintenanceTableRow.all();
         const actualWebTableData: MaintenanceTableRowData[] = await Promise.all(
             tableRows.map(async (row) => {
@@ -52,7 +52,7 @@ export class MaintenanceTable {
         return {equipmentName, plannedStartDate, plannedEndDate};
     }
 
-    async getAllHeadersOfDataTable() {
+    private async getAllHeadersOfDataTable() {
         await this.navigateToMaintenancePage()
         const headerElements = await this.allTableHeaderElements.allTextContents();
         return headerElements.filter(text => text.trim() !== '');
@@ -77,11 +77,11 @@ export class MaintenanceTable {
         await headerButton.click();
     }
 
-    async headerLocator(header: "Equipment" | "Planned start date" | "Planned end date") {
+    private async headerLocator(header: "Equipment" | "Planned start date" | "Planned end date") {
         return this.page.locator(`//span[text()="${header}"]`)
     }
 
-    async getHeaderFilter(header: string): Promise<Locator> {
+    private async getHeaderFilter(header: string): Promise<Locator> {
         return this.page.locator(`//span[text()="${header}"]/..//following-sibling::i`)
     }
 
@@ -98,7 +98,7 @@ export class MaintenanceTable {
         await menu.click();
     }
 
-    getHiddenMenuLocator(equipment: string, start: string, end: string): Locator {
+    private getHiddenMenuLocator(equipment: string, start: string, end: string): Locator {
         return this.page.locator(
             `//span[text()="${equipment}"]/../../../..//td[text()=' ${start} ']/..//span[text()='${end}']/../../..//button[@class="tba-icon-default-important actions-on-hover v-btn v-btn--icon v-btn--round v-btn--text theme--light v-size--default"]`
         );
@@ -109,6 +109,10 @@ export class MaintenanceTable {
         await this.removeButton.click();
         await expect(this.popupTitle).toHaveText("Remove planned maintenance?");
         await this.confirmRemoveButton.click();
+    }
+
+    async getMaintenanceTableRowCount(): Promise<number> {
+        return await this.maintenanceTableRow.count();
     }
 }
 
