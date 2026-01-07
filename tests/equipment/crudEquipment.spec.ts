@@ -293,6 +293,4 @@ test("Create a Rail Gantry Crane (only essential fields)",
         const actualData = await equipmentTable.getActualEquipmentTableDataForRailGantryCrane();
         // expect(actualData).toEqual(expectedDataForEquipmentACS)
         await addRailGantryCraneFormPage.createRailGantryCrane("Test Rail Gantry Crane", 50, 50, 30, "test", "new crane",11)
-
-        // await "Test Rail Gantry Crane", 50, "test-provider", "www.test.nl");
-    });
+ });
