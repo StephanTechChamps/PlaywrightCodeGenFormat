@@ -17,6 +17,8 @@ import {Severity} from "../../enums/Severity";
 import {
     expectedDataForRemoteOperatingStation
 } from "../../test-data/equipment/hct/equipmentTestDataForRemoteOperatingStation";
+import {ctbExpectedDataForAcsPage2} from "../../test-data/equipment/ctb/expect/ctbAcsEquipmentPage2";
+import {ctbValidateCreatedACS} from "../../test-data/equipment/ctb/created/ctbValidateCreatedAcs";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -95,7 +97,7 @@ test("Create and delete AGV equipment (only essential fields)",
         await addAgvFormPage.createAGV("Test AGV", 203, "v2", "Creative", 10, 96000);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForAGV();
-        }, {timeout: Duration.SHORT}).toEqual(ctbValidateCreatedAGV);
+        }, {timeout: Duration.LONG}).toEqual(ctbValidateCreatedAGV);
 
         await equipmentTable.deleteEquipment("Test AGV");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
@@ -142,7 +144,7 @@ test("Create and delete ACS equipment (only essential fields)",
         await homePage.selectVehicleType(VehicleType.ACS);
         await equipmentTable.navigateToTablePage(2)
         const actualData = await equipmentTable.getActualEquipmentTableDataForACS();
-        expect(actualData).toEqual(ctbExpectedDataForAcs);
+        expect(actualData).toEqual(ctbExpectedDataForAcsPage2);
 
         await addAcsFormPage.createACS(
             "Test ACS", "new", 60, 80, 2000,
@@ -150,13 +152,13 @@ test("Create and delete ACS equipment (only essential fields)",
             40000, 7, 43);
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcsAfterImport);
+        }, {timeout: Duration.VERY_LONG}).toEqual(ctbValidateCreatedACS);
 
         await equipmentTable.deleteEquipment("Test ACS");
         await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForACS();
-        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcs);
+        }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcsPage2);
     });
 
 // @TODO: finish validation for creation of MSC

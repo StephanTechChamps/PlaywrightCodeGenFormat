@@ -32,7 +32,8 @@ test("BUG: TEAMS-46730: Import file and delete AGV equipment",
 
         const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
         await homePage.selectVehicleType(VehicleType.AGV);
-        expect(actualData).toEqual(ctbExpectedDataForEquipmentAGV)
+        await expect.poll(async () => {
+            return actualData }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForEquipmentAGV);
 
         await equipmentOverviewPage.importAllEquipmentFromCtbFile("ctbAGV611.csv");
         await expect.poll(async () => {
