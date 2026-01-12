@@ -11,7 +11,7 @@ import {ctbExpectedDataForAcsAfterImport} from "../../test-data/equipment/ctb/ct
 import {expectedDataForEquipmentACS} from "../../test-data/equipment/hct/equipmentTestDataForACS";
 import {htcValidateCreatedARMG} from "../../test-data/equipment/hct/htcValidateCreatedARMG"
 import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/hct/htcEquipmentTestDataForARMG";
-import {Tag} from "../../enums/Tag";
+import {TestCategory} from "../../enums/TestCategory";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
 import {
@@ -19,15 +19,16 @@ import {
 } from "../../test-data/equipment/hct/equipmentTestDataForRemoteOperatingStation";
 import {ctbExpectedDataForAcsPage2} from "../../test-data/equipment/ctb/expect/ctbAcsEquipmentPage2";
 import {ctbValidateCreatedACS} from "../../test-data/equipment/ctb/created/ctbValidateCreatedAcs";
+import {Terminal} from "../../enums/Terminal";
 
 test.use({ignoreHTTPSErrors: true});
 
 test("Create and delete a A-RMG (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     },
     async ({homePage, addArmgFormPage, equipmentTable, confirmDeleteEquipmentFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.A_RMG);
         const actualData = await equipmentTable.getActualEquipmentTableDataForARMG();
@@ -50,10 +51,10 @@ test("Create and delete a A-RMG (only essential fields)",
 // @TODO: alter the edit step of the test
 test("Create and edit a A-RMG (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     },
     async ({homePage, addArmgFormPage, equipmentTable, confirmDeleteEquipmentFormPage, editArmgFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.A_RMG);
         const actualData = await equipmentTable.getActualEquipmentTableDataForARMG();
@@ -84,10 +85,10 @@ test("Create and edit a A-RMG (only essential fields)",
 
 test("Create and delete AGV equipment (only essential fields)",
     {
-        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]
     },
     async ({homePage, equipmentTable, confirmDeleteEquipmentFormPage, addAgvFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.AGV);
         const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
@@ -110,10 +111,10 @@ test("Create and delete AGV equipment (only essential fields)",
 
 test("Create and delete QC equipment (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     },
     async ({homePage, equipmentTable, confirmDeleteEquipmentFormPage, addQCFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.QC);
         const actualData = await equipmentTable.getActualEquipmentTableDataForQC();
@@ -137,9 +138,9 @@ test("Create and delete QC equipment (only essential fields)",
 
 test("Create and delete ACS equipment (only essential fields)",
     {
-        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable, confirmDeleteEquipmentFormPage, addAcsFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.ACS);
         await equipmentTable.navigateToTablePage(2)
@@ -164,9 +165,9 @@ test("Create and delete ACS equipment (only essential fields)",
 // @TODO: finish validation for creation of MSC
 test("Create a MSC (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, addMscFormPage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.MSC);
         const actualData = await equipmentTable.getActualEquipmentTableDataForMSC();
@@ -179,9 +180,9 @@ test("Create a MSC (only essential fields)",
 // @TODO: finish validation for creation of REACH STACKER
 test("Create a REACH STACKER (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, addReachStackerFormPage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);
         const actualData = await equipmentTable.getActualEquipmentTableDataForReachStacker();
@@ -195,9 +196,9 @@ test("Create a REACH STACKER (only essential fields)",
 // @TODO: finish validation for creation of REMOTE OPERATING WORK STATION
 test("Create a remote operating station (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.REGRESSION]
     }, async ({homePage, addRemoteOperatingStationFormPage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
         const actualData = await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();
@@ -211,9 +212,9 @@ test("Create a remote operating station (only essential fields)",
 // @TODO: finish validation for creation of TERMINAL TRUCK
 test("Create a TERMINAL TRUCK (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable, addTerminalTruckFormPage}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.TERMINAL_TRUCK);
         const actualData = await equipmentTable.getActualEquipmentTableDataForTerminalTruck();
@@ -229,9 +230,9 @@ test("Create a TERMINAL TRUCK (only essential fields)",
 // @TODO: finish validation for creation of A-RTG
 test("Create and delete A-RTG (only essential fields)",
     {
-        tag: [Tag.CTB, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.REGRESSION]
     }, async ({homePage, addArtgFormPage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.A_RTG);
         const actualData = await equipmentTable.getActualEquipmentTableDataForARTG();
@@ -243,9 +244,9 @@ test("Create and delete A-RTG (only essential fields)",
 // @TODO: finish validation for creation of BES
 test("Create a BES (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable, addBesFormPage}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.BES);
         const actualData = await equipmentTable.getActualEquipmentTableDataForBES();
@@ -262,9 +263,9 @@ test("Create a BES (only essential fields)",
 // @TODO: finish validation for creation of A-STRAD
 test("Create a A-STRAD (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable, addAstradFormPage}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.A_STRAD);
         const actualData = await equipmentTable.getActualEquipmentTableDataForASTRAD();
@@ -275,9 +276,9 @@ test("Create a A-STRAD (only essential fields)",
 // @TODO: finish validation for creation of AUTO-TT
 test("Create a AUTO_TT (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable, addAutoTTFormPage}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.AUTO_TT);
         const actualData = await equipmentTable.getActualEquipmentTableDataForAUTOTT();
@@ -288,9 +289,9 @@ test("Create a AUTO_TT (only essential fields)",
 // @TODO: finish validation for creation of RAIL GANTRY CRANE
 test("Create a Rail Gantry Crane (only essential fields)",
     {
-        tag: [Tag.HCT, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable, addRailGantryCraneFormPage}) => {
-        await setExportEquipmentLabels(Severity.NORMAL, Tag.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.NORMAL, TestCategory.REGRESSION, [{name: "suite", value: "CRUD equipment"}]);
         await homePage.selectVehicleType(VehicleType.RAIL_GANTRY_CRANE);
         const actualData = await equipmentTable.getActualEquipmentTableDataForRailGantryCrane();
         // expect(actualData).toEqual(expectedDataForEquipmentACS)

@@ -1,6 +1,4 @@
-export enum Tag {
-    HCT = "@hct",
-    CTB = "@ctb",
+export enum TestCategory {
     SMOKE = '@smoke',
     REGRESSION = '@regression',
     TESTRUN = '@testrun'

@@ -2,7 +2,7 @@
 import {expect, test} from '../../fixtures/tests.fixtures'
 import {vehicleCode} from "../../enums/MaintenanceVehicleCode";
 import {Duration} from "../../config/Duration"
-import {Tag} from "../../enums/Tag";
+import {TestCategory} from "../../enums/TestCategory";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
 
@@ -25,7 +25,7 @@ test.afterEach(async ({page}) => {
 });
 
 test("Create and complete maintenance schedule",
-    {tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]},
+    {tag: [TestCategory.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]},
     async ({
                topMenuBarPage,
                maintenancePage,
@@ -33,7 +33,7 @@ test("Create and complete maintenance schedule",
                completeMaintenanceForm,
                maintenanceTable
            }) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD maintenance"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD maintenance"}]);
 
         await topMenuBarPage.openMaintenancePage();
         await maintenancePage.openCreateMaintenancePage();
@@ -53,7 +53,7 @@ test("Create and complete maintenance schedule",
     });
 
 test("Create, edit and delete a maintenance schedule", {
-        tag: [Tag.HCT, Tag.REGRESSION]
+        tag: [TestCategory.HCT, TestCategory.REGRESSION]
     },
     async ({
                topMenuBarPage,
@@ -61,7 +61,7 @@ test("Create, edit and delete a maintenance schedule", {
                addMaintenanceFormPage,
                maintenanceTable
            }) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD maintenance"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD maintenance"}]);
 
         await topMenuBarPage.openMaintenancePage();
         await maintenancePage.openCreateMaintenancePage();
@@ -91,9 +91,9 @@ test("Create, edit and delete a maintenance schedule", {
 
 test("Arrange and filter table data",
     {
-        tag: [Tag.HCT, Tag.REGRESSION]
+        tag: [TestCategory.HCT, TestCategory.REGRESSION]
     }, async ({topMenuBarPage, maintenancePage, addMaintenanceFormPage, maintenanceTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "CRUD maintenance"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "CRUD maintenance"}]);
 
         await topMenuBarPage.openMaintenancePage();
         await maintenancePage.openCreateMaintenancePage();
