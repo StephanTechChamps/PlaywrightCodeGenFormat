@@ -1,15 +1,15 @@
 import {expect, test} from "../../fixtures/tests.fixtures";
 import {VehicleType} from "../../enums/vehicleType";
 import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
-import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/ctbValidateCreatedAGV";
+import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/created/ctbValidateCreatedAGV";
 import {Duration} from "../../config/Duration";
-import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
-import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
+import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/created/ctbValidateCreatedQc";
+import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/expect/ctbExpectedDataForQc";
 import {ctbExpectedDataForAcs} from "../../test-data/equipment/ctb/expect/ctbAcsEquipment";
 import {ctbExpectedDataForAcsAfterImport} from "../../test-data/equipment/ctb/ctbAcsEquipmentWithImportedData";
 
 import {expectedDataForEquipmentACS} from "../../test-data/equipment/hct/equipmentTestDataForACS";
-import {htcValidateCreatedARMG} from "../../test-data/equipment/hct/htcValidateCreatedARMG"
+import {htcValidateCreatedARMG} from "../../test-data/equipment/hct/created/htcValidateCreatedARMG"
 import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/hct/htcEquipmentTestDataForARMG";
 import {TestCategory} from "../../enums/TestCategory";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
@@ -20,6 +20,10 @@ import {
 import {ctbExpectedDataForAcsPage2} from "../../test-data/equipment/ctb/expect/ctbAcsEquipmentPage2";
 import {ctbValidateCreatedACS} from "../../test-data/equipment/ctb/created/ctbValidateCreatedAcs";
 import {Terminal} from "../../enums/Terminal";
+import {expectedDataForMSC} from "../../test-data/equipment/hct/equipmentTestDataForMSC";
+import {htcValidateCreatedMSC} from "../../test-data/equipment/hct/created/htcValidateCreatedMSC";
+import {expectedDataForTerminalTruck} from "../../test-data/equipment/hct/equipmentTestDataForTerminalTruck";
+import {htcExpectedDataForTerminalTruck} from "../../test-data/equipment/hct/expected/htcExpectedDataForTerminalTruck";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -166,15 +170,25 @@ test("Create and delete ACS equipment (only essential fields)",
 test("Create a MSC (only essential fields)",
     {
         tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
-    }, async ({homePage, addMscFormPage, equipmentTable}) => {
+    }, async ({homePage, addMscFormPage, equipmentTable,confirmDeleteEquipmentFormPage}) => {
         await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.MSC);
         const actualData = await equipmentTable.getActualEquipmentTableDataForMSC();
-        expect(actualData).toEqual(expectedDataForEquipmentACS)
+        expect(actualData).toEqual(expectedDataForMSC)
 
         await addMscFormPage.createMSC(
             'Test A-RMG', 300, 200, '3000', "1.4", 200);
+
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForMSC();
+        }, {timeout: Duration.VERY_LONG}).toEqual(htcValidateCreatedMSC);
+
+        // await equipmentTable.deleteEquipment("Test A-RMG");
+        // await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
+        // await expect.poll(async () => {
+        //     return await equipmentTable.getActualEquipmentTableDataForMSC();
+        // }, {timeout: Duration.VERY_LONG}).toEqual(expectedDataForMSC);
     });
 
 // @TODO: finish validation for creation of REACH STACKER
@@ -202,26 +216,37 @@ test("Create a remote operating station (only essential fields)",
 
         await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
         const actualData = await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();
-        // expect(actualData).toEqual(expectedDataForRemoteOperatingStation)
-
+        expect(actualData).toEqual(expectedDataForRemoteOperatingStation)
 
         await addRemoteOperatingStationFormPage.createRemoteOperatingStation(
             "Test Remote Operating station", 5);
-    });
+
+
+});
 
 // @TODO: finish validation for creation of TERMINAL TRUCK
 test("Create a TERMINAL TRUCK (only essential fields)",
     {
         tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
-    }, async ({homePage, equipmentTable, addTerminalTruckFormPage}) => {
+    }, async ({homePage, equipmentTable, addTerminalTruckFormPage, confirmDeleteEquipmentFormPage}) => {
         await setExportEquipmentLabels(Severity.NORMAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.TERMINAL_TRUCK);
         const actualData = await equipmentTable.getActualEquipmentTableDataForTerminalTruck();
-        // expect(actualData).toEqual(expectedDataForEquipmentACS)
+        expect(actualData).toEqual(expectedDataForTerminalTruck)
         await addTerminalTruckFormPage.createTerminalTruck
         ("Test Terminal Truck", 2000, "V2",
             300, 50, 5);
+
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForTerminalTruck();
+        }, {timeout: Duration.VERY_LONG}).toEqual(htcExpectedDataForTerminalTruck);
+
+        // await equipmentTable.deleteEquipment("Test ACS");
+        // await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
+        // await expect.poll(async () => {
+        //     return await equipmentTable.getActualEquipmentTableDataForACS();
+        // }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcsPage2);
     });
 
 // expect(actualData).toEqual(ctbQcEquipmen

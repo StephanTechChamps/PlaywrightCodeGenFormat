@@ -7,4 +7,5 @@ export enum Terminal {
     GAVLE = "@gavle",
     RWG = "@rwg",
     EMX = "@emx",
+    POAL = "@Poal"
 }

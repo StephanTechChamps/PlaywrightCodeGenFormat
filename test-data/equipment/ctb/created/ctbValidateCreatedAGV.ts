@@ -1,4 +1,4 @@
-import {equipmentTableRowForAGV} from "../../../interfaces/equipment/equipmentTableRowDataForAGV";
+import {equipmentTableRowForAGV} from "../../../../interfaces/equipment/equipmentTableRowDataForAGV";
 
 export let ctbValidateCreatedAGV: equipmentTableRowForAGV[] = [
     {

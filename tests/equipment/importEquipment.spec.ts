@@ -8,9 +8,9 @@ import {expectedDataForReachStacker} from "../../test-data/equipment/hct/equipme
 import {
     expectedDataForRemoteOperatingStation
 } from "../../test-data/equipment/hct/equipmentTestDataForRemoteOperatingStation";
-import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
+import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/expect/ctbExpectedDataForQc";
 import {TestCategory} from "../../enums/TestCategory";
-import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
+import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/created/ctbValidateCreatedQc";
 import {Duration} from "../../config/Duration";
 import {expectedDataForEquipmentAGVAfterImport} from "../../test-data/equipment/ctb/ctbAGVEquipmentWithImportedData";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";

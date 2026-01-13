@@ -192,7 +192,7 @@ export function mapAllValuesToTerminalTruckObjects(value: string[]): equipmentTa
     return {
         name: value[0] ?? '',
         maxWeight: value[1] ?? '',
-        liftCapability: value[2] ?? '',
+        liftCapability: value[  2] ?? '',
         maxTwinWeightDifference: value [3] ?? '',
         maxTierHeight: value [4] ?? '',
         softwareVersion: value [5] ?? '',
