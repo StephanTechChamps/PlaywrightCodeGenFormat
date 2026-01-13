@@ -7,7 +7,4 @@ export enum Terminal {
     GAVLE = "@gavle",
     RWG = "@rwg",
     EMX = "@emx",
-    SMOKE = '@smoke',
-    REGRESSION = '@regression',
-    TESTRUN = '@testrun'
 }
