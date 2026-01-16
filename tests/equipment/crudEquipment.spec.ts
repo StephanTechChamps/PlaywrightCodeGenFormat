@@ -23,7 +23,10 @@ import {Terminal} from "../../enums/Terminal";
 import {expectedDataForMSC} from "../../test-data/equipment/hct/equipmentTestDataForMSC";
 import {htcValidateCreatedMSC} from "../../test-data/equipment/hct/created/htcValidateCreatedMSC";
 import {expectedDataForTerminalTruck} from "../../test-data/equipment/hct/equipmentTestDataForTerminalTruck";
-import {htcExpectedDataForTerminalTruck} from "../../test-data/equipment/hct/expected/htcExpectedDataForTerminalTruck";
+import {htcValidateCreatedTerminalTruck} from "../../test-data/equipment/hct/created/htcValidateCreatedTerminalTruck";
+import {
+    htcValidateCreatedRemoteOperatingStation
+} from "../../test-data/equipment/hct/created/htcValidateCreatedRemoteOperatingStation";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -207,11 +210,11 @@ test("Create a REACH STACKER (only essential fields)",
             30, 50, 180,);
     });
 
-// @TODO: finish validation for creation of REMOTE OPERATING WORK STATION
+// @TODO: this test fails because of bug: TSG-8955 - REMOTE OPERATING WORK STATION
 test("Create a remote operating station (only essential fields)",
     {
         tag: [Terminal.HCT, TestCategory.REGRESSION]
-    }, async ({homePage, addRemoteOperatingStationFormPage, equipmentTable}) => {
+    }, async ({homePage, addRemoteOperatingStationFormPage, equipmentTable, confirmDeleteEquipmentFormPage}) => {
         await setExportEquipmentLabels(Severity.NORMAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
@@ -219,12 +222,19 @@ test("Create a remote operating station (only essential fields)",
         expect(actualData).toEqual(expectedDataForRemoteOperatingStation)
 
         await addRemoteOperatingStationFormPage.createRemoteOperatingStation(
-            "Test Remote Operating station", 5);
+            "Test", 5);
 
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();
+        }, {timeout: Duration.SHORT}).toEqual(htcValidateCreatedRemoteOperatingStation);
 
+        await equipmentTable.deleteEquipment("Test");
+        await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();
+        }, {timeout: Duration.MEDIUM}).toEqual(expectedDataForRemoteOperatingStation);
 });
 
-// @TODO: finish validation for creation of TERMINAL TRUCK
 test("Create a TERMINAL TRUCK (only essential fields)",
     {
         tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
@@ -233,24 +243,24 @@ test("Create a TERMINAL TRUCK (only essential fields)",
 
         await homePage.selectVehicleType(VehicleType.TERMINAL_TRUCK);
         const actualData = await equipmentTable.getActualEquipmentTableDataForTerminalTruck();
-        expect(actualData).toEqual(expectedDataForTerminalTruck)
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForTerminalTruck();
+        }, {timeout: Duration.MEDIUM}).toEqual(actualData);
+
         await addTerminalTruckFormPage.createTerminalTruck
         ("Test Terminal Truck", 2000, "V2",
             300, 50, 5);
 
         await expect.poll(async () => {
             return await equipmentTable.getActualEquipmentTableDataForTerminalTruck();
-        }, {timeout: Duration.VERY_LONG}).toEqual(htcExpectedDataForTerminalTruck);
+        }, {timeout: Duration.VERY_LONG}).toEqual(htcValidateCreatedTerminalTruck);
 
-        // await equipmentTable.deleteEquipment("Test ACS");
-        // await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
-        // await expect.poll(async () => {
-        //     return await equipmentTable.getActualEquipmentTableDataForACS();
-        // }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForAcsPage2);
+        await equipmentTable.deleteEquipment("Test Terminal Truck");
+        await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForTerminalTruck();
+        }, {timeout: Duration.MEDIUM}).toEqual(expectedDataForTerminalTruck);
     });
-
-// expect(actualData).toEqual(ctbQcEquipmen
-// await equipmentFormPage.createASTRAD("Test A-STRAD", 4000, 600, "1.20202", "Lion-o", 600);
 
 // @TODO: finish validation for creation of A-RTG
 test("Create and delete A-RTG (only essential fields)",

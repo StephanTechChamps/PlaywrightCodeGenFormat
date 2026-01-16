@@ -5,6 +5,7 @@ import {Duration} from "../../config/Duration"
 import {TestCategory} from "../../enums/TestCategory";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
+import {Terminal} from "../../enums/Terminal";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -25,7 +26,7 @@ test.afterEach(async ({page}) => {
 });
 
 test("Create and complete maintenance schedule",
-    {tag: [TestCategory.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]},
+    {tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]},
     async ({
                topMenuBarPage,
                maintenancePage,
@@ -48,12 +49,13 @@ test("Create and complete maintenance schedule",
                 }
             ]);
 
-        await maintenancePage.openCompletePlannedMaintenanceMenu(vehicleCode.QC8, 'Nov 20, 2025 (15:20)', 'Nov 20, 2026 (20:00)');
+        await maintenancePage.openCompletePlannedMaintenanceMenu(
+            vehicleCode.QC8, 'Nov 20, 2025 (15:20)', 'Nov 20, 2026 (20:00)');
         await completeMaintenanceForm.confirmMaintenance('Nov 21, 2027 (20:00)');
     });
 
 test("Create, edit and delete a maintenance schedule", {
-        tag: [TestCategory.HCT, TestCategory.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.REGRESSION]
     },
     async ({
                topMenuBarPage,
@@ -83,7 +85,8 @@ test("Create, edit and delete a maintenance schedule", {
                     plannedEndDate: 'Nov 25, 2026 (10:00)',
                 }
             ])
-        await maintenanceTable.removeMaintenanceMaintenanceEvent(vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
+        await maintenanceTable.removeMaintenanceMaintenanceEvent(
+            vehicleCode.AL1, 'Nov 20, 2026 (15:47)', 'Nov 25, 2026 (10:00)');
         await expect.poll(async () => {
             return await maintenanceTable.getActualEquipmentTableData();
         }, {timeout: Duration.LONG}).toHaveLength(0)
@@ -91,7 +94,7 @@ test("Create, edit and delete a maintenance schedule", {
 
 test("Arrange and filter table data",
     {
-        tag: [TestCategory.HCT, TestCategory.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.REGRESSION]
     }, async ({topMenuBarPage, maintenancePage, addMaintenanceFormPage, maintenanceTable}) => {
         await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "CRUD maintenance"}]);
 
@@ -126,7 +129,8 @@ test("Arrange and filter table data",
                     plannedStartDate: 'Nov 27, 2025 (15:47)',
                     plannedEndDate: 'Nov 27, 2026 (10:00)',
                 },
-            ])
+            ]
+        )
         await maintenanceTable.applyFilter('AL');
         await maintenanceTable.clickTableSortByHeader("Equipment")
         expect(await maintenanceTable.getActualEquipmentTableData()).toEqual(
@@ -163,5 +167,6 @@ test("Arrange and filter table data",
                     equipmentName: 'AL01',
                     plannedStartDate: 'Nov 15, 2025 (15:47)',
                     plannedEndDate: 'Nov 21, 2026 (10:00)',
-                }])
+                }]
+        )
     })
