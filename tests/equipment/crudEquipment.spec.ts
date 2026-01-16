@@ -5,10 +5,7 @@ import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/created/ctbVa
 import {Duration} from "../../config/Duration";
 import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/created/ctbValidateCreatedQc";
 import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/expect/ctbExpectedDataForQc";
-import {ctbExpectedDataForAcs} from "../../test-data/equipment/ctb/expect/ctbAcsEquipment";
-import {ctbExpectedDataForAcsAfterImport} from "../../test-data/equipment/ctb/ctbAcsEquipmentWithImportedData";
 
-import {expectedDataForEquipmentACS} from "../../test-data/equipment/hct/equipmentTestDataForACS";
 import {htcValidateCreatedARMG} from "../../test-data/equipment/hct/created/htcValidateCreatedARMG"
 import {htcExpectedDataForEquipmentARMG} from "../../test-data/equipment/hct/htcEquipmentTestDataForARMG";
 import {TestCategory} from "../../enums/TestCategory";

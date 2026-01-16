@@ -1,4 +1,3 @@
-import {equipmentTableRowDataForMSC} from "../../../interfaces/equipment/equipmentTableRowDataMSC";
 import {
     equipmentTableRowDataForTERMINALTRUCK
 } from "../../../interfaces/equipment/equipmentTableRowDataForTERMINALTRUCK";

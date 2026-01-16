@@ -1,4 +1,3 @@
-import {equipmentTableRowDataForQC} from "../../../../interfaces/equipment/equipmentTableRowDataForQC";
 import {
     equipmentTableRowDataForTERMINALTRUCK
 } from "../../../../interfaces/equipment/equipmentTableRowDataForTERMINALTRUCK";
