@@ -184,11 +184,11 @@ test("Create a MSC (only essential fields)",
             return await equipmentTable.getActualEquipmentTableDataForMSC();
         }, {timeout: Duration.VERY_LONG}).toEqual(htcValidateCreatedMSC);
 
-        // await equipmentTable.deleteEquipment("Test A-RMG");
-        // await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
-        // await expect.poll(async () => {
-        //     return await equipmentTable.getActualEquipmentTableDataForMSC();
-        // }, {timeout: Duration.VERY_LONG}).toEqual(expectedDataForMSC);
+        await equipmentTable.deleteEquipment("Test A-RMG");
+        await confirmDeleteEquipmentFormPage.confirmDeleteEquipment();
+        await expect.poll(async () => {
+            return await equipmentTable.getActualEquipmentTableDataForMSC();
+        }, {timeout: Duration.VERY_LONG}).toEqual(expectedDataForMSC);
     });
 
 // @TODO: finish validation for creation of REACH STACKER
