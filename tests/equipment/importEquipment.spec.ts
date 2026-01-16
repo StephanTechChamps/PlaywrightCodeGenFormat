@@ -8,13 +8,14 @@ import {expectedDataForReachStacker} from "../../test-data/equipment/hct/equipme
 import {
     expectedDataForRemoteOperatingStation
 } from "../../test-data/equipment/hct/equipmentTestDataForRemoteOperatingStation";
-import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
-import {Tag} from "../../enums/Tag";
-import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
+import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/expect/ctbExpectedDataForQc";
+import {TestCategory} from "../../enums/TestCategory";
+import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/created/ctbValidateCreatedQc";
 import {Duration} from "../../config/Duration";
 import {expectedDataForEquipmentAGVAfterImport} from "../../test-data/equipment/ctb/ctbAGVEquipmentWithImportedData";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
+import {Terminal} from "../../enums/Terminal";
 
 test.use({ignoreHTTPSErrors: true});
 
@@ -26,13 +27,14 @@ test.use({ignoreHTTPSErrors: true});
 
 test("BUG: TEAMS-46730: Import file and delete AGV equipment",
     {
-        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable, equipmentOverviewPage, confirmDeleteEquipmentFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
         await homePage.selectVehicleType(VehicleType.AGV);
-        expect(actualData).toEqual(ctbExpectedDataForEquipmentAGV)
+        await expect.poll(async () => {
+            return actualData }, {timeout: Duration.MEDIUM}).toEqual(ctbExpectedDataForEquipmentAGV);
 
         await equipmentOverviewPage.importAllEquipmentFromCtbFile("ctbAGV611.csv");
         await expect.poll(async () => {
@@ -51,19 +53,20 @@ test("BUG: TEAMS-46730: Import file and delete AGV equipment",
 
 test("Import A-RMG equipment from a file",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentOverviewPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.A_RMG);
         await equipmentOverviewPage.importAllEquipmentFromHtcFile("A_RMG_IMPORT.csv")
     });
-
+// @TODO research if the import works or not / if it's backwards compatible
+// Can't seem to create QC equipment in older versions
 test("Import QC equipment from a file",
     {
-        tag: [Tag.SMOKE, Tag.CTB, Tag.REGRESSION]
+        tag: [TestCategory.SMOKE, Terminal.CTB, TestCategory.REGRESSION]
     }, async ({homePage, equipmentOverviewPage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.QC);
         const actualData = await equipmentTable.getActualEquipmentTableDataForQC();
@@ -78,9 +81,9 @@ test("Import QC equipment from a file",
 
 test("Verify test data for A-RMG",
     {
-        tag: [Tag.HCT, Tag.REGRESSION],
+        tag: [Terminal.HCT, TestCategory.REGRESSION],
     }, async ({homePage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.A_RMG);
         const actualData = await equipmentTable.getActualEquipmentTableDataForARMG();
@@ -90,9 +93,9 @@ test("Verify test data for A-RMG",
 
 test("Verify test data for ACS",
     {
-        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.ACS);
         const actualData: equipmentTableRowDataForACS[] = await equipmentTable.getActualEquipmentTableDataForACS();
@@ -101,9 +104,9 @@ test("Verify test data for ACS",
 
 test("Verify test data for AGV",
     {
-        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.AGV);
         const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
@@ -113,9 +116,9 @@ test("Verify test data for AGV",
 
 test("Verify test data for QC",
     {
-        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.QC);
         const actualData = await equipmentTable.getActualEquipmentTableDataForQC();
@@ -124,9 +127,9 @@ test("Verify test data for QC",
 
 test("Verify test data for Reach-stacker",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);
         const actualData = await equipmentTable.getActualEquipmentTableDataForReachStacker();
@@ -137,9 +140,9 @@ test("Verify test data for Reach-stacker",
 // Or just run this test in the new equipment manager
 test("Verify test data for Remote operating Station",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage, equipmentTable}) => {
-        await setExportEquipmentLabels(Severity.TRIVIAL, Tag.REGRESSION, [{name: "suite", value: "Import equipment"}]);
+        await setExportEquipmentLabels(Severity.TRIVIAL, TestCategory.REGRESSION, [{name: "suite", value: "Import equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.REMOTE_OPERATING_STATION);
         const actualData = await equipmentTable.getActualEquipmentTableDataForRemoteOperatingStation();

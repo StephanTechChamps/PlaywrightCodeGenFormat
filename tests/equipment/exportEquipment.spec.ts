@@ -1,16 +1,17 @@
 import {test} from '../../fixtures/tests.fixtures'
 import {VehicleType} from "../../enums/vehicleType";
-import {Tag} from "../../enums/Tag";
+import {TestCategory} from "../../enums/TestCategory";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
+import {Terminal} from "../../enums/Terminal";
 
 test.use({ignoreHTTPSErrors: true});
 
 test("Export a specific selection of equipment",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage,equipmentOverviewPage,exportEquipmentFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{ name: "suite", value: "Export equipment" }]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{ name: "suite", value: "Export equipment" }]);
 
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);
         await equipmentOverviewPage.openExportAllEquipmentMenu();
@@ -19,9 +20,9 @@ test("Export a specific selection of equipment",
 
 test("Export all equipment",
     {
-        tag: [Tag.HCT, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.HCT, TestCategory.SMOKE, TestCategory.REGRESSION]
     }, async ({homePage,equipmentOverviewPage,exportEquipmentFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{ name: "suite", value: "Export equipment" }]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{ name: "suite", value: "Export equipment" }]);
 
         await homePage.selectVehicleType(VehicleType.REACH_STACKER);
         await equipmentOverviewPage.openExportAllEquipmentMenu();

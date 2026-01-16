@@ -1,28 +1,29 @@
 import {test} from "../../fixtures/tests.fixtures";
 import {VehicleType} from "../../enums/vehicleType";
 import {expect} from "../../fixtures/tests.fixtures";
-import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/ctbExpectedDataForQc";
+import {ctbExpectedDataForQc} from "../../test-data/equipment/ctb/expect/ctbExpectedDataForQc";
 import {Duration} from "../../config/Duration";
 import {ctbValidateEditedQC} from "../../test-data/equipment/ctb/edited/ctbValidateEditedQc";
-import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/ctbValidateCreatedQc";
+import {ctbValidateCreatedQC} from "../../test-data/equipment/ctb/created/ctbValidateCreatedQc";
 import {ctbValidateEditedAGV} from "../../test-data/equipment/ctb/edited/ctbValidateEditedAGV";
 import {ctbExpectedDataForEquipmentAGV} from "../../test-data/equipment/ctb/ctbAGVEquipment";
-import {Tag} from "../../enums/Tag";
-import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/ctbValidateCreatedAGV";
+import {TestCategory} from "../../enums/TestCategory";
+import {ctbValidateCreatedAGV} from "../../test-data/equipment/ctb/created/ctbValidateCreatedAGV";
 import {ctbExpectedDataForAcs} from "../../test-data/equipment/ctb/expect/ctbAcsEquipment";
 import {ctbValidateCreatedACS} from "../../test-data/equipment/ctb/created/ctbValidateCreatedAcs";
 import {ctbValidateEditedACS} from "../../test-data/equipment/ctb/edited/ctbValidateEditedAcs";
 import {ctbExpectedDataForAcsPage2} from "../../test-data/equipment/ctb/expect/ctbAcsEquipmentPage2";
 import {setExportEquipmentLabels} from "../../helpers/setExportedAllureLabels";
 import {Severity} from "../../enums/Severity";
+import {Terminal} from "../../enums/Terminal";
 
 test.use({ignoreHTTPSErrors: true});
 
 
 test("Create, edit and delete a QC equipment (only essential fields)",
-    {tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]},
+    {tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]},
     async ({homePage, equipmentTable,confirmDeleteEquipmentFormPage,editQCFormPage,addQCFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
 
         await homePage.selectVehicleType(VehicleType.QC);
@@ -60,9 +61,9 @@ test("Create, edit and delete a QC equipment (only essential fields)",
 //     +     "chassisSpecification": "app.constants.chassisTypeOptions.",
 //     +     "energySourceType": "app.constants.energySourceTypes.",
 test("Create, edit and delete an AGV equipment (only essential fields",
-    {tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]},
+    {tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]},
     async ({homePage,equipmentTable,confirmDeleteEquipmentFormPage,addAgvFormPage,editAgvFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.AGV);
         const actualData = await equipmentTable.getActualEquipmentTableDataForAGV();
@@ -90,10 +91,10 @@ test("Create, edit and delete an AGV equipment (only essential fields",
 
 test("Create, edit and delete an ACS equipment (only essential fields",
     {
-        tag: [Tag.CTB, Tag.SMOKE, Tag.REGRESSION]
+        tag: [Terminal.CTB, TestCategory.SMOKE, TestCategory.REGRESSION]
     },
     async ({homePage, equipmentTable, confirmDeleteEquipmentFormPage, addAcsFormPage, editAcsFormPage}) => {
-        await setExportEquipmentLabels(Severity.CRITICAL, Tag.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
+        await setExportEquipmentLabels(Severity.CRITICAL, TestCategory.SMOKE, [{name: "suite", value: "CRUD equipment"}]);
 
         await homePage.selectVehicleType(VehicleType.ACS);
         const actualData = await equipmentTable.getActualEquipmentTableDataForACS();

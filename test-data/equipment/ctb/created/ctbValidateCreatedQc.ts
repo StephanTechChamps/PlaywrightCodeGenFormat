@@ -1,6 +1,6 @@
-import {equipmentTableRowDataForQC} from "../../../interfaces/equipment/equipmentTableRowDataForQC";
+import {equipmentTableRowDataForQC} from "../../../../interfaces/equipment/equipmentTableRowDataForQC";
 
-export let ctbExpectedDataForQc: equipmentTableRowDataForQC[] = [
+export let ctbValidateCreatedQC: equipmentTableRowDataForQC[] = [
     {
         name: 'CB20',
         maxWeight: '40000',
@@ -154,4 +154,21 @@ export let ctbExpectedDataForQc: equipmentTableRowDataForQC[] = [
         url: '$ITS_url$',
         boundary: '-',
     },
+    {
+        name: 'Test QC',
+        maxWeight: '203',
+        liftCapability: 'Single only',
+        maxTwinWeightDifference: '',
+        portalTrolley: 'With a portal trolley',
+        platform: 'With a platform',
+        availableLocationsOnPlatform: '3',
+        sharedLegSpace: 'Yes',
+        berth: 'QUAY01',
+        lane: 'View lane details',
+        typologyIndex: '45',
+        softwareVersion: 'V2',
+        provider: 'test',
+        url: 'www.koneCranes.com',
+        boundary: '-'
+    }
 ];

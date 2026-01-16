@@ -1,4 +1,4 @@
-import {equipmentTableRowDataForARMG} from "../../../interfaces/equipment/equipmentTableRowDataForARMG";
+import {equipmentTableRowDataForARMG} from "../../../../interfaces/equipment/equipmentTableRowDataForARMG";
 
 export let htcValidateCreatedARMG: equipmentTableRowDataForARMG[] = [
     {
